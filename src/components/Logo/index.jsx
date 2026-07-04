@@ -1,7 +1,7 @@
-import MovieIcon from '@mui/icons-material/Movie';
+import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
 
 function Logo () {
-  return <MovieIcon color='inherit' />;
+  return <LocalMoviesIcon />;
 }
 
 export default Logo;

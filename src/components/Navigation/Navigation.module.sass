@@ -1,0 +1,15 @@
+@use './../../assets/_vars' as v
+  
+.navMenu
+  grid-area: nav
+  padding-left: calc(v.$main-gap / 2) 
+  .navList
+    background-color: #252525
+    color: #ffffff
+    li
+      padding: 0.9375rem 5rem 0.9375rem 0.9375rem
+      display: flex
+      align-items: center
+      gap: 2rem
+      &:last-child
+        border-top: 1px solid #616161
