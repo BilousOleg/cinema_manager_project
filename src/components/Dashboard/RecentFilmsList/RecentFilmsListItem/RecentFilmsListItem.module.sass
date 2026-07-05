@@ -1,0 +1,34 @@
+.recentFilmListItem
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  gap: 1rem
+  min-height: 175px
+  background: linear-gradient(90deg, #808080, #616161)
+  border-radius: 1.5rem
+  overflow: hidden
+  
+  img
+    display: block
+    width: 100%
+    aspect-ratio: 2 / 3
+
+  h4
+    width: 100%
+    padding: 0 1.5rem 1rem
+    font-size: 1.25rem
+
+  @media (max-width: 992px)
+    min-height: 150px
+
+    h4
+      font-size: 1.1rem
+
+  @media (max-width: 576px)
+    min-height: 120px
+    gap: 0.5rem
+    padding: 1rem
+
+    h4
+      font-size: 1rem
