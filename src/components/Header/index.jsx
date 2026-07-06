@@ -13,7 +13,7 @@ function Header () {
         <SettingsIcon />
         <img
           className={styles.avatar}
-          src='/public/staticImages/avatar.jpg'
+          src='/staticImages/avatar.jpg'
           alt='avatar'
         />
       </div>
