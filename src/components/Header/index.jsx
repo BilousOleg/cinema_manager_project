@@ -1,6 +1,9 @@
-import Logo from '../Logo';
 import SettingsIcon from '@mui/icons-material/Settings';
+import Logo from '../Logo';
 import styles from './Header.module.sass';
+import CONSTANTS from '../../constants';
+
+const { STATIC_IMAGES_PATH } = CONSTANTS;
 
 function Header () {
   return (
@@ -13,7 +16,7 @@ function Header () {
         <SettingsIcon />
         <img
           className={styles.avatar}
-          src='/staticImages/avatar.jpg'
+          src={`${STATIC_IMAGES_PATH}avatar.jpg`}
           alt='avatar'
         />
       </div>

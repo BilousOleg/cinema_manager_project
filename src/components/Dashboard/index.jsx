@@ -1,7 +1,10 @@
-import styles from './Dashboard.module.sass';
 import PopularGenresList from './PopularGenresList';
 import RecentFilmsList from './RecentFilmsList';
 import TotalCountList from './TotalCountList';
+import styles from './Dashboard.module.sass';
+import CONSTANTS from '../../constants';
+
+const { STATIC_IMAGES_PATH } = CONSTANTS;
 
 const genres = [
   {
@@ -26,20 +29,17 @@ const films = [
   {
     id: 1,
     name: 'Interstellar',
-    imgSrc:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6MBU9VxzNxqU0gzzOsgDR0Mpxn4_6BDHIzD-Xc8YaQ&s=10',
+    imgSrc: `${STATIC_IMAGES_PATH}posters/interstellar.jpg`,
   },
   {
     id: 2,
     name: 'Joker',
-    imgSrc:
-      'https://m.media-amazon.com/images/M/MV5BNzY3OWQ5NDktNWQ2OC00ZjdlLThkMmItMDhhNDk3NTFiZGU4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
+    imgSrc: `${STATIC_IMAGES_PATH}posters/joker.jpg`,
   },
   {
     id: 3,
     name: 'Oppenheimer',
-    imgSrc:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtHcEp4CGmgOhHGVGqDMZUfC_9z7xDnn9HMNj2fuq7yQ&s=10',
+    imgSrc: `${STATIC_IMAGES_PATH}posters/oppenheimer.jpg`,
   },
 ];
 

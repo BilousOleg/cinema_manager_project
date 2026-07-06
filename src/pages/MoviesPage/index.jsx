@@ -1,12 +1,23 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+import MoviesList from '../../components/MoviesList';
 import styles from './MoviesPage.module.sass';
 
 function MoviesPage () {
   const dispatch = useDispatch();
 
-  const { movies } = useSelector(state => state.movies);
-
-  return <div>{JSON.stringify(movies)}</div>;
+  return (
+    <article className={styles.movies}>
+      <section className={styles.headingSection}>
+        <h2>Movies List</h2>
+        <button className={styles.addMovieBtn}>
+          <VideoCallIcon />
+          <span>ADD MOVIE</span>
+        </button>
+      </section>
+      <MoviesList />
+    </article>
+  );
 }
 
 export default MoviesPage;
