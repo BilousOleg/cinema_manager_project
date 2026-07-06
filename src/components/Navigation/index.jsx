@@ -12,28 +12,40 @@ function Navigation () {
     <nav className={styles.navMenu}>
       <ul className={styles.navList}>
         <li>
-          <HomeIcon />
-          <NavLink>Home</NavLink>
+          <NavLink to='/' className={styles.navLink}>
+            <HomeIcon />
+            <span>Home</span>
+          </NavLink>
         </li>
         <li>
-          <MovieFilterIcon />
-          <NavLink>Movies</NavLink>
+          <NavLink to='/movies' className={styles.navLink}>
+            <MovieFilterIcon />
+            <span>Movies</span>
+          </NavLink>
         </li>
         <li>
-          <RecentActorsIcon />
-          <NavLink>Actors</NavLink>
+          <NavLink to='/actors' className={styles.navLink}>
+            <RecentActorsIcon />
+            <span>Actors</span>
+          </NavLink>
         </li>
         <li>
-          <VideoCameraFrontIcon />
-          <NavLink>Directors</NavLink>
+          <NavLink to='/directors' className={styles.navLink}>
+            <VideoCameraFrontIcon />
+            <span>Directors</span>
+          </NavLink>
         </li>
         <li>
-          <AssuredWorkloadIcon />
-          <NavLink>Studios</NavLink>
+          <NavLink to='/studios' className={styles.navLink}>
+            <AssuredWorkloadIcon />
+            <span>Studios</span>
+          </NavLink>
         </li>
         <li>
-          <MiscellaneousServicesIcon />
-          <NavLink>Service</NavLink>
+          <NavLink to='/service' className={styles.navLink}>
+            <MiscellaneousServicesIcon />
+            <span>Service</span>
+          </NavLink>
         </li>
       </ul>
     </nav>
