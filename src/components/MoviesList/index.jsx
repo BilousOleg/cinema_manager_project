@@ -1,25 +1,18 @@
-import { useSelector } from 'react-redux';
-import styles from './MoviesList.module.sass';
 import MoviesListItem from './MoviesListItem';
+import styles from './MoviesList.module.sass';
 
-function MoviesList () {
-  const { movies } = useSelector(state => state.movies);
-
-  console.log(movies);
-
+function MoviesList ({ movies }) {
   return (
-    <section className={styles.moviesListSection}>
-      <ul className={styles.moviesList}>
-        {movies.map(m => (
-          <MoviesListItem
-            key={m.id}
-            title={m.title}
-            year={m.year}
-            imgSrc={m.poster}
-          />
-        ))}
-      </ul>
-    </section>
+    <ul className={styles.moviesList}>
+      {movies.map(m => (
+        <MoviesListItem
+          key={m.id}
+          title={m.title}
+          year={m.year}
+          imgSrc={m.poster}
+        />
+      ))}
+    </ul>
   );
 }
 
