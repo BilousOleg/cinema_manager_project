@@ -7,6 +7,7 @@ function MoviesList ({ movies }) {
       {movies.map(m => (
         <MoviesListItem
           key={m.id}
+          movieId={m.id}
           title={m.title}
           year={m.year}
           imgSrc={m.poster}

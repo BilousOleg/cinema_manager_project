@@ -3,6 +3,8 @@ import Header from './components/Header';
 import Navigation from './components/Navigation';
 import Home from './pages/Home';
 import MoviesPage from './pages/MoviesPage';
+import MovieDetailsPage from './pages/MovieDetailsPage';
+import MovieTrailerPage from './pages/MovieTrailerPage';
 import CinemaService from './components/CinemaService';
 import Footer from './components/Footer';
 import styles from './App.module.sass';
@@ -16,7 +18,12 @@ function App () {
         <main className={styles.main}>
           <Routes>
             <Route index path='/' element={<Home />} />
-            <Route index path='/movies' element={<MoviesPage />} />
+            <Route path='/movies' element={<MoviesPage />} />
+            <Route path='/movies/:movieId' element={<MovieDetailsPage />} />
+            <Route
+              path='/movies/:movieId/trailer'
+              element={<MovieTrailerPage />}
+            />
           </Routes>
         </main>
         <CinemaService />

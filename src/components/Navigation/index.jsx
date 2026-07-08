@@ -42,10 +42,10 @@ function Navigation () {
           </NavLink>
         </li>
         <li>
-          <NavLink to='/service' className={styles.navLink}>
+          <button className={styles.serviceBtn}>
             <MiscellaneousServicesIcon />
             <span>Service</span>
-          </NavLink>
+          </button>
         </li>
       </ul>
     </nav>

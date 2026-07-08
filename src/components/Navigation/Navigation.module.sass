@@ -1,4 +1,10 @@
 @use './../../assets/_vars' as v
+
+%navItem
+  padding: 0.9375rem 5rem 0.9375rem 0.9375rem
+  display: flex
+  align-items: center
+  gap: 2rem
   
 .navMenu
   grid-area: nav
@@ -8,11 +14,14 @@
     color: #ffffff
     li
       .navLink
-        padding: 0.9375rem 5rem 0.9375rem 0.9375rem
-        display: flex
-        align-items: center
-        gap: 2rem
+        @extend %navItem
 
-      &:last-child
-        .navLink
-          border-top: 1px solid #3d3d3d
+      .serviceBtn
+        @extend %navItem
+        width: 100%
+        font: inherit
+        border: 0
+        border-top: 1px solid #3d3d3d
+        background: transparent
+        color: inherit
+        cursor: pointer
