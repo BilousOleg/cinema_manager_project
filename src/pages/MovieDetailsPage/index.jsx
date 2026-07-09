@@ -6,6 +6,10 @@ function MovieDetailsPage () {
   const { movieId } = useParams();
 
   const { movies } = useSelector(state => state.movies);
+  const { actors } = useSelector(state => state.actors);
+  const { directors } = useSelector(state => state.directors);
+  const { studios } = useSelector(state => state.studios);
+
   const movie = movies.find(m => m.id === Number(movieId));
 
   if (!movie) {
@@ -14,6 +18,10 @@ function MovieDetailsPage () {
   }
 
   const { title, poster, genre, country, year, description } = movie;
+
+  const movieActors = movie.actorIds.map(id => actors.find(a => a.id === id));
+  const movieDirector = directors.find(d => d.id === movie.directorId);
+  const movieStudio = studios.find(s => s.id === movie.studioId);
 
   return (
     <article className={styles.movieDetailsCard}>
@@ -41,6 +49,30 @@ function MovieDetailsPage () {
             </li>
             <li>
               <p>
+                Actors:{' '}
+                <span className={styles.infoContainer}>
+                  {movieActors.map(actor => actor.fullName).join(', ')}
+                </span>
+              </p>
+            </li>
+            <li>
+              <p>
+                Director:{' '}
+                <span className={styles.infoContainer}>
+                  {movieDirector?.fullName}
+                </span>
+              </p>
+            </li>
+            <li>
+              <p>
+                Studio:{' '}
+                <span className={styles.infoContainer}>
+                  {movieStudio?.name}
+                </span>
+              </p>
+            </li>
+            <li>
+              <p>
                 Description:{' '}
                 <span className={styles.infoContainer}>{description}</span>
               </p>
@@ -57,17 +89,5 @@ function MovieDetailsPage () {
     </article>
   );
 }
-
-/* <section className={styles.trailerSection}>
-        <iframe
-          width='560'
-          height='360'
-          src={getYoutubeEmbed(trailer)}
-          title='YouTube video player'
-          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-          referrerPolicy='strict-origin-when-cross-origin'
-          allowFullScreen
-        ></iframe>
-      </section> */
 
 export default MovieDetailsPage;
