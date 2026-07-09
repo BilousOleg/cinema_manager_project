@@ -3,13 +3,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import styles from './MoviesListItem.module.sass';
 
-function MoviesListItem ({ movieId, title, year, imgSrc }) {
+function MoviesListItem ({ id, title, year, poster }) {
   return (
     <li>
-      <NavLink to={`/movies/${movieId}`}>
+      <NavLink to={`/movies/${id}`}>
         <article className={styles.movieCard}>
           <div className={styles.cardBlock}>
-            <img src={imgSrc} alt={title} />
+            <img src={poster} alt={title} />
             <p>
               {title}, {year}
             </p>
