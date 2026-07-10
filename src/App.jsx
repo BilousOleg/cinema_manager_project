@@ -6,6 +6,7 @@ import MoviesPage from './pages/MoviesPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
 import MovieTrailerPage from './pages/MovieTrailerPage';
 import ActorsPage from './pages/ActorsPage';
+import ActorDetailsPage from './pages/ActorDetailsPage';
 import CinemaService from './components/CinemaService';
 import Footer from './components/Footer';
 import styles from './App.module.sass';
@@ -26,6 +27,7 @@ function App () {
               element={<MovieTrailerPage />}
             />
             <Route path='/actors' element={<ActorsPage />} />
+            <Route path='/actors/:actorId' element={<ActorDetailsPage />} />
           </Routes>
         </main>
         <CinemaService />
