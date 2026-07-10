@@ -1,5 +1,20 @@
+import { useSelector } from 'react-redux';
+import EntityPage from '../EntityPage';
+
 function ActorsPage () {
-  return <div>ActorsPage</div>;
+  const { actors } = useSelector(state => state.actors);
+
+  return (
+    <EntityPage
+      title='Actors List'
+      items={actors}
+      addButtonText='ADD ACTOR'
+      // ItemComponent={}
+      onAdd={() => {
+        //
+      }}
+    />
+  );
 }
 
 export default ActorsPage;
