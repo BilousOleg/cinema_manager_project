@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import EntityPage from '../EntityPage';
+import ActorsListItem from '../../components/ActorsListItem';
 
 function ActorsPage () {
   const { actors } = useSelector(state => state.actors);
@@ -9,7 +10,7 @@ function ActorsPage () {
       title='Actors List'
       items={actors}
       addButtonText='ADD ACTOR'
-      // ItemComponent={}
+      ItemComponent={ActorsListItem}
       onAdd={() => {
         //
       }}

@@ -40,7 +40,7 @@ function EntityPage ({
       </section>
 
       <section className={styles.listSection}>
-        <ul className={styles.list}>
+        <ul>
           {currentItems.map(item => (
             <ItemComponent key={item.id} {...item} />
           ))}
