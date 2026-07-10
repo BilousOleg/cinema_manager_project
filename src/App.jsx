@@ -11,6 +11,7 @@ import DirectorsPage from './pages/DirectorsPage';
 import CinemaService from './components/CinemaService';
 import Footer from './components/Footer';
 import styles from './App.module.sass';
+import DirectorDetailsPage from './pages/DirectorDetailsPage';
 
 function App () {
   return (
@@ -30,6 +31,10 @@ function App () {
             <Route path='/actors' element={<ActorsPage />} />
             <Route path='/actors/:actorId' element={<ActorDetailsPage />} />
             <Route path='/directors' element={<DirectorsPage />} />
+            <Route
+              path='/directors/:directorId'
+              element={<DirectorDetailsPage />}
+            />
           </Routes>
         </main>
         <CinemaService />
