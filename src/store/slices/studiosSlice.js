@@ -7,7 +7,7 @@ const initialState = {
       name: 'Warner Bros. Pictures',
       country: 'USA',
       founded: 1923,
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/6/66/Warner_Bros._Pictures_logo.svg',
+      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKjUsWV5bfTnNebkW8x-TWwAQK7dNtRlhzOe6_021VSQ&s=10',
       movieIds: [1, 5],
     },
     {
@@ -15,7 +15,7 @@ const initialState = {
       name: 'DC Films',
       country: 'USA',
       founded: 2016,
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/3/3d/DC_Films_logo.svg',
+      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPkOI-5VPQTphP8ywCHIE7HiT1gzDtz-SjNZrHyDhR8A&s',
       movieIds: [2],
     },
     {
@@ -23,7 +23,7 @@ const initialState = {
       name: 'Universal Pictures',
       country: 'USA',
       founded: 1912,
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Universal_Pictures_logo.svg',
+      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCDjUYCMWCJvYgNi5GPXrAo-iX3n5VnbG7vIEZFwSl3Q&s',
       movieIds: [3],
     },
     {
@@ -31,7 +31,7 @@ const initialState = {
       name: 'Village Roadshow Pictures',
       country: 'Australia',
       founded: 1986,
-      logo: 'https://upload.wikimedia.org/wikipedia/en/3/31/Village_Roadshow_Pictures_logo.svg',
+      logo: 'https://i0.wp.com/www.thewrap.com/wp-content/uploads/2017/04/village-roadshow-logo.jpg?fit=618%2C412&quality=89&ssl=1',
       movieIds: [4],
     },
   ],

@@ -8,10 +8,11 @@ import MovieTrailerPage from './pages/MovieTrailerPage';
 import ActorsPage from './pages/ActorsPage';
 import ActorDetailsPage from './pages/ActorDetailsPage';
 import DirectorsPage from './pages/DirectorsPage';
+import DirectorDetailsPage from './pages/DirectorDetailsPage';
+import StudiosPage from './pages/StudiosPage';
 import CinemaService from './components/CinemaService';
 import Footer from './components/Footer';
 import styles from './App.module.sass';
-import DirectorDetailsPage from './pages/DirectorDetailsPage';
 
 function App () {
   return (
@@ -35,6 +36,7 @@ function App () {
               path='/directors/:directorId'
               element={<DirectorDetailsPage />}
             />
+            <Route path='/studios' element={<StudiosPage />} />
           </Routes>
         </main>
         <CinemaService />
