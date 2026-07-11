@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
+import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import styles from './MovieDetailsPage.module.sass';
 
@@ -35,36 +36,32 @@ function MovieDetailsPage () {
   const movieStudio = studios.find(s => s.id === studioId);
 
   return (
-    <article className={styles.movieDetailsCard}>
-      <h2>{title}</h2>
-      <section className={styles.descriptionSection}>
-        <img src={poster} alt={title} />
-        <div className={styles.movieInfo}>
-          <h3>Movie Definition</h3>
-          <ul className={styles.movieDefinitionList}>
-            <DetailsListItem title={'Genre'} body={genre} />
-            <DetailsListItem title={'Country'} body={country} />
-            <DetailsListItem title={'Release year'} body={year} />
-            <DetailsListItem
-              title={'Actors'}
-              body={movieActors.map(a => a.fullName).join(', ')}
-            />
-            <DetailsListItem
-              title={'Director'}
-              body={movieDirector?.fullName}
-            />
-            <DetailsListItem title={'Studio'} body={movieStudio?.name} />
-            <DetailsListItem title={'Description'} body={description} />
-          </ul>
-        </div>
-      </section>
-      <NavLink
-        to={`/movies/${movieId}/trailer`}
-        className={styles.watchTrailerLink}
+    <>
+      <EntityDetailsPage
+        heading={title}
+        imgSrc={poster}
+        sectionTitle={'Movie Definition'}
+        actions={
+          <NavLink
+            to={`/movies/${movieId}/trailer`}
+            className={styles.watchTrailerLink}
+          >
+            Watch Trailer
+          </NavLink>
+        }
       >
-        Watch Trailer
-      </NavLink>
-    </article>
+        <DetailsListItem title={'Genre'} body={genre} />
+        <DetailsListItem title={'Country'} body={country} />
+        <DetailsListItem title={'Release year'} body={year} />
+        <DetailsListItem
+          title={'Actors'}
+          body={movieActors.map(a => a.fullName).join(', ')}
+        />
+        <DetailsListItem title={'Director'} body={movieDirector?.fullName} />
+        <DetailsListItem title={'Studio'} body={movieStudio?.name} />
+        <DetailsListItem title={'Description'} body={description} />
+      </EntityDetailsPage>
+    </>
   );
 }
 

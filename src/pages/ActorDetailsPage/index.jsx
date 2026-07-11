@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
-import styles from './ActorDetailsPage.module.sass';
 
 function ActorDetailsPage () {
   const { actorId } = useParams();
@@ -21,27 +21,22 @@ function ActorDetailsPage () {
   const actorMovies = movieIds.map(id => movies.find(m => m.id === id));
 
   return (
-    <article className={styles.actorDetailsCard}>
-      <h2>{fullName}</h2>
-      <section className={styles.descriptionSection}>
-        <img src={photo} alt={fullName} />
-        <div className={styles.actorInfo}>
-          <h3>Actor Information</h3>
-          <ul className={styles.actorInformationList}>
-            <DetailsListItem title={'Country'} body={country} />
-            <DetailsListItem
-              title={'Birth date'}
-              body={birthDate.replaceAll('-', '.')}
-            />
-            <DetailsListItem
-              title={'Movies'}
-              body={actorMovies.map(m => m.title).join(', ')}
-            />
-            <DetailsListItem title={'Biography'} body={biography} />
-          </ul>
-        </div>
-      </section>
-    </article>
+    <EntityDetailsPage
+      heading={fullName}
+      imgSrc={photo}
+      sectionTitle={'Actor Information'}
+    >
+      <DetailsListItem title={'Country'} body={country} />
+      <DetailsListItem
+        title={'Birth date'}
+        body={birthDate.replaceAll('-', '.')}
+      />
+      <DetailsListItem
+        title={'Movies'}
+        body={actorMovies.map(m => m.title).join(', ')}
+      />
+      <DetailsListItem title={'Biography'} body={biography} />
+    </EntityDetailsPage>
   );
 }
 
