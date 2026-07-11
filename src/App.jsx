@@ -10,6 +10,7 @@ import ActorDetailsPage from './pages/ActorDetailsPage';
 import DirectorsPage from './pages/DirectorsPage';
 import DirectorDetailsPage from './pages/DirectorDetailsPage';
 import StudiosPage from './pages/StudiosPage';
+import StudioDetailsPage from './pages/StudioDetailsPage';
 import CinemaService from './components/CinemaService';
 import Footer from './components/Footer';
 import styles from './App.module.sass';
@@ -37,6 +38,7 @@ function App () {
               element={<DirectorDetailsPage />}
             />
             <Route path='/studios' element={<StudiosPage />} />
+            <Route path='/studios/:studioId' element={<StudioDetailsPage />} />
           </Routes>
         </main>
         <CinemaService />

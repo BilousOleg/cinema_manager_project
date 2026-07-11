@@ -31,7 +31,7 @@ function ActorDetailsPage () {
             <DetailsListItem title={'Country'} body={country} />
             <DetailsListItem
               title={'Birth date'}
-              body={birthDate.replace('/', '.')}
+              body={birthDate.replaceAll('-', '.')}
             />
             <DetailsListItem
               title={'Movies'}

@@ -26,12 +26,12 @@ function DirectorDetailsPage () {
       <section className={styles.descriptionSection}>
         <img src={photo} alt={fullName} />
         <div className={styles.directorInfo}>
-          <h3>Actor Information</h3>
+          <h3>Director Information</h3>
           <ul className={styles.directorInformationList}>
             <DetailsListItem title={'Country'} body={country} />
             <DetailsListItem
               title={'Birth date'}
-              body={birthDate.replace('/', '.')}
+              body={birthDate.replaceAll('-', '.')}
             />
             <DetailsListItem
               title={'Movies'}
