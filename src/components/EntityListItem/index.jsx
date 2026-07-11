@@ -1,24 +1,35 @@
 import { NavLink } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import styles from './StudiosListItem.module.sass';
+import styles from './EntityListItem.module.sass';
 
-function StudiosListItem ({ id, name, founded, logo }) {
+function EntityListItem ({
+  entity,
+  id,
+  image,
+  primaryText,
+  secondaryText,
+  onEdit,
+  onDelete,
+}) {
   return (
     <li>
-      <NavLink to={`/studios/${id}`}>
-        <article className={styles.studioCard}>
+      <NavLink to={`/${entity}/${id}`}>
+        <article className={styles.entityCard}>
           <div className={styles.cardBlock}>
-            <img src={logo} alt={name} />
+            <img src={image} alt={primaryText} />
             <p>
-              {name}, {founded}
+              {primaryText}
+              {secondaryText && `, ${secondaryText}`}
             </p>
           </div>
+
           <div className={styles.cardBlock}>
             <button
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
+                onEdit?.(id);
               }}
             >
               <EditIcon />
@@ -27,6 +38,7 @@ function StudiosListItem ({ id, name, founded, logo }) {
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
+                onDelete?.(id);
               }}
             >
               <HighlightOffIcon />
@@ -38,4 +50,4 @@ function StudiosListItem ({ id, name, founded, logo }) {
   );
 }
 
-export default StudiosListItem;
+export default EntityListItem;

@@ -1,7 +1,5 @@
 import { useSelector } from 'react-redux';
 import EntityPage from '../EntityPage';
-import StudiosListItem from '../../components/StudiosListItem';
-
 function StudiosPage () {
   const { studios } = useSelector(state => state.studios);
 
@@ -9,11 +7,14 @@ function StudiosPage () {
     <EntityPage
       title='Studios List'
       items={studios}
-      ItemComponent={StudiosListItem}
+      entity='studios'
       addButtonText='ADD STUDIO'
       onAdd={() => {
         //
       }}
+      getImage={s => s.logo}
+      getPrimaryText={s => s.name}
+      getSecondaryText={s => s.founded}
     />
   );
 }

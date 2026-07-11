@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import EntityPage from '../EntityPage';
-import DirectorsListItem from '../../components/DirectorsListItem';
 
 function DirectorsPage () {
   const { directors } = useSelector(state => state.directors);
@@ -9,11 +8,13 @@ function DirectorsPage () {
     <EntityPage
       title='Directors List'
       items={directors}
+      entity='directors'
       addButtonText='ADD DIRECTOR'
-      ItemComponent={DirectorsListItem}
       onAdd={() => {
         //
       }}
+      getImage={d => d.photo}
+      getPrimaryText={d => d.fullName}
     />
   );
 }

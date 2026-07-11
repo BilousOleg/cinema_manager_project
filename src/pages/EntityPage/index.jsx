@@ -2,15 +2,19 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Pagination, PaginationItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import EntityListItem from '../../components/EntityListItem';
 import styles from './EntityPage.module.sass';
 
 function EntityPage ({
+  entity,
   title,
   items,
-  ItemComponent,
   addButtonText,
   onAdd,
   itemsPerPage = 9,
+  getImage,
+  getPrimaryText,
+  getSecondaryText,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -42,7 +46,14 @@ function EntityPage ({
       <section className={styles.listSection}>
         <ul>
           {currentItems.map(item => (
-            <ItemComponent key={item.id} {...item} />
+            <EntityListItem
+              key={item.id}
+              entity={entity}
+              id={item.id}
+              image={getImage(item)}
+              primaryText={getPrimaryText(item)}
+              secondaryText={getSecondaryText?.(item)}
+            />
           ))}
         </ul>
       </section>
