@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityDetailsPage from '../EntityDetailsPage';
+import EntityLinks from '../../components/EntityLinks';
 
 function StudioDetailsPage () {
   const { studioId } = useParams();
@@ -19,6 +20,7 @@ function StudioDetailsPage () {
   const { name, founded, country, logo, movieIds } = studio;
 
   const studioMovies = movieIds.map(id => movies.find(m => m.id === id));
+
   return (
     <EntityDetailsPage
       heading={name}
@@ -29,7 +31,13 @@ function StudioDetailsPage () {
       <DetailsListItem title={'Country'} body={country} />
       <DetailsListItem
         title={'Movies'}
-        body={studioMovies.map(m => m.title).join(', ')}
+        body={
+          <EntityLinks
+            items={studioMovies}
+            basePath='movies'
+            getLabel={movie => movie.title}
+          />
+        }
       />
     </EntityDetailsPage>
   );

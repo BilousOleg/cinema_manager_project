@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
+import EntityLinks from '../../components/EntityLinks';
 
 function DirectorDetailsPage () {
   const { directorId } = useParams();
@@ -33,7 +34,13 @@ function DirectorDetailsPage () {
       />
       <DetailsListItem
         title={'Movies'}
-        body={directorMovies.map(m => m.title).join(', ')}
+        body={
+          <EntityLinks
+            items={directorMovies}
+            basePath='movies'
+            getLabel={movie => movie.title}
+          />
+        }
       />
       <DetailsListItem title={'Biography'} body={biography} />
     </EntityDetailsPage>
