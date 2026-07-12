@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
+import EntityLinks from '../../components/EntityLinks';
 import styles from './MovieDetailsPage.module.sass';
 
 function MovieDetailsPage () {
@@ -55,10 +56,30 @@ function MovieDetailsPage () {
         <DetailsListItem title={'Release year'} body={year} />
         <DetailsListItem
           title={'Actors'}
-          body={movieActors.map(a => a.fullName).join(', ')}
+          body={
+            <EntityLinks
+              items={movieActors}
+              basePath='actors'
+              getLabel={a => a.fullName}
+            />
+          }
         />
-        <DetailsListItem title={'Director'} body={movieDirector?.fullName} />
-        <DetailsListItem title={'Studio'} body={movieStudio?.name} />
+        <DetailsListItem
+          title={'Director'}
+          body={
+            <NavLink to={`/directors/${movieDirector.id}`}>
+              {movieDirector.fullName}
+            </NavLink>
+          }
+        />
+        <DetailsListItem
+          title={'Studio'}
+          body={
+            <NavLink to={`/studios/${movieStudio.id}`}>
+              {movieStudio.name}
+            </NavLink>
+          }
+        />
         <DetailsListItem title={'Description'} body={description} />
       </EntityDetailsPage>
     </>
