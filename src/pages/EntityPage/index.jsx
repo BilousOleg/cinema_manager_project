@@ -11,6 +11,8 @@ function EntityPage ({
   items,
   addButtonText,
   onAdd,
+  onEdit,
+  onDelete,
   itemsPerPage = 9,
   getImage,
   getPrimaryText,
@@ -53,6 +55,8 @@ function EntityPage ({
               image={getImage(item)}
               primaryText={getPrimaryText(item)}
               secondaryText={getSecondaryText?.(item)}
+              onEdit={onEdit}
+              onDelete={onDelete}
             />
           ))}
         </ul>

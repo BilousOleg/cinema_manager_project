@@ -109,10 +109,15 @@ const actorsSlice = createSlice({
   initialState,
   name: 'actors',
   reducers: {
-    addActors: (state, action) => {},
+    addActor: (state, action) => {},
+    deleteActor: (state, { payload }) => {
+      state.actors = state.actors.filter(a => a.id !== payload);
+    },
   },
 });
 
 const { reducer, actions } = actorsSlice;
+
+export const { deleteActor } = actions;
 
 export default reducer;

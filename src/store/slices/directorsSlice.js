@@ -42,10 +42,15 @@ const directorsSlice = createSlice({
   initialState,
   name: 'directors',
   reducers: {
-    addDirectors: (state, action) => {},
+    addDirector: (state, action) => {},
+    deleteDirector: (state, { payload }) => {
+      state.directors = state.directors.filter(a => a.id !== payload);
+    },
   },
 });
 
 const { reducer, actions } = directorsSlice;
+
+export const { deleteDirector } = actions;
 
 export default reducer;

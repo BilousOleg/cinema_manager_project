@@ -151,9 +151,14 @@ const moviesSlice = createSlice({
   name: 'movies',
   reducers: {
     addMovie: (state, action) => {},
+    deleteMovie: (state, { payload }) => {
+      state.movies = state.movies.filter(m => m.id !== payload);
+    },
   },
 });
 
 const { reducer, actions } = moviesSlice;
+
+export const { addMovie, deleteMovie } = actions;
 
 export default reducer;

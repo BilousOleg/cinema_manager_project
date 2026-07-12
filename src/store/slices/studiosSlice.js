@@ -40,9 +40,15 @@ const initialState = {
 const studiosSlice = createSlice({
   initialState,
   name: 'studios',
-  reducers: {},
+  reducers: {
+    deleteStudio: (state, { payload }) => {
+      state.studios = state.studios.filter(s => s.id !== payload);
+    },
+  },
 });
 
 const { reducer, actions } = studiosSlice;
+
+export const { deleteStudio } = actions;
 
 export default reducer;
