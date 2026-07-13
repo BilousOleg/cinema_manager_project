@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
+import useService from '../../hooks/useService';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
@@ -7,6 +8,8 @@ import styles from './MovieDetailsPage.module.sass';
 
 function MovieDetailsPage () {
   const { movieId } = useParams();
+
+  useService('movies', 'edit', movieId);
 
   const { movies } = useSelector(state => state.movies);
   const { actors } = useSelector(state => state.actors);

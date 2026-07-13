@@ -1,11 +1,14 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import useService from '../../hooks/useService';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
 
 function DirectorDetailsPage () {
   const { directorId } = useParams();
+
+  useService('directors', 'edit', directorId);
 
   const { directors } = useSelector(state => state.directors);
   const { movies } = useSelector(state => state.movies);
