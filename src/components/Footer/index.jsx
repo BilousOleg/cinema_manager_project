@@ -10,13 +10,16 @@ function Footer () {
         © 2026 Bilous Oleh. All rights reserved.
       </div>
       <div className={styles.footerGroup}>
-        <a href='https://github.com/BilousOleg/cinema_manager_project.git'>
+        <a
+          href='https://github.com/BilousOleg/cinema_manager_project.git'
+          target='_blank'
+        >
           <GitHubIcon />
         </a>
-        <a href='https://www.google.com/'>
+        <a href='https://www.google.com/' target='_blank'>
           <LinkedInIcon />
         </a>
-        <a href='https://t.me/bilous_0leh'>
+        <a href='https://t.me/bilous_0leh' target='_blank'>
           <TelegramIcon />
         </a>
       </div>
