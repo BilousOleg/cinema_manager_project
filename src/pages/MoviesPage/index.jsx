@@ -1,6 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteMovie } from '../../store/slices/moviesSlice';
+import { openEntityForm } from '../../store/slices/serviceSlice';
 import EntityPage from '../EntityPage';
+import CONSTANTS from '../../constants';
+
+const {
+  ENTITIES: { MOVIES },
+  SERVICE_MODES: { CREATE },
+} = CONSTANTS;
 
 function MoviesPage () {
   const { movies } = useSelector(state => state.movies);
@@ -11,15 +18,17 @@ function MoviesPage () {
     dispatch(deleteMovie(id));
   };
 
+  const addMovie = () => {
+    dispatch(openEntityForm({ entity: MOVIES, mode: CREATE }));
+  };
+
   return (
     <EntityPage
       title='Movies List'
       items={movies}
-      entity='movies'
+      entity={MOVIES}
       addButtonText='ADD MOVIE'
-      onAdd={() => {
-        //
-      }}
+      onAdd={addMovie}
       // onEdit={}
       onDelete={deleteMovieById}
       getImage={m => m.poster}

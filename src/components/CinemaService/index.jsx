@@ -1,5 +1,9 @@
 import { useSelector } from 'react-redux';
 import classNames from 'classnames';
+import MovieForm from '../forms/MovieForm';
+import ActorForm from '../forms/ActorForm';
+import DirectorForm from '../forms/DirectorForm';
+import StudioForm from '../forms/StudioForm';
 import styles from './CinemaService.module.sass';
 
 function CinemaService () {
@@ -11,17 +15,15 @@ function CinemaService () {
 
   return (
     <aside className={serviceClassNames}>
-      <section>
-        <h2 className={styles.serviceHeading}>Cinema service</h2>
-      </section>
-
-      <section>
-        <div className={styles.serviceBody}>
-          {!entity && (
-            <div className={styles.selectAction}>Select action...</div>
-          )}
-        </div>
-      </section>
+      <h2 className={styles.serviceHeading}>Cinema service</h2>
+      <div className={styles.serviceBody}>
+        {/* <SelectAction /> */}
+        {!entity && <div className={styles.selectAction}>Select action...</div>}
+        {entity === 'movies' && <MovieForm />}
+        {entity === 'actors' && <ActorForm />}
+        {entity === 'directors' && <DirectorForm />}
+        {entity === 'studios' && <StudioForm />}
+      </div>
     </aside>
   );
 }

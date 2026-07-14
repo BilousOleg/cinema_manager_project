@@ -1,6 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteStudio } from '../../store/slices/studiosSlice';
+import { openEntityForm } from '../../store/slices/serviceSlice';
 import EntityPage from '../EntityPage';
+import CONSTANTS from '../../constants';
+
+const {
+  ENTITIES: { STUDIOS },
+  SERVICE_MODES: { CREATE },
+} = CONSTANTS;
 
 function StudiosPage () {
   const { studios } = useSelector(state => state.studios);
@@ -11,15 +18,17 @@ function StudiosPage () {
     dispatch(deleteStudio(id));
   };
 
+  const addStudio = () => {
+    dispatch(openEntityForm({ entity: STUDIOS, mode: CREATE }));
+  };
+
   return (
     <EntityPage
       title='Studios List'
       items={studios}
-      entity='studios'
+      entity={STUDIOS}
       addButtonText='ADD STUDIO'
-      onAdd={() => {
-        //
-      }}
+      onAdd={addStudio}
       // onEdit={}
       onDelete={deleteStudioById}
       getImage={s => s.logo}
