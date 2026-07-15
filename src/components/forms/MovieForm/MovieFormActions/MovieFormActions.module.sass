@@ -1,0 +1,33 @@
+%button
+  display: flex
+  align-items: center
+  gap: 0.5rem
+  padding: 0.4rem 0.75rem
+  text-transform: uppercase
+  border: none
+  border-radius: 0.25rem
+  cursor: pointer
+
+.actionsBlock
+  display: flex
+  justify-content: center
+  gap: 0.5rem
+  width: 85%
+  margin-top: auto
+
+  .returnBtn
+    @extend %button
+    background-color: #ffa726
+
+  .nextBtn
+    @extend %button
+    background-color: #8fcaf8
+  
+  .submitBtn
+    @extend %button
+    background-color: #66bb6a
+
+  .resetBtn
+    @extend %button
+    background-color: #f44236
+    color: #ffffff

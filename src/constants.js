@@ -10,6 +10,19 @@ const CONSTANTS = {
     CREATE: 'create',
     EDIT: 'edit',
   },
+  GENRES: [
+    'Action',
+    'Adventure',
+    'Biography',
+    'Comedy',
+    'Crime',
+    'Drama',
+    'Fantasy',
+    'Horror',
+    'Romance',
+    'Science Fiction',
+    'Thriller',
+  ],
 };
 
 export default CONSTANTS;

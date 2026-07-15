@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { openService, closeService } from '../store/slices/serviceSlice';
 
-function useService (entity, mode, selectedId = null) {
+function useCinemaService (entity, mode, selectedId = null) {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -12,4 +12,4 @@ function useService (entity, mode, selectedId = null) {
   }, [dispatch, entity, mode, selectedId]);
 }
 
-export default useService;
+export default useCinemaService;
