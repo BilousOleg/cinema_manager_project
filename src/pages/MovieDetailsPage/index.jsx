@@ -58,7 +58,7 @@ function MovieDetailsPage () {
             <EntityLinks
               items={movieActors}
               basePath='actors'
-              getLabel={a => a.fullName}
+              getLabel={a => `${a.firstName} ${a.lastName}`}
             />
           }
         />
@@ -66,7 +66,7 @@ function MovieDetailsPage () {
           title={'Director'}
           body={
             <NavLink to={`/directors/${movieDirector.id}`}>
-              {movieDirector.fullName}
+              {`${movieDirector.firstName} ${movieDirector.lastName}`}
             </NavLink>
           }
         />
