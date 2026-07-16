@@ -5,7 +5,8 @@ const initialState = {
   actors: [
     {
       id: uuidv4(),
-      fullName: 'Matthew McConaughey',
+      firstName: 'Matthew',
+      lastName: 'McConaughey',
       birthDate: '1969-11-04',
       country: 'USA',
       photo:

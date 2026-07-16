@@ -32,7 +32,7 @@ function ActorsPage () {
       // onEdit={}
       onDelete={deleteActorById}
       getImage={a => a.photo}
-      getPrimaryText={a => a.fullName}
+      getPrimaryText={a => `${a.firstName} ${a.lastName}`}
     />
   );
 }
