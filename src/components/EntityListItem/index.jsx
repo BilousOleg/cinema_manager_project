@@ -38,7 +38,7 @@ function EntityListItem ({
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
-                onDelete?.(id);
+                onDelete(id);
               }}
             >
               <HighlightOffIcon />

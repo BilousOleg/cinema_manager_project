@@ -1,0 +1,30 @@
+.item
+  width: 100% 
+  padding: 0.5rem 1rem
+  border: 1px solid #06867a
+  border-radius: 1.25rem
+
+  & + &
+    margin-top: 0.5rem
+
+  .label
+    display: flex
+    align-items: center
+    gap: 1rem
+    user-select: none
+
+    .title
+      min-width: 0
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+    
+    .image
+      $image-size: 2.5rem
+      width: $image-size
+      height: $image-size
+      margin-right: auto
+      border-radius: 50%
+      object-fit: cover
+      vertical-align: middle
+      user-select: none

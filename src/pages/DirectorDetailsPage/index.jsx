@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import useCinemaService from '../../hooks/useCinemaService';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
@@ -8,12 +7,10 @@ import EntityLinks from '../../components/EntityLinks';
 function DirectorDetailsPage () {
   const { directorId } = useParams();
 
-  useCinemaService('directors', 'edit', directorId);
-
   const { directors } = useSelector(state => state.directors);
   const { movies } = useSelector(state => state.movies);
 
-  const director = directors.find(d => d.id === Number(directorId));
+  const director = directors.find(d => d.id === directorId);
 
   if (!director) {
     // NotFoundPage needed

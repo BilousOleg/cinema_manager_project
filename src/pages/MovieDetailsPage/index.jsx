@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
-import useCinemaService from '../../hooks/useCinemaService';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
@@ -9,14 +8,12 @@ import styles from './MovieDetailsPage.module.sass';
 function MovieDetailsPage () {
   const { movieId } = useParams();
 
-  useCinemaService('movies', 'edit', movieId);
-
   const { movies } = useSelector(state => state.movies);
   const { actors } = useSelector(state => state.actors);
   const { directors } = useSelector(state => state.directors);
   const { studios } = useSelector(state => state.studios);
 
-  const movie = movies.find(m => m.id === Number(movieId));
+  const movie = movies.find(m => m.id === movieId);
 
   if (!movie) {
     // NotFoundPage needed
@@ -27,7 +24,6 @@ function MovieDetailsPage () {
     title,
     poster,
     genre,
-    country,
     year,
     description,
     actorIds,
@@ -55,7 +51,6 @@ function MovieDetailsPage () {
         }
       >
         <DetailsListItem title={'Genre'} body={genre} />
-        <DetailsListItem title={'Country'} body={country} />
         <DetailsListItem title={'Release year'} body={year} />
         <DetailsListItem
           title={'Actors'}

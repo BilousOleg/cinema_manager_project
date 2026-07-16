@@ -1,5 +1,7 @@
+import TextAreaField from '../../../../TextAreaField';
+
 function StorylineStep () {
-  return <div>StorylineStep</div>;
+  return <TextAreaField name='description' placeholder='Movie description' />;
 }
 
 export default StorylineStep;

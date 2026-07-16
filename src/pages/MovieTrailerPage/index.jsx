@@ -7,7 +7,7 @@ function MovieTrailerPage () {
   const { movieId } = useParams();
 
   const { movies } = useSelector(state => state.movies);
-  const movie = movies.find(m => m.id === Number(movieId));
+  const movie = movies.find(m => m.id === movieId);
 
   if (!movie) {
     return <div>Movie not found</div>;

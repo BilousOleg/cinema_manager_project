@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, Formik } from 'formik';
+import { addMovie } from '../../../store/slices/moviesSlice';
 import MovieStepper from './MovieStepper';
 import GeneralStep from './steps/GeneralStep';
 import DirectorStep from './steps/DirectorStep';
@@ -31,16 +33,21 @@ function MovieForm () {
     { label: 'Storyline' },
   ];
 
+  const dispatch = useDispatch();
+
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(addMovie(values));
+    resetForm();
+    setStep(0);
+  };
+
   return (
     <Formik
       initialValues={initialValues}
-      onSubmit={values => {
-        //
-        console.log(values);
-      }}
+      onSubmit={handleSubmit}
       enableReinitialize
     >
-      {({ resetForm }) => (
+      {() => (
         <Form className={styles.form}>
           <MovieStepper step={step} steps={steps} />
 
@@ -54,10 +61,6 @@ function MovieForm () {
             step={step}
             stepsCount={steps.length}
             setStep={setStep}
-            onReset={() => {
-              resetForm();
-              setStep(0);
-            }}
           />
         </Form>
       )}
