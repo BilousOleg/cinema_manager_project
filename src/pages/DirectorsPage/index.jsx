@@ -32,7 +32,7 @@ function DirectorsPage () {
       // onEdit={}
       onDelete={deleteDirectorById}
       getImage={d => d.photo}
-      getPrimaryText={d => d.fullName}
+      getPrimaryText={d => `${d.firstName} ${d.lastName}`}
     />
   );
 }

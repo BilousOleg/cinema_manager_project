@@ -5,7 +5,8 @@ const initialState = {
   directors: [
     {
       id: uuidv4(),
-      fullName: 'Christopher Nolan',
+      firstName: 'Christopher',
+      lastName: 'Nolan',
       birthDate: '1970-07-30',
       country: 'United Kingdom',
       photo:
