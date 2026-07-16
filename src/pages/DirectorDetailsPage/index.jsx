@@ -17,13 +17,14 @@ function DirectorDetailsPage () {
     return <div>ERROR</div>;
   }
 
-  const { fullName, birthDate, country, photo, biography } = director;
+  const { firstName, lastName, birthDate, country, photo, biography } =
+    director;
 
   const directorMovies = movies.filter(m => m.directorId === directorId);
 
   return (
     <EntityDetailsPage
-      heading={fullName}
+      heading={`${firstName} ${lastName}`}
       imgSrc={photo}
       sectionTitle={'Director Information'}
     >
