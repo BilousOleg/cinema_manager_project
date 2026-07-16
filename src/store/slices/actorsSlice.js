@@ -11,7 +11,6 @@ const initialState = {
       photo:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqfu-8n0ljUW4HAw5VtBpUkxB09VQ3SjoG4i3rDdk1WQsCfl8PMftbeakmk-hrYbDyA9YrFQ5lm7s0QVxg_VxAk9mvx9HXA_7iXsMqFww&s=10',
       biography: 'Academy Award-winning American actor.',
-      movieIds: [1, 2],
     },
   ],
 };

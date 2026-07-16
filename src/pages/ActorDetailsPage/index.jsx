@@ -17,9 +17,9 @@ function ActorDetailsPage () {
     return <div>ERROR</div>;
   }
 
-  const { fullName, birthDate, country, photo, biography, movieIds } = actor;
+  const { fullName, birthDate, country, photo, biography } = actor;
 
-  const actorMovies = movieIds.map(id => movies.find(m => m.id === id));
+  const actorMovies = movies.filter(m => m.actorIds.includes(actorId));
 
   return (
     <EntityDetailsPage
