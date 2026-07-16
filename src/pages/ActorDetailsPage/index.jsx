@@ -17,13 +17,13 @@ function ActorDetailsPage () {
     return <div>ERROR</div>;
   }
 
-  const { fullName, birthDate, country, photo, biography } = actor;
+  const { firstName, lastName, birthDate, country, photo, biography } = actor;
 
   const actorMovies = movies.filter(m => m.actorIds.includes(actorId));
 
   return (
     <EntityDetailsPage
-      heading={fullName}
+      heading={`${firstName} ${lastName}`}
       imgSrc={photo}
       sectionTitle={'Actor Information'}
     >
