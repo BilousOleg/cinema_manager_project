@@ -17,9 +17,9 @@ function StudioDetailsPage () {
     return <div>ERROR</div>;
   }
 
-  const { name, founded, country, logo, movieIds } = studio;
+  const { name, founded, country, logo } = studio;
 
-  const studioMovies = movieIds.map(id => movies.find(m => m.id === id));
+  const studioMovies = movies.filter(m => m.studioId === studioId);
 
   return (
     <EntityDetailsPage

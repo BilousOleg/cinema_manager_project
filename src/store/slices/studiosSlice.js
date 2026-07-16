@@ -9,7 +9,6 @@ const initialState = {
       country: 'USA',
       founded: 1923,
       logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKjUsWV5bfTnNebkW8x-TWwAQK7dNtRlhzOe6_021VSQ&s=10',
-      movieIds: [1, 5],
     },
   ],
 };
