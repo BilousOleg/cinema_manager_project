@@ -12,7 +12,6 @@ const initialState = {
         'https://upload.wikimedia.org/wikipedia/commons/9/95/Christopher_Nolan_Cannes_2018.jpg',
       biography:
         'British-American film director, producer and screenwriter. Known for large-scale science fiction and psychological thrillers.',
-      movieIds: [1, 3, 5],
     },
   ],
 };
