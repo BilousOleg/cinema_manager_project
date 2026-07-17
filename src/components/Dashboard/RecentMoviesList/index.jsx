@@ -1,6 +1,6 @@
 import RecentMoviesListItem from './RecentMoviesListItem';
 import defaultPoster from './../../../assets/defaultImages/defaultPoster.png';
-import NoItems from '../NoItems';
+import NoItems from '../../NoItems';
 import styles from './RecentMoviesList.module.sass';
 
 function RecentMoviesList ({ movies }) {

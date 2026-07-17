@@ -9,7 +9,8 @@ function MovieFormActions ({ step, stepsCount, setStep }) {
   const isFirstStep = step === 0;
   const isLastStep = step === stepsCount - 1;
 
-  const { submitForm, resetForm } = useFormikContext();
+  const { submitForm, resetForm, dirty, isValid, isSubmitting } =
+    useFormikContext();
 
   const handlePrevious = () => {
     if (!isFirstStep) {

@@ -20,8 +20,9 @@ function DirectorDetailsPage () {
 
   const { firstName, lastName, birthDate, country, photo, biography } =
     director;
-
   const directorMovies = movies.filter(m => m.directorId === directorId);
+
+  const formattedDate = birthDate.split('-').reverse().join('.');
 
   return (
     <EntityDetailsPage
@@ -30,10 +31,7 @@ function DirectorDetailsPage () {
       sectionTitle={'Director Information'}
     >
       <DetailsListItem title={'Country'} body={country} />
-      <DetailsListItem
-        title={'Birth date'}
-        body={birthDate.replaceAll('-', '.')}
-      />
+      <DetailsListItem title={'Birth date'} body={formattedDate} />
       <DetailsListItem
         title={'Movies'}
         body={

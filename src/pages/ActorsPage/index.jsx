@@ -7,7 +7,6 @@ import CONSTANTS from '../../constants';
 
 const {
   ENTITIES: { ACTORS },
-  SERVICE_MODES: { CREATE },
 } = CONSTANTS;
 
 function ActorsPage () {
@@ -20,7 +19,7 @@ function ActorsPage () {
   };
 
   const addActor = () => {
-    dispatch(openEntityForm({ entity: ACTORS, mode: CREATE }));
+    dispatch(openEntityForm({ entity: ACTORS }));
   };
 
   return (

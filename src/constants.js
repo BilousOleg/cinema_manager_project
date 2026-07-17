@@ -53,10 +53,6 @@ const CONSTANTS = {
     DIRECTORS: 'directors',
     STUDIOS: 'studios',
   },
-  SERVICE_MODES: {
-    CREATE: 'create',
-    EDIT: 'edit',
-  },
   GENRES,
   GENRES_BY_ID: Object.fromEntries(GENRES.map(genre => [genre.id, genre])),
 };

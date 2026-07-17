@@ -1,5 +1,5 @@
 import PopularGenresListItem from './PopularGenresListItem';
-import NoItems from '../NoItems';
+import NoItems from '../../NoItems';
 import styles from './PopularGenresList.module.sass';
 
 function PopularGenresList ({ genres }) {

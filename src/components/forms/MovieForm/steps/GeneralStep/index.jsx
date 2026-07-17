@@ -1,5 +1,5 @@
-import TextField from '../../../../TextField';
-import SelectField from '../../../../SelectField';
+import TextField from '../../../../fields/TextField';
+import SelectField from '../../../../fields/SelectField';
 import styles from './GeneralStep.module.sass';
 import CONSTANTS from '../../../../../constants';
 

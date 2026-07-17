@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   isOpen: false,
   entity: null,
-  mode: null,
   selectedId: null,
 };
 
@@ -18,14 +17,12 @@ const serviceSlice = createSlice({
     closeService: state => {
       state.isOpen = false;
       state.entity = null;
-      state.mode = null;
       state.selectedId = null;
     },
 
-    openEntityForm: (state, { payload: { entity, mode, selectedId } }) => {
+    openEntityForm: (state, { payload: { entity, selectedId } }) => {
       state.isOpen = true;
       state.entity = entity;
-      state.mode = mode;
       state.selectedId = selectedId ?? null;
     },
   },
