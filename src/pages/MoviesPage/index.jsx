@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteMovie } from '../../store/slices/moviesSlice';
 import { openEntityForm } from '../../store/slices/serviceSlice';
+import defaultPoster from './../../assets/defaultImages/defaultPoster.png';
 import EntityPage from '../EntityPage';
 import CONSTANTS from '../../constants';
 
@@ -31,7 +32,7 @@ function MoviesPage () {
       onAdd={addMovie}
       // onEdit={}
       onDelete={deleteMovieById}
-      getImage={m => m.poster}
+      getImage={m => m.poster || defaultPoster}
       getPrimaryText={m => m.title}
       getSecondaryText={m => m.year}
     />

@@ -11,11 +11,11 @@ function GeneralStep () {
       <TextField name='title' type='text' placeholder='Movie title' />
       <div className={styles.formBlock}>
         <SelectField
-          name='genre'
+          name='genreId'
           label='Genre'
           items={GENRES}
-          getValue={genre => genre}
-          getLabel={genre => genre}
+          getValue={genre => genre.id}
+          getLabel={genre => genre.name}
         />
         <TextField
           name='year'

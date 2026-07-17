@@ -1,3 +1,50 @@
+const GENRES = [
+  {
+    id: 1,
+    name: 'Action',
+  },
+  {
+    id: 2,
+    name: 'Adventure',
+  },
+  {
+    id: 3,
+    name: 'Biography',
+  },
+  {
+    id: 4,
+    name: 'Comedy',
+  },
+  {
+    id: 5,
+    name: 'Crime',
+  },
+  {
+    id: 6,
+    name: 'Drama',
+  },
+  {
+    id: 7,
+    name: 'Fantasy',
+  },
+  {
+    id: 8,
+    name: 'Horror',
+  },
+  {
+    id: 9,
+    name: 'Romance',
+  },
+  {
+    id: 10,
+    name: 'Science Fiction',
+  },
+  {
+    id: 11,
+    name: 'Thriller',
+  },
+];
+
 const CONSTANTS = {
   STATIC_IMAGES_PATH: '/staticImages/',
   ENTITIES: {
@@ -10,19 +57,8 @@ const CONSTANTS = {
     CREATE: 'create',
     EDIT: 'edit',
   },
-  GENRES: [
-    'Action',
-    'Adventure',
-    'Biography',
-    'Comedy',
-    'Crime',
-    'Drama',
-    'Fantasy',
-    'Horror',
-    'Romance',
-    'Science Fiction',
-    'Thriller',
-  ],
+  GENRES,
+  GENRES_BY_ID: Object.fromEntries(GENRES.map(genre => [genre.id, genre])),
 };
 
 export default CONSTANTS;

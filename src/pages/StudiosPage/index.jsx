@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteStudio } from '../../store/slices/studiosSlice';
 import { openEntityForm } from '../../store/slices/serviceSlice';
+import defaultStudio from './../../assets/defaultImages/defaultStudio.png';
 import EntityPage from '../EntityPage';
 import CONSTANTS from '../../constants';
 
@@ -31,7 +32,7 @@ function StudiosPage () {
       onAdd={addStudio}
       // onEdit={}
       onDelete={deleteStudioById}
-      getImage={s => s.logo}
+      getImage={s => s.logo || defaultStudio}
       getPrimaryText={s => s.name}
       getSecondaryText={s => s.founded}
     />

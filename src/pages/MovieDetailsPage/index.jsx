@@ -3,7 +3,11 @@ import { NavLink, useParams } from 'react-router-dom';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
+import defaultPoster from './../../assets/defaultImages/defaultPoster.png';
 import styles from './MovieDetailsPage.module.sass';
+import CONSTANTS from '../../constants';
+
+const { GENRES_BY_ID } = CONSTANTS;
 
 function MovieDetailsPage () {
   const { movieId } = useParams();
@@ -23,7 +27,7 @@ function MovieDetailsPage () {
   const {
     title,
     poster,
-    genre,
+    genreId,
     year,
     description,
     actorIds,
@@ -31,7 +35,9 @@ function MovieDetailsPage () {
     studioId,
   } = movie;
 
-  const movieActors = actorIds.map(id => actors.find(a => a.id === id));
+  const movieActors = actorIds
+    .map(id => actors.find(a => a.id === id))
+    .filter(item => !!item);
   const movieDirector = directors.find(d => d.id === directorId);
   const movieStudio = studios.find(s => s.id === studioId);
 
@@ -39,7 +45,7 @@ function MovieDetailsPage () {
     <>
       <EntityDetailsPage
         heading={title}
-        imgSrc={poster}
+        imgSrc={poster || defaultPoster}
         sectionTitle={'Movie Definition'}
         actions={
           <NavLink
@@ -50,7 +56,10 @@ function MovieDetailsPage () {
           </NavLink>
         }
       >
-        <DetailsListItem title={'Genre'} body={genre} />
+        <DetailsListItem
+          title={'Genre'}
+          body={GENRES_BY_ID[genreId].name ?? '—'}
+        />
         <DetailsListItem title={'Release year'} body={year} />
         <DetailsListItem
           title={'Actors'}
@@ -65,17 +74,25 @@ function MovieDetailsPage () {
         <DetailsListItem
           title={'Director'}
           body={
-            <NavLink to={`/directors/${movieDirector.id}`}>
-              {`${movieDirector.firstName} ${movieDirector.lastName}`}
-            </NavLink>
+            movieDirector ? (
+              <NavLink to={`/directors/${movieDirector.id}`}>
+                {`${movieDirector.firstName} ${movieDirector.lastName}`}
+              </NavLink>
+            ) : (
+              <span>—</span>
+            )
           }
         />
         <DetailsListItem
           title={'Studio'}
           body={
-            <NavLink to={`/studios/${movieStudio.id}`}>
-              {movieStudio.name}
-            </NavLink>
+            movieStudio ? (
+              <NavLink to={`/studios/${movieStudio.id}`}>
+                {movieStudio.name}
+              </NavLink>
+            ) : (
+              <span>—</span>
+            )
           }
         />
         <DetailsListItem title={'Description'} body={description} />

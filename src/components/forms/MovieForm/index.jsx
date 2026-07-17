@@ -13,7 +13,7 @@ import styles from './MovieForm.module.sass';
 
 const initialValues = {
   title: '',
-  genre: '',
+  genreId: '',
   year: '',
   poster: '',
   trailer: '',

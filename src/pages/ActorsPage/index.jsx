@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteActor } from '../../store/slices/actorsSlice';
 import { openEntityForm } from '../../store/slices/serviceSlice';
+import defaultPhoto from './../../assets/defaultImages/defaultPhoto.png';
 import EntityPage from '../EntityPage';
 import CONSTANTS from '../../constants';
 
@@ -31,7 +32,7 @@ function ActorsPage () {
       onAdd={addActor}
       // onEdit={}
       onDelete={deleteActorById}
-      getImage={a => a.photo}
+      getImage={a => a.photo || defaultPhoto}
       getPrimaryText={a => `${a.firstName} ${a.lastName}`}
     />
   );

@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import defaultPhoto from './../../../../../assets/defaultImages/defaultPhoto.png';
 import EntitySelectionList from '../../../../EntitySelectionList';
 
 function DirectorStep () {
@@ -10,8 +11,8 @@ function DirectorStep () {
       type='radio'
       name='directorId'
       getValue={d => d.id}
-      getTitle={d => d.fullName}
-      getImage={d => d.photo}
+      getTitle={d => `${d.firstName} ${d.lastName}`}
+      getImage={d => d.photo || defaultPhoto}
     />
   );
 }

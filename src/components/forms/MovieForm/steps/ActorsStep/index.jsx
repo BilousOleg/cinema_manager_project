@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import defaultPhoto from './../../../../../assets/defaultImages/defaultPhoto.png';
 import EntitySelectionList from '../../../../EntitySelectionList';
 
 function ActorsStep () {
@@ -10,8 +11,8 @@ function ActorsStep () {
       type='checkbox'
       name='actorIds'
       getValue={a => a.id}
-      getTitle={a => a.fullName}
-      getImage={a => a.photo}
+      getTitle={a => `${a.firstName} ${a.lastName}`}
+      getImage={a => a.photo || defaultPhoto}
     />
   );
 }

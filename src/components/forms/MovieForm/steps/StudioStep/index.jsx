@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import defaultStudio from './../../../../../assets/defaultImages/defaultStudio.png';
 import EntitySelectionList from '../../../../EntitySelectionList';
 
 function StudioStep () {
@@ -11,7 +12,7 @@ function StudioStep () {
       name='studioId'
       getValue={s => s.id}
       getTitle={s => s.name}
-      getImage={s => s.logo}
+      getImage={s => s.logo || defaultStudio}
     />
   );
 }

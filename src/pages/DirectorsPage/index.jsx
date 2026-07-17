@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteDirector } from '../../store/slices/directorsSlice';
 import { openEntityForm } from '../../store/slices/serviceSlice';
+import defaultPhoto from './../../assets/defaultImages/defaultPhoto.png';
 import EntityPage from '../EntityPage';
 import CONSTANTS from '../../constants';
 
@@ -31,7 +32,7 @@ function DirectorsPage () {
       onAdd={addDirector}
       // onEdit={}
       onDelete={deleteDirectorById}
-      getImage={d => d.photo}
+      getImage={d => d.photo || defaultPhoto}
       getPrimaryText={d => `${d.firstName} ${d.lastName}`}
     />
   );

@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import defaultPhoto from './../../assets/defaultImages/defaultPhoto.png';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
@@ -24,7 +25,7 @@ function ActorDetailsPage () {
   return (
     <EntityDetailsPage
       heading={`${firstName} ${lastName}`}
-      imgSrc={photo}
+      imgSrc={photo || defaultPhoto}
       sectionTitle={'Actor Information'}
     >
       <DetailsListItem title={'Country'} body={country} />

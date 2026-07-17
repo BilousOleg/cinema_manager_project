@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import defaultStudio from './../../assets/defaultImages/defaultStudio.png';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityDetailsPage from '../EntityDetailsPage';
 import EntityLinks from '../../components/EntityLinks';
