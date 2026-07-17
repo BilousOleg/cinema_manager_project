@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { Pagination, PaginationItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EntityListItem from '../../components/EntityListItem';
+import NoItems from '../../components/NoItems';
 import styles from './EntityPage.module.sass';
 
 function EntityPage ({
@@ -46,20 +47,24 @@ function EntityPage ({
       </section>
 
       <section className={styles.listSection}>
-        <ul>
-          {currentItems.map(item => (
-            <EntityListItem
-              key={item.id}
-              entity={entity}
-              id={item.id}
-              image={getImage(item)}
-              primaryText={getPrimaryText(item)}
-              secondaryText={getSecondaryText?.(item)}
-              onEdit={onEdit}
-              onDelete={onDelete}
-            />
-          ))}
-        </ul>
+        {items.length ? (
+          <ul>
+            {currentItems.map(item => (
+              <EntityListItem
+                key={item.id}
+                entity={entity}
+                id={item.id}
+                image={getImage(item)}
+                primaryText={getPrimaryText(item)}
+                secondaryText={getSecondaryText?.(item)}
+                onEdit={onEdit}
+                onDelete={onDelete}
+              />
+            ))}
+          </ul>
+        ) : (
+          <NoItems message={`Added ${entity} will be displayed here`} />
+        )}
       </section>
 
       <section className={styles.paginationSection}>
