@@ -45,7 +45,8 @@ function MovieDetailsPage () {
     <>
       <EntityDetailsPage
         heading={title}
-        imgSrc={poster || defaultPoster}
+        imgSrc={poster}
+        defaultImage={defaultPoster}
         sectionTitle={'Movie Definition'}
         actions={
           <NavLink

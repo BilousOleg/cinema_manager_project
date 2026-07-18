@@ -7,9 +7,10 @@ import NoItems from '../../components/NoItems';
 import styles from './EntityPage.module.sass';
 
 function EntityPage ({
-  entity,
   title,
+  defaultImage,
   items,
+  entity,
   addButtonText,
   onAdd,
   onEdit,
@@ -55,6 +56,7 @@ function EntityPage ({
                 entity={entity}
                 id={item.id}
                 image={getImage(item)}
+                defaultImage={defaultImage}
                 primaryText={getPrimaryText(item)}
                 secondaryText={getSecondaryText?.(item)}
                 onEdit={onEdit}

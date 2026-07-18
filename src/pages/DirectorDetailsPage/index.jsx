@@ -27,7 +27,8 @@ function DirectorDetailsPage () {
   return (
     <EntityDetailsPage
       heading={`${firstName} ${lastName}`}
-      imgSrc={photo || defaultPhoto}
+      imgSrc={photo}
+      defaultImage={defaultPhoto}
       sectionTitle={'Director Information'}
     >
       <DetailsListItem title={'Country'} body={country} />

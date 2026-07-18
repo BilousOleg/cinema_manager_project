@@ -25,13 +25,14 @@ function DirectorsPage () {
   return (
     <EntityPage
       title='Directors List'
+      defaultImage={defaultPhoto}
       items={directors}
       entity='directors'
       addButtonText='ADD DIRECTOR'
       onAdd={addDirector}
       // onEdit={}
       onDelete={deleteDirectorById}
-      getImage={d => d.photo || defaultPhoto}
+      getImage={d => d.photo}
       getPrimaryText={d => `${d.firstName} ${d.lastName}`}
     />
   );

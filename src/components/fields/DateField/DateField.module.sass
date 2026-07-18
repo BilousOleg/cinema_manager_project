@@ -1,4 +1,7 @@
+@use './../Field.module' as *
+
 .wrapper
+  position: relative
   width: 100%
 
 .input
@@ -19,3 +22,6 @@
   &::-webkit-calendar-picker-indicator
     cursor: pointer
     filter: invert(1)
+
+.error
+  @include error

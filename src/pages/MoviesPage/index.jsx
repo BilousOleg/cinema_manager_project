@@ -25,13 +25,14 @@ function MoviesPage () {
   return (
     <EntityPage
       title='Movies List'
+      defaultImage={defaultPoster}
       items={movies}
       entity={MOVIES}
       addButtonText='ADD MOVIE'
       onAdd={addMovie}
       // onEdit={}
       onDelete={deleteMovieById}
-      getImage={m => m.poster || defaultPoster}
+      getImage={m => m.poster}
       getPrimaryText={m => m.title}
       getSecondaryText={m => m.year}
     />

@@ -26,36 +26,29 @@ function StudioForm () {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      // validationSchema,
       enableReinitialize
     >
-      {({ dirty, isValid, isSubmitting }) => (
-        <Form className={styles.form}>
-          <TextField name='name' placeholder='Studio name' />
-          <TextField name='country' placeholder='Country' />
-          <TextField
-            name='founded'
-            placeholder='Year of foundation'
-            inputMode='numeric'
-            maxLength={4}
-            normalize={value => value.replace(/\D/g, '').slice(0, 4)}
-          />
-          <TextField name='logo' placeholder='Logo URL' />
-          <TextAreaField
-            name='description'
-            placeholder='Description...'
-            rows={6}
-          />
-          <button
-            type='submit'
-            className={styles.submitBtn}
-            disabled={!dirty || !isValid || isSubmitting}
-          >
-            <CheckIcon />
-            <span>SAVE</span>
-          </button>
-        </Form>
-      )}
+      <Form className={styles.form}>
+        <TextField name='name' placeholder='Studio name' />
+        <TextField name='country' placeholder='Country' />
+        <TextField
+          name='founded'
+          placeholder='Year of foundation'
+          inputMode='numeric'
+          maxLength={4}
+          normalize={value => value.replace(/\D/g, '').slice(0, 4)}
+        />
+        <TextField name='logo' placeholder='Logo URL' />
+        <TextAreaField
+          name='description'
+          placeholder='Description...'
+          rows={6}
+        />
+        <button type='submit' className={styles.submitBtn}>
+          <CheckIcon />
+          <span>SAVE</span>
+        </button>
+      </Form>
     </Formik>
   );
 }

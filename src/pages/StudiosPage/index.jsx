@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteStudio } from '../../store/slices/studiosSlice';
 import { openEntityForm } from '../../store/slices/serviceSlice';
-import defaultStudio from './../../assets/defaultImages/defaultStudio.png';
+import defaultLogo from './../../assets/defaultImages/defaultLogo.png';
 import EntityPage from '../EntityPage';
 import CONSTANTS from '../../constants';
 
@@ -25,13 +25,14 @@ function StudiosPage () {
   return (
     <EntityPage
       title='Studios List'
+      defaultImage={defaultLogo}
       items={studios}
       entity={STUDIOS}
       addButtonText='ADD STUDIO'
       onAdd={addStudio}
       // onEdit={}
       onDelete={deleteStudioById}
-      getImage={s => s.logo || defaultStudio}
+      getImage={s => s.logo}
       getPrimaryText={s => s.name}
       getSecondaryText={s => s.founded}
     />

@@ -12,7 +12,8 @@ function DirectorStep () {
       name='directorId'
       getValue={d => d.id}
       getTitle={d => `${d.firstName} ${d.lastName}`}
-      getImage={d => d.photo || defaultPhoto}
+      getImage={d => d.photo}
+      defaultImage={defaultPhoto}
     />
   );
 }

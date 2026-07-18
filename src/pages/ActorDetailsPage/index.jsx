@@ -26,7 +26,8 @@ function ActorDetailsPage () {
   return (
     <EntityDetailsPage
       heading={`${firstName} ${lastName}`}
-      imgSrc={photo || defaultPhoto}
+      imgSrc={photo}
+      defaultImage={defaultPhoto}
       sectionTitle={'Actor Information'}
     >
       <DetailsListItem title={'Country'} body={country} />
