@@ -8,6 +8,7 @@ function EntitySelectionList ({
   getValue,
   getTitle,
   getImage,
+  defaultImage,
 }) {
   return (
     <ul className={styles.selectionList}>
@@ -19,6 +20,7 @@ function EntitySelectionList ({
           value={getValue(item)}
           title={getTitle(item)}
           imgSrc={getImage(item)}
+          defaultImage={defaultImage}
         />
       ))}
     </ul>

@@ -25,13 +25,14 @@ function ActorsPage () {
   return (
     <EntityPage
       title='Actors List'
+      defaultImage={defaultPhoto}
       items={actors}
       entity={ACTORS}
       addButtonText='ADD ACTOR'
       onAdd={addActor}
       // onEdit={}
       onDelete={deleteActorById}
-      getImage={a => a.photo || defaultPhoto}
+      getImage={a => a.photo}
       getPrimaryText={a => `${a.firstName} ${a.lastName}`}
     />
   );

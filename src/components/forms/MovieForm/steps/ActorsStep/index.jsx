@@ -12,7 +12,8 @@ function ActorsStep () {
       name='actorIds'
       getValue={a => a.id}
       getTitle={a => `${a.firstName} ${a.lastName}`}
-      getImage={a => a.photo || defaultPhoto}
+      getImage={a => a.photo}
+      defaultImage={defaultPhoto}
     />
   );
 }

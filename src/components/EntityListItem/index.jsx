@@ -1,12 +1,14 @@
 import { NavLink } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Image from '../Image';
 import styles from './EntityListItem.module.sass';
 
 function EntityListItem ({
   entity,
   id,
   image,
+  defaultImage,
   primaryText,
   secondaryText,
   onEdit,
@@ -17,7 +19,7 @@ function EntityListItem ({
       <NavLink to={`/${entity}/${id}`}>
         <article className={styles.entityCard}>
           <div className={styles.content}>
-            <img src={image} alt={primaryText} />
+            <Image src={image} alt={primaryText} fallback={defaultImage} />
             <p className={styles.entityText}>
               {primaryText}
               {secondaryText && `, ${secondaryText}`}
