@@ -9,9 +9,6 @@ function EntityDetailsPage ({
   actions,
   children,
 }) {
-  const handleImageError = ({ currentTarget }) => {
-    currentTarget.src = defaultImage;
-  };
   return (
     <article className={styles.entityDetailsCard}>
       <h2>{heading}</h2>
