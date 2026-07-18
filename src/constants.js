@@ -47,6 +47,13 @@ const GENRES = [
 
 const CONSTANTS = {
   STATIC_IMAGES_PATH: '/staticImages/',
+  ROUTES: {
+    HOME: '/',
+    MOVIES: '/movies',
+    ACTORS: '/actors',
+    DIRECTORS: '/directors',
+    STUDIOS: '/studios',
+  },
   ENTITIES: {
     MOVIES: 'movies',
     ACTORS: 'actors',
