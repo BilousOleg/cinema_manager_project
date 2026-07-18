@@ -14,10 +14,7 @@ const initialValues = {
   biography: '',
 };
 
-function PersonForm ({
-  // validationSchema,
-  onSubmit,
-}) {
+function PersonForm ({ onSubmit }) {
   return (
     <Formik
       initialValues={initialValues}

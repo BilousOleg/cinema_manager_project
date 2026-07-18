@@ -1,25 +1,47 @@
-.entityCard
-  display: flex
-  justify-content: space-between
-  padding: 0.5rem 1rem
-  border: 1px solid #06867a
-  border-radius: 1.25rem
+.entityListItem
+  min-width: 0
 
-  .cardBlock
-    display: flex
-    align-items: center
-    gap: 1.2rem
+  a
+    display: block
 
-    img
-      $image-size: 2.5rem
-      width: $image-size
-      height: $image-size
-      border-radius: 50%
-      object-fit: cover
+    .entityCard
+      display: flex
+      align-items: center
+      justify-content: space-between
+      gap: 1rem
+      padding: 0.5rem 1rem
+      border: 1px solid #06867a
+      border-radius: 1.25rem
 
-    button
-      padding: 0
-      border: 0
-      background: transparent
-      color: inherit
-      cursor: pointer
+    .content
+      display: flex
+      align-items: center
+      gap: 1.2rem
+      flex: 1
+      min-width: 0
+
+      img 
+        $image-size: 2.5rem 
+        width: $image-size 
+        height: $image-size
+        border-radius: 50% 
+        object-fit: cover
+
+    .entityText
+      flex: 1
+      min-width: 0
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
+
+    .actions
+      display: flex
+      gap: 1.5rem
+      flex-shrink: 0
+
+      button
+        padding: 0
+        border: 0
+        background: transparent
+        color: inherit
+        cursor: pointer

@@ -26,7 +26,6 @@ function StudioForm () {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      // validationSchema,
       enableReinitialize
     >
       {({ dirty, isValid, isSubmitting }) => (

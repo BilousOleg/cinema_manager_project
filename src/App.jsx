@@ -17,8 +17,8 @@ import styles from './App.module.sass';
 
 function App () {
   return (
-    <div className={styles.appWrapper}>
-      <Router>
+    <Router>
+      <div className={styles.appWrapper}>
         <Header />
         <Navigation />
         <main className={styles.main}>
@@ -43,8 +43,8 @@ function App () {
         </main>
         <CinemaService />
         <Footer />
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 

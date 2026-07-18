@@ -13,18 +13,18 @@ function EntityListItem ({
   onDelete,
 }) {
   return (
-    <li>
+    <li className={styles.entityListItem}>
       <NavLink to={`/${entity}/${id}`}>
         <article className={styles.entityCard}>
-          <div className={styles.cardBlock}>
+          <div className={styles.content}>
             <img src={image} alt={primaryText} />
-            <p>
+            <p className={styles.entityText}>
               {primaryText}
               {secondaryText && `, ${secondaryText}`}
             </p>
           </div>
 
-          <div className={styles.cardBlock}>
+          <div className={styles.actions}>
             <button
               onClick={e => {
                 e.preventDefault();
