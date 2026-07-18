@@ -18,7 +18,7 @@ function StudioDetailsPage () {
     return <div>ERROR</div>;
   }
 
-  const { name, founded, country, logo } = studio;
+  const { name, founded, country, logo, description } = studio;
 
   const studioMovies = movies.filter(m => m.studioId === studioId);
 
@@ -40,6 +40,7 @@ function StudioDetailsPage () {
           />
         }
       />
+      <DetailsListItem title={'Description'} body={description} />
     </EntityDetailsPage>
   );
 }

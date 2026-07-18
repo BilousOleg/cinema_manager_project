@@ -1,3 +1,10 @@
+@mixin form
+  display: flex
+  flex-direction: column
+  align-items: center
+  gap: 1.5rem
+  height: 100%
+
 @mixin button
   display: flex
   align-items: center
@@ -8,9 +15,11 @@
   border-radius: 0.25rem
   cursor: pointer
 
-@mixin form
-  display: flex
-  flex-direction: column
-  align-items: center
-  gap: 1.5rem
-  height: 100%
+@mixin submit-button
+  @include button
+  background-color: #66bb6a
+
+  &:disabled
+    background: #5a5a5a
+    color: #b0b0b0
+    cursor: not-allowed

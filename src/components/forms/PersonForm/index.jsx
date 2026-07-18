@@ -1,8 +1,8 @@
 import { Formik, Form } from 'formik';
+import CheckIcon from '@mui/icons-material/Check';
 import TextField from '../../fields/TextField';
 import DateField from '../../fields/DateField';
 import TextAreaField from '../../fields/TextAreaField';
-import CheckIcon from '@mui/icons-material/Check';
 import styles from './PersonForm.module.sass';
 
 const initialValues = {
