@@ -2,16 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 
 const initialState = {
-  studios: [
-    {
-      id: uuidv4(),
-      name: 'Warner Bros. Pictures',
-      country: 'USA',
-      founded: 1923,
-      logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKjUsWV5bfTnNebkW8x-TWwAQK7dNtRlhzOe6_021VSQ&s=10',
-      description: 'An American company',
-    },
-  ],
+  studios: [],
 };
 
 const studiosSlice = createSlice({
