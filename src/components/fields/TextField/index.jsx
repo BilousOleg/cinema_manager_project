@@ -1,4 +1,4 @@
-import { Field } from 'formik';
+import { ErrorMessage, Field } from 'formik';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import styles from './TextField.module.sass';
 
@@ -30,6 +30,9 @@ function TextField ({ name, placeholder, normalize, ...inputProps }) {
               <BackspaceIcon />
             </button>
           )}
+          <ErrorMessage name={name}>
+            {msg => <span className={styles.error}>{msg}</span>}
+          </ErrorMessage>
         </div>
       )}
     </Field>

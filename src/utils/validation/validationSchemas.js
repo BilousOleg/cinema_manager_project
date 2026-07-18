@@ -1,14 +1,60 @@
 import * as yup from 'yup';
 
+const nameField = fieldName =>
+  yup
+    .string()
+    .trim()
+    .min(2, `${fieldName} must contain at least 2 characters`)
+    .max(50, `${fieldName} must contain at most 50 characters`)
+    .matches(/^[A-Za-z' -]+$/, `${fieldName} contains invalid characters`)
+    .required(`${fieldName} is required`);
+
+const countryField = yup
+  .string()
+  .trim()
+  .min(2, 'Country must contain at least 2 characters')
+  .max(50, 'Country must contain at most 50 characters')
+  .required('Country is required');
+
+const urlField = yup
+  .string()
+  .trim()
+  .test(
+    'url-or-empty',
+    'Enter a valid URL',
+    value => !value || yup.string().url().isValidSync(value)
+  );
+
+const longTextField = fieldName =>
+  yup
+    .string()
+    .trim()
+    .max(2000, `${fieldName} must contain at most 2000 characters`);
+
 export const MOVIE_VALIDATION_SCHEMA = yup.object();
 
 export const PERSON_VALIDATION_SCHEMA = yup.object({
-  firstName: yup
+  firstName: nameField('First name'),
+  lastName: nameField('Last name'),
+  birthDate: yup
     .string()
-    .trim()
-    .required('First name is required')
-    .min(MIN_LENGTH, `Minimum ${MIN_LENGTH} characters required`)
-    .max(MAX_LENGTH, `Maximum ${MAX_LENGTH} characters`),
+    .required('Birth date is required')
+    .test('not-in-future', 'Birth date cannot be in the future', value => {
+      if (!value) {
+        return true;
+      }
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const birthDate = new Date(value);
+      birthDate.setHours(0, 0, 0, 0);
+
+      return birthDate <= today;
+    }),
+  country: countryField,
+  photo: urlField,
+  biography: longTextField('Biography'),
 });
 
 export const STUDIO_VALIDATION_SCHEMA = yup.object();

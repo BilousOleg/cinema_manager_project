@@ -1,3 +1,5 @@
+@use './../Field.module' as *
+
 .wrapper
   position: relative
   width: 100%
@@ -19,6 +21,9 @@
   &:focus
     outline: none
     border-color: #8fc7ff
+
+.error
+  @include error
 
 .clearBtn
   position: absolute
