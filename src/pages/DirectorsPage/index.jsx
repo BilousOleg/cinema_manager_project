@@ -22,6 +22,10 @@ function DirectorsPage () {
     dispatch(openEntityForm({ entity: DIRECTORS }));
   };
 
+  const editDirector = id => {
+    dispatch(openEntityForm({ entity: DIRECTORS, selectedId: id }));
+  };
+
   return (
     <EntityPage
       title='Directors List'
@@ -30,7 +34,7 @@ function DirectorsPage () {
       entity='directors'
       addButtonText='ADD DIRECTOR'
       onAdd={addDirector}
-      // onEdit={}
+      onEdit={editDirector}
       onDelete={deleteDirectorById}
       getImage={d => d.photo}
       getPrimaryText={d => `${d.firstName} ${d.lastName}`}

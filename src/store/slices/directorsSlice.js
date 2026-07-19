@@ -15,6 +15,13 @@ const directorsSlice = createSlice({
         ...payload,
       });
     },
+    updateDirector: (state, { payload }) => {
+      const director = state.directors.find(d => d.id === payload.id);
+
+      if (director) {
+        Object.assign(director, payload);
+      }
+    },
     deleteDirector: (state, { payload }) => {
       state.directors = state.directors.filter(a => a.id !== payload);
     },
@@ -23,6 +30,6 @@ const directorsSlice = createSlice({
 
 const { reducer, actions } = directorsSlice;
 
-export const { addDirector, deleteDirector } = actions;
+export const { addDirector, updateDirector, deleteDirector } = actions;
 
 export default reducer;

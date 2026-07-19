@@ -72,6 +72,22 @@ const CONSTANTS = {
   ],
   GENRES,
   GENRES_BY_ID: Object.fromEntries(GENRES.map(genre => [genre.id, genre])),
+  EMPTY_FORM_VALUES: {
+    EMPTY_MOVIE: {
+      title: '',
+      genreId: '',
+      year: '',
+      poster: '',
+      trailer: '',
+      directorId: '',
+      actorIds: [],
+      studioId: '',
+      description: '',
+    },
+    EMPTY_ACTOR: {},
+    EMPTY_DIRECTOR: {},
+    EMPTY_STUDIO: {},
+  },
 };
 
 export default CONSTANTS;

@@ -31,7 +31,7 @@ function EntityListItem ({
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
-                onEdit?.(id);
+                onEdit(id);
               }}
             >
               <EditIcon />

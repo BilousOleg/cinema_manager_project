@@ -22,6 +22,10 @@ function StudiosPage () {
     dispatch(openEntityForm({ entity: STUDIOS }));
   };
 
+  const editStudio = id => {
+    dispatch(openEntityForm({ entity: STUDIOS, selectedId: id }));
+  };
+
   return (
     <EntityPage
       title='Studios List'
@@ -30,7 +34,7 @@ function StudiosPage () {
       entity={STUDIOS}
       addButtonText='ADD STUDIO'
       onAdd={addStudio}
-      // onEdit={}
+      onEdit={editStudio}
       onDelete={deleteStudioById}
       getImage={s => s.logo}
       getPrimaryText={s => s.name}

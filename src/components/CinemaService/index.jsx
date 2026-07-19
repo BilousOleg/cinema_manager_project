@@ -13,7 +13,7 @@ function CinemaService () {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const { isOpen, entity } = useSelector(state => state.service);
+  const { isOpen, entity, selectedId } = useSelector(state => state.service);
 
   const serviceClassNames = classNames(styles.serviceSection, {
     [styles.isOpen]: isOpen,
@@ -28,10 +28,10 @@ function CinemaService () {
       <h2 className={styles.serviceHeading}>Cinema service</h2>
       <div className={styles.serviceBody}>
         {!entity && <div className={styles.selectAction}>Select action...</div>}
-        {entity === 'movies' && <MovieForm />}
-        {entity === 'actors' && <ActorForm />}
-        {entity === 'directors' && <DirectorForm />}
-        {entity === 'studios' && <StudioForm />}
+        {entity === 'movies' && <MovieForm selectedId={selectedId} />}
+        {entity === 'actors' && <ActorForm selectedId={selectedId} />}
+        {entity === 'directors' && <DirectorForm selectedId={selectedId} />}
+        {entity === 'studios' && <StudioForm selectedId={selectedId} />}
       </div>
     </aside>
   );

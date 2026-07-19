@@ -12,9 +12,19 @@ const moviesSlice = createSlice({
     addMovie: (state, { payload }) => {
       state.movies.push({
         id: uuidv4(),
-        genreId: Number(payload.genreId),
         ...payload,
+        genreId: Number(payload.genreId),
       });
+    },
+    updateMovie (state, { payload }) {
+      const movie = state.movies.find(m => m.id === payload.id);
+
+      if (movie) {
+        Object.assign(movie, {
+          ...payload,
+          genreId: Number(payload.genreId),
+        });
+      }
     },
     deleteMovie: (state, { payload }) => {
       state.movies = state.movies.filter(m => m.id !== payload);
@@ -24,6 +34,6 @@ const moviesSlice = createSlice({
 
 const { reducer, actions } = moviesSlice;
 
-export const { addMovie, deleteMovie } = actions;
+export const { addMovie, updateMovie, deleteMovie } = actions;
 
 export default reducer;

@@ -43,7 +43,7 @@ function DirectorDetailsPage () {
           />
         }
       />
-      <DetailsListItem title={'Biography'} body={biography} />
+      <DetailsListItem title={'Biography'} body={biography || '—'} />
     </EntityDetailsPage>
   );
 }

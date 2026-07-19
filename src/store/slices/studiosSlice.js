@@ -15,6 +15,13 @@ const studiosSlice = createSlice({
         ...payload,
       });
     },
+    updateStudio: (state, { payload }) => {
+      const studio = state.studios.find(s => s.id === payload.id);
+
+      if (studio) {
+        Object.assign(studio, payload);
+      }
+    },
     deleteStudio: (state, { payload }) => {
       state.studios = state.studios.filter(s => s.id !== payload);
     },
@@ -23,6 +30,6 @@ const studiosSlice = createSlice({
 
 const { reducer, actions } = studiosSlice;
 
-export const { addStudio, deleteStudio } = actions;
+export const { addStudio, updateStudio, deleteStudio } = actions;
 
 export default reducer;

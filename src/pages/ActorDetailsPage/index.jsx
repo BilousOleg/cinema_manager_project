@@ -42,7 +42,7 @@ function ActorDetailsPage () {
           />
         }
       />
-      <DetailsListItem title={'Biography'} body={biography} />
+      <DetailsListItem title={'Biography'} body={biography || '—'} />
     </EntityDetailsPage>
   );
 }

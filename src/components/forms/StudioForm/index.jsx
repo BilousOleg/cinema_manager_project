@@ -1,31 +1,43 @@
 import { Formik, Form } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CheckIcon from '@mui/icons-material/Check';
 import { STUDIO_VALIDATION_SCHEMA } from '../../../utils/validation/validationSchemas';
+import { addStudio, updateStudio } from '../../../store/slices/studiosSlice';
+import { closeService } from '../../../store/slices/serviceSlice';
 import TextField from '../../fields/TextField';
 import TextAreaField from '../../fields/TextAreaField';
-import { addStudio } from '../../../store/slices/studiosSlice';
 import styles from './StudioForm.module.sass';
+import CONSTANTS from '../../../constants';
 
-const initialValues = {
-  name: '',
-  country: '',
-  founded: '',
-  logo: '',
-  description: '',
-};
+const {
+  EMPTY_FORM_VALUES: { EMPTY_STUDIO },
+} = CONSTANTS;
 
-function StudioForm () {
+function StudioForm ({ selectedId }) {
   const dispatch = useDispatch();
 
+  const { studios } = useSelector(state => state.studios);
+  const currentStudio = selectedId
+    ? studios.find(s => s.id === selectedId)
+    : null;
+
+  const formInitialValues = currentStudio
+    ? {
+        ...currentStudio,
+        genreId: String(currentStudio.genreId),
+      }
+    : EMPTY_STUDIO;
+
   const handleSubmit = (values, { resetForm }) => {
-    dispatch(addStudio(values));
+    const action = selectedId ? updateStudio : addStudio;
+    dispatch(action(values));
     resetForm();
+    dispatch(closeService());
   };
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={formInitialValues}
       onSubmit={handleSubmit}
       validationSchema={STUDIO_VALIDATION_SCHEMA}
       enableReinitialize

@@ -1,16 +1,38 @@
-import { useDispatch } from 'react-redux';
-import { addActor } from '../../../store/slices/actorsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addActor, updateActor } from '../../../store/slices/actorsSlice';
+import { closeService } from '../../../store/slices/serviceSlice';
 import PersonForm from '../PersonForm';
+import CONSTANTS from '../../../constants';
 
-function ActorForm () {
+const {
+  EMPTY_FORM_VALUES: { EMPTY_ACTOR },
+} = CONSTANTS;
+
+function ActorForm ({ selectedId }) {
   const dispatch = useDispatch();
 
+  const { actors } = useSelector(state => state.actors);
+  const currentDirector = selectedId
+    ? actors.find(a => a.id === selectedId)
+    : null;
+
+  const formInitialValues = currentDirector
+    ? {
+        ...currentDirector,
+        genreId: String(currentDirector.genreId),
+      }
+    : EMPTY_ACTOR;
+
   const handleSubmit = (values, { resetForm }) => {
-    dispatch(addActor(values));
+    const action = selectedId ? updateActor : addActor;
+    dispatch(action(values));
     resetForm();
+    dispatch(closeService());
   };
 
-  return <PersonForm onSubmit={handleSubmit} />;
+  return (
+    <PersonForm initialValues={formInitialValues} onSubmit={handleSubmit} />
+  );
 }
 
 export default ActorForm;

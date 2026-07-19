@@ -22,6 +22,10 @@ function MoviesPage () {
     dispatch(openEntityForm({ entity: MOVIES }));
   };
 
+  const editMovie = id => {
+    dispatch(openEntityForm({ entity: MOVIES, selectedId: id }));
+  };
+
   return (
     <EntityPage
       title='Movies List'
@@ -30,7 +34,7 @@ function MoviesPage () {
       entity={MOVIES}
       addButtonText='ADD MOVIE'
       onAdd={addMovie}
-      // onEdit={}
+      onEdit={editMovie}
       onDelete={deleteMovieById}
       getImage={m => m.poster}
       getPrimaryText={m => m.title}

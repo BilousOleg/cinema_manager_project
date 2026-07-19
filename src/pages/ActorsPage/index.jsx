@@ -22,6 +22,10 @@ function ActorsPage () {
     dispatch(openEntityForm({ entity: ACTORS }));
   };
 
+  const editActor = id => {
+    dispatch(openEntityForm({ entity: ACTORS, selectedId: id }));
+  };
+
   return (
     <EntityPage
       title='Actors List'
@@ -30,7 +34,7 @@ function ActorsPage () {
       entity={ACTORS}
       addButtonText='ADD ACTOR'
       onAdd={addActor}
-      // onEdit={}
+      onEdit={editActor}
       onDelete={deleteActorById}
       getImage={a => a.photo}
       getPrimaryText={a => `${a.firstName} ${a.lastName}`}

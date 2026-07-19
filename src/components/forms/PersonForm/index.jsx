@@ -6,16 +6,7 @@ import DateField from '../../fields/DateField';
 import TextAreaField from '../../fields/TextAreaField';
 import styles from './PersonForm.module.sass';
 
-const initialValues = {
-  firstName: '',
-  lastName: '',
-  birthDate: '',
-  country: '',
-  photo: '',
-  biography: '',
-};
-
-function PersonForm ({ onSubmit }) {
+function PersonForm ({ initialValues, onSubmit }) {
   return (
     <Formik
       initialValues={initialValues}

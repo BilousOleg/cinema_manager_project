@@ -4,7 +4,7 @@ function DetailsListItem ({ title, body }) {
   return (
     <li>
       <p>
-        {title}: <span className={styles.infoContainer}>{body}</span>
+        {title}: <span className={styles.infoContainer}>{body ?? ''}</span>
       </p>
     </li>
   );
