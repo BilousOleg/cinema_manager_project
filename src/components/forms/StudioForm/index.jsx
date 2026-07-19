@@ -1,6 +1,7 @@
 import { Formik, Form } from 'formik';
 import { useDispatch } from 'react-redux';
 import CheckIcon from '@mui/icons-material/Check';
+import { STUDIO_VALIDATION_SCHEMA } from '../../../utils/validation/validationSchemas';
 import TextField from '../../fields/TextField';
 import TextAreaField from '../../fields/TextAreaField';
 import { addStudio } from '../../../store/slices/studiosSlice';
@@ -26,6 +27,7 @@ function StudioForm () {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
+      validationSchema={STUDIO_VALIDATION_SCHEMA}
       enableReinitialize
     >
       <Form className={styles.form}>

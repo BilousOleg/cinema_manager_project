@@ -16,6 +16,27 @@ const countryField = yup
   .max(50, 'Country must contain at most 50 characters')
   .required('Country is required');
 
+const yearField = (label, minYear) =>
+  yup
+    .string()
+    .required(`${label} is required`)
+    .length(4, `${label} must consist of 4 digits`)
+    .test(
+      'year-range',
+      `${label} must be between ${minYear} and ${new Date().getFullYear()}`,
+      value => {
+        if (!value) return true;
+
+        const year = Number(value);
+
+        return (
+          Number.isInteger(year) &&
+          year >= minYear &&
+          year <= new Date().getFullYear()
+        );
+      }
+    );
+
 const urlField = yup
   .string()
   .trim()
@@ -57,4 +78,10 @@ export const PERSON_VALIDATION_SCHEMA = yup.object({
   biography: longTextField('Biography'),
 });
 
-export const STUDIO_VALIDATION_SCHEMA = yup.object();
+export const STUDIO_VALIDATION_SCHEMA = yup.object({
+  name: nameField('Name'),
+  country: countryField,
+  founded: yearField('Foundation year', 1800),
+  logo: urlField,
+  description: longTextField('Description'),
+});
