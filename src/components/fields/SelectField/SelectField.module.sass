@@ -1,41 +1,46 @@
+@use './../Field.module' as *
+
 .wrapper
   position: relative
   width: 100%
 
-.select
-  width: 100%
-  height: 2.75rem
-  padding: 0 2.5rem 0 0.9rem
-  border: 1px solid #565656
-  border-radius: 0.3rem
-  background: #2f2f2f
-  color: #fff
-  font-size: 0.95rem
-  transition: border-color 0.2s
-  cursor: pointer
-  appearance: none
-  -webkit-appearance: none
-  -moz-appearance: none
-
-  &:focus
-    outline: none
-    border-color: #8fc7ff
-
-  option
+  .select
+    width: 100%
+    height: 2.75rem
+    padding: 0 2.5rem 0 0.9rem
+    border: 1px solid #565656
+    border-radius: 0.3rem
     background: #2f2f2f
     color: #fff
+    font-size: 0.95rem
+    transition: border-color 0.2s
+    cursor: pointer
+    appearance: none
+    -webkit-appearance: none
+    -moz-appearance: none
 
-  option:disabled
-    color: #9b9b9b
+    &:focus
+      outline: none
+      border-color: #8fc7ff
 
-.wrapper::after
-  content: ''
-  position: absolute
-  top: 50%
-  right: 0.9rem
-  width: 0.5rem
-  height: 0.5rem
-  border-right: 2px solid #a5a5a5
-  border-bottom: 2px solid #a5a5a5
-  transform: translateY(-70%) rotate(45deg)
-  pointer-events: none
+    option
+      background: #2f2f2f
+      color: #fff
+
+    option:disabled
+      color: #9b9b9b
+
+  .error
+    @include error
+
+  &::after
+    content: ''
+    position: absolute
+    top: 50%
+    right: 0.9rem
+    width: 0.5rem
+    height: 0.5rem
+    border-right: 2px solid #a5a5a5
+    border-bottom: 2px solid #a5a5a5
+    transform: translateY(-70%) rotate(45deg)
+    pointer-events: none

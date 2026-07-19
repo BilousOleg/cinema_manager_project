@@ -1,4 +1,4 @@
-import { Field } from 'formik';
+import { ErrorMessage, Field } from 'formik';
 import styles from './SelectField.module.sass';
 
 function SelectField ({
@@ -23,6 +23,10 @@ function SelectField ({
               </option>
             ))}
           </select>
+
+          <ErrorMessage name={name}>
+            {msg => <span className={styles.error}>{msg}</span>}
+          </ErrorMessage>
         </div>
       )}
     </Field>

@@ -5,11 +5,11 @@ import ClearAllIcon from '@mui/icons-material/ClearAll';
 import CheckIcon from '@mui/icons-material/Check';
 import styles from './MovieFormActions.module.sass';
 
-function MovieFormActions ({ step, stepsCount, setStep }) {
+function MovieFormActions ({ step, steps, setStep }) {
   const isFirstStep = step === 0;
-  const isLastStep = step === stepsCount - 1;
+  const isLastStep = step === steps.length - 1;
 
-  const { submitForm, resetForm, dirty, isValid, isSubmitting } =
+  const { submitForm, resetForm, validateForm, setTouched } =
     useFormikContext();
 
   const handlePrevious = () => {
@@ -18,10 +18,17 @@ function MovieFormActions ({ step, stepsCount, setStep }) {
     }
   };
 
-  const handleNext = () => {
-    if (!isLastStep) {
-      setStep(prev => prev + 1);
+  const handleNext = async () => {
+    const errors = await validateForm();
+    const currentFields = steps[step].fields;
+    const hasErrors = currentFields.some(field => errors[field]);
+
+    if (hasErrors) {
+      setTouched(Object.fromEntries(currentFields.map(field => [field, true])));
+
+      return;
     }
+    setStep(step + 1);
   };
 
   const handleReset = () => {

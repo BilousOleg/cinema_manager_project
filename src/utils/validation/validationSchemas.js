@@ -1,11 +1,11 @@
 import * as yup from 'yup';
 
-const nameField = fieldName =>
+const nameField = (fieldName, minChars, maxChars) =>
   yup
     .string()
     .trim()
-    .min(2, `${fieldName} must contain at least 2 characters`)
-    .max(50, `${fieldName} must contain at most 50 characters`)
+    .min(minChars, `${fieldName} must contain at least ${minChars} characters`)
+    .max(maxChars, `${fieldName} must contain at most ${maxChars} characters`)
     .matches(/^[A-Za-z' -]+$/, `${fieldName} contains invalid characters`)
     .required(`${fieldName} is required`);
 
@@ -52,11 +52,33 @@ const longTextField = fieldName =>
     .trim()
     .max(2000, `${fieldName} must contain at most 2000 characters`);
 
-export const MOVIE_VALIDATION_SCHEMA = yup.object();
+export const MOVIE_VALIDATION_SCHEMA = yup.object({
+  title: nameField('Title', 1, 100),
+  genreId: yup.number().required('Genre is required'),
+  year: yearField('Release year', 1800),
+  poster: urlField,
+  trailer: yup
+    .string()
+    .trim()
+    .test(
+      'youtube-url-or-empty',
+      'Enter a valid YouTube URL',
+      value =>
+        !value ||
+        /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//.test(value)
+    ),
+  directorId: yup.string().required('Director is required'),
+  actorIds: yup
+    .array()
+    .min(1, 'Select at least one actor')
+    .required('Select at least one actor'),
+  studioId: yup.string().required('Studio is required'),
+  description: longTextField('Description'),
+});
 
 export const PERSON_VALIDATION_SCHEMA = yup.object({
-  firstName: nameField('First name'),
-  lastName: nameField('Last name'),
+  firstName: nameField('First name', 2, 50),
+  lastName: nameField('Last name', 2, 50),
   birthDate: yup
     .string()
     .required('Birth date is required')
@@ -64,7 +86,6 @@ export const PERSON_VALIDATION_SCHEMA = yup.object({
       if (!value) {
         return true;
       }
-
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
@@ -79,7 +100,7 @@ export const PERSON_VALIDATION_SCHEMA = yup.object({
 });
 
 export const STUDIO_VALIDATION_SCHEMA = yup.object({
-  name: nameField('Name'),
+  name: nameField('Name', 2, 50),
   country: countryField,
   founded: yearField('Foundation year', 1800),
   logo: urlField,

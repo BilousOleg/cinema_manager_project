@@ -12,6 +12,7 @@ const moviesSlice = createSlice({
     addMovie: (state, { payload }) => {
       state.movies.push({
         id: uuidv4(),
+        genreId: Number(payload.genreId),
         ...payload,
       });
     },

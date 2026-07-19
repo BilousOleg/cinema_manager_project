@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import defaultPhoto from './../../../../../assets/defaultImages/defaultPhoto.png';
-import EntitySelectionList from '../../../../EntitySelectionList';
+import EntitySelectionList from '../../../../fields/EntitySelectionList';
 
 function DirectorStep () {
   const { directors } = useSelector(state => state.directors);

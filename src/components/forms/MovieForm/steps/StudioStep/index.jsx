@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import defaultLogo from './../../../../../assets/defaultImages/defaultLogo.png';
-import EntitySelectionList from '../../../../EntitySelectionList';
+import EntitySelectionList from '../../../../fields/EntitySelectionList';
 
 function StudioStep () {
   const { studios } = useSelector(state => state.studios);

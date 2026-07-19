@@ -60,6 +60,16 @@ const CONSTANTS = {
     DIRECTORS: 'directors',
     STUDIOS: 'studios',
   },
+  MOVIE_FORM_STEPS: [
+    {
+      label: 'General',
+      fields: ['title', 'genreId', 'year', 'poster', 'trailer'],
+    },
+    { label: 'Director', fields: ['directorId'] },
+    { label: 'Actors', fields: ['actorIds'] },
+    { label: 'Studio', fields: ['studioId'] },
+    { label: 'Storyline', fields: ['description'] },
+  ],
   GENRES,
   GENRES_BY_ID: Object.fromEntries(GENRES.map(genre => [genre.id, genre])),
 };

@@ -1,5 +1,5 @@
 import { Field } from 'formik';
-import Image from '../../Image';
+import Image from '../../../Image';
 import styles from './EntitySelectionItem.module.sass';
 
 function EntitySelectionItem ({

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Formik } from 'formik';
 import { addMovie } from '../../../store/slices/moviesSlice';
+import { MOVIE_VALIDATION_SCHEMA } from '../../../utils/validation/validationSchemas';
 import MovieStepper from './MovieStepper';
 import GeneralStep from './steps/GeneralStep';
 import DirectorStep from './steps/DirectorStep';
@@ -10,6 +11,9 @@ import StudioStep from './steps/StudioStep';
 import StorylineStep from './steps/StorylineStep';
 import MovieFormActions from './MovieFormActions';
 import styles from './MovieForm.module.sass';
+import CONSTANTS from '../../../constants';
+
+const { MOVIE_FORM_STEPS } = CONSTANTS;
 
 const initialValues = {
   title: '',
@@ -17,21 +21,14 @@ const initialValues = {
   year: '',
   poster: '',
   trailer: '',
-  directorId: null,
+  directorId: '',
   actorIds: [],
-  studioId: null,
+  studioId: '',
   description: '',
 };
 
 function MovieForm () {
   const [step, setStep] = useState(0);
-  const steps = [
-    { label: 'General' },
-    { label: 'Director' },
-    { label: 'Actors' },
-    { label: 'Studio' },
-    { label: 'Storyline' },
-  ];
 
   const dispatch = useDispatch();
 
@@ -45,11 +42,12 @@ function MovieForm () {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
+      validationSchema={MOVIE_VALIDATION_SCHEMA}
       enableReinitialize
     >
       {() => (
         <Form className={styles.form}>
-          <MovieStepper step={step} steps={steps} />
+          <MovieStepper step={step} steps={MOVIE_FORM_STEPS} />
 
           {step === 0 && <GeneralStep />}
           {step === 1 && <DirectorStep />}
@@ -59,7 +57,7 @@ function MovieForm () {
 
           <MovieFormActions
             step={step}
-            stepsCount={steps.length}
+            steps={MOVIE_FORM_STEPS}
             setStep={setStep}
           />
         </Form>

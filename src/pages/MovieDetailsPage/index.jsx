@@ -96,7 +96,7 @@ function MovieDetailsPage () {
             )
           }
         />
-        <DetailsListItem title={'Description'} body={description} />
+        <DetailsListItem title={'Description'} body={description || '—'} />
       </EntityDetailsPage>
     </>
   );
