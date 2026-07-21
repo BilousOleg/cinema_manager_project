@@ -2,21 +2,22 @@
 
 html 
   font-size: 16px 
-  font-family: sans-serif 
+  font-family: sans-serif
+  color: var(--color-text-primary)
   
 .appWrapper 
   display: grid 
   grid-template-columns: 240px 1fr 450px 
   grid-template-rows: 60px 1fr auto
   grid-template-areas: "header header header" "nav main sidebar" "footer footer footer" 
-  min-height: 100vh 
-  max-height: 100vh 
+  height: 100vh  
   gap: v.$main-gap 
-  background-color: #616161 
+  background-color: var(--color-bg-page)
   
   .main 
     grid-area: main 
-    min-width: 0 
+    min-width: 0
+    background-color: var(--color-bg-primary)
     
     h2 
       font-size: 2rem 

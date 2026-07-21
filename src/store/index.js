@@ -4,6 +4,7 @@ import actorsReducer from './slices/actorsSlice';
 import directorsReducer from './slices/directorsSlice';
 import studiosReducer from './slices/studiosSlice';
 import serviceReducer from './slices/serviceSlice';
+import themeReducer from './slices/themeSlice';
 
 const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ const store = configureStore({
     directors: directorsReducer,
     studios: studiosReducer,
     service: serviceReducer,
+    theme: themeReducer,
   },
 });
 

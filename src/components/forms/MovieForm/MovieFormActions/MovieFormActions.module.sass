@@ -1,3 +1,4 @@
+@use './../../../../assets/_colors' as c
 @use '../../Form.module' as *
 
 .actionsBlock
@@ -13,12 +14,12 @@
 
   .nextBtn
     @include button
-    background-color: #8fcaf8
+    background-color: c.$color-border-focus
 
   .submitBtn
     @include submit-button
 
   .resetBtn
     @include button
-    background-color: #f44236
-    color: #ffffff
+    background-color: c.$color-error
+    color: inherit

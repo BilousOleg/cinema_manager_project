@@ -1,3 +1,5 @@
+import { useLayoutEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import MoviesPage from './pages/MoviesPage';
@@ -17,6 +19,12 @@ const {
 } = CONSTANTS;
 
 function App () {
+  const { theme } = useSelector(state => state.theme);
+
+  useLayoutEffect(() => {
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
+
   return (
     <Router>
       <Routes>

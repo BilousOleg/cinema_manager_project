@@ -1,3 +1,5 @@
+@use './../../assets/_colors' as c
+
 @mixin field
   width: 100%
   height: 2.75rem
@@ -5,19 +7,19 @@
   font: inherit
   font-size: 0.95rem
   line-height: 1.4
-  border: 1px solid #565656
+  border: 1px solid var(--color-border-muted)
   border-radius: 0.3rem
-  background: #2f2f2f
-  color: #ffffff
+  background: var(--color-bg-secondary)
+  color: inherit
   transition: border-color 0.2s
   user-select: none
 
   &:focus
     outline: none
-    border-color: #8fc7ff
+    border-color: c.$color-border-focus
   
   &.invalid
-    border-color: #f44336
+    border-color: c.$color-error
 
 @mixin error
   position: absolute
@@ -25,4 +27,4 @@
   left: 0
   font-size: 0.75rem
   line-height: 1.2
-  color: #f44336
+  color: c.$color-error

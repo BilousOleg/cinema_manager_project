@@ -9,7 +9,7 @@
   padding-right: 2.5rem
 
   &::placeholder
-    color: #9b9b9b
+    color: var(--color-text-muted)
 
 .error
   @include error
@@ -26,13 +26,10 @@
   padding: 0
   border: none
   background: transparent
-  color: #a5a5a5
+  color: var(--color-text-muted)
   transform: translateY(-50%)
   transition: color 0.2s
   cursor: pointer
-
-  &:hover
-    color: #ffffff
 
   svg
     font-size: 1.3rem

@@ -1,3 +1,5 @@
+@use './../../assets/_colors' as c
+
 @mixin form
   display: flex
   flex-direction: column
@@ -13,8 +15,9 @@
   text-transform: uppercase
   border: none
   border-radius: 0.25rem
+  color: var(--color-text-secondary)
   cursor: pointer
 
 @mixin submit-button
   @include button
-  background-color: #66bb6a
+  background-color: c.$color-success
