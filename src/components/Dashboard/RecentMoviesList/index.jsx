@@ -4,7 +4,6 @@ import NoItems from '../../NoItems';
 import styles from './RecentMoviesList.module.sass';
 
 function RecentMoviesList ({ movies }) {
-  console.log(defaultPoster);
   return movies.length ? (
     <ul className={styles.recentFilmList}>
       {movies.map(m => (
