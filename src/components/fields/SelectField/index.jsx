@@ -1,4 +1,5 @@
 import { ErrorMessage, Field } from 'formik';
+import classNames from 'classnames';
 import styles from './SelectField.module.sass';
 
 function SelectField ({
@@ -10,9 +11,14 @@ function SelectField ({
 }) {
   return (
     <Field name={name}>
-      {({ field }) => (
+      {({ field, meta }) => (
         <div className={styles.wrapper}>
-          <select {...field} className={styles.select}>
+          <select
+            {...field}
+            className={classNames(styles.select, {
+              [styles.invalid]: meta.touched && meta.error,
+            })}
+          >
             <option value='' disabled>
               {placeholder}
             </option>

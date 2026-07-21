@@ -84,9 +84,29 @@ const CONSTANTS = {
       studioId: '',
       description: '',
     },
-    EMPTY_ACTOR: {},
-    EMPTY_DIRECTOR: {},
-    EMPTY_STUDIO: {},
+    EMPTY_ACTOR: {
+      firstName: '',
+      lastName: '',
+      birthDate: '',
+      country: '',
+      photo: '',
+      biography: '',
+    },
+    EMPTY_DIRECTOR: {
+      firstName: '',
+      lastName: '',
+      birthDate: '',
+      country: '',
+      photo: '',
+      biography: '',
+    },
+    EMPTY_STUDIO: {
+      name: '',
+      country: '',
+      founded: '',
+      logo: '',
+      description: '',
+    },
   },
 };
 

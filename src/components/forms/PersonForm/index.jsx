@@ -20,7 +20,7 @@ function PersonForm ({ initialValues, onSubmit }) {
         <DateField name='birthDate' />
         <TextField name='country' placeholder='Country' />
         <TextField name='photo' placeholder='Photo URL' />
-        <TextAreaField name='biography' placeholder='Biography...' rows={6} />
+        <TextAreaField name='biography' placeholder='Biography...' />
         <button type='submit' className={styles.submitBtn}>
           <CheckIcon />
           <span>SAVE</span>

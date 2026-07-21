@@ -1,22 +1,24 @@
 import { ErrorMessage, Field } from 'formik';
+import classNames from 'classnames';
 import BackspaceIcon from '@mui/icons-material/Backspace';
 import styles from './TextField.module.sass';
 
-function TextField ({ name, placeholder, normalize, ...inputProps }) {
+function TextField ({ name, placeholder, normalize, ...props }) {
   return (
     <Field name={name}>
-      {({ field, form }) => (
+      {({ field, meta, form }) => (
         <div className={styles.wrapper}>
           <input
             {...field}
-            {...inputProps}
+            {...props}
             placeholder={placeholder}
-            className={styles.input}
+            className={classNames(styles.input, {
+              [styles.invalid]: meta.touched && meta.error,
+            })}
             onChange={e => {
               const value = normalize
                 ? normalize(e.target.value)
                 : e.target.value;
-
               form.setFieldValue(name, value);
             }}
           />

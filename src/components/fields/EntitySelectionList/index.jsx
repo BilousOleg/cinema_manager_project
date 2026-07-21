@@ -1,4 +1,5 @@
-import { ErrorMessage } from 'formik';
+import { ErrorMessage, useField } from 'formik';
+import classNames from 'classnames';
 import EntitySelectionItem from './EntitySelectionItem';
 import styles from './EntitySelectionList.module.sass';
 
@@ -10,10 +11,24 @@ function EntitySelectionList ({
   getTitle,
   getImage,
   defaultImage,
+  onAdd,
+  addButtonText,
 }) {
+  const [, meta] = useField(name);
+
   return (
     <div className={styles.wrapper}>
-      <ul className={styles.selectionList}>
+      {onAdd && (
+        <button type='button' className={styles.addBtn} onClick={onAdd}>
+          + {addButtonText}
+        </button>
+      )}
+
+      <ul
+        className={classNames(styles.selectionList, {
+          [styles.invalid]: meta.touched && meta.error,
+        })}
+      >
         {items.map(item => (
           <EntitySelectionItem
             key={getValue(item)}

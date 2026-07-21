@@ -5,25 +5,15 @@
   width: 100%
 
   .textarea
-    width: 100%
+    @include field
     height: 10rem
-    padding: 0.75rem 0.9rem
-    border: 1px solid #565656
-    border-radius: 0.3rem
-    background: #2f2f2f
-    color: #ffffff
-    font: inherit
-    line-height: 1.4
+    padding-top: 0.75rem
+    padding-bottom: 0.75rem
     resize: none
     overflow-y: auto
-    transition: border-color 0.2s
 
     &::placeholder
       color: #9b9b9b
-
-    &:focus
-      outline: none
-      border-color: #8fc7ff
 
   .error
     @include error

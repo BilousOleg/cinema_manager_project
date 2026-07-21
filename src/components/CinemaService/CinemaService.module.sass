@@ -1,29 +1,29 @@
-@use './../../assets/_vars' as v
-$heading-font-size: 1.125rem
-$main-padding: 1rem
+@use './../../assets/_vars' as v 
+$heading-font-size: 1.125rem 
+$main-padding: 1rem 
 
-.serviceSection
-  display: flex
-  flex-direction: column
-  grid-area: sidebar
+.serviceSection 
+  display: flex 
+  flex-direction: column 
+  grid-area: sidebar 
   max-height: calc($main-padding * 2 + $heading-font-size)
-  margin-right: v.$main-gap
-  padding: $main-padding 1.5rem
-  background-color: #262626
-  transition: max-height 0.3s ease
-  overflow: hidden
-  color: #ffffff
-
-  .serviceHeading
-    padding-bottom: $main-padding
-    font-size: $heading-font-size
-    text-align: center
-
-  .serviceBody
+  margin-right: v.$main-gap 
+  padding: $main-padding 1.5rem 
+  background-color: #262626 
+  transition: max-height 0.3s ease 
+  overflow: hidden 
+  color: #ffffff 
+   
+  .serviceHeading 
+    padding-bottom: $main-padding 
+    font-size: $heading-font-size 
+    text-align: center 
+    
+  .serviceBody 
     height: 100%
-
-    .selectAction
-      text-align: center
-
-.isOpen
+  
+    .selectAction 
+      text-align: center 
+    
+.isOpen 
   max-height: 100%
