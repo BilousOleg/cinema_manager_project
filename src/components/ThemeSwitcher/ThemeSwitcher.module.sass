@@ -1,16 +1,17 @@
-.themeSwitcher
-  transition: 0.2s
+.themeSwitcherBtn
+  transition: .2s
 
-.dark
-  color: #ffd54f
-  background-color: var(--color-bg-secondary)
+  &:global(.MuiIconButton-root)
+    &.dark
+      color: #ffd54f
+      background-color: var(--color-bg-secondary)
 
-  &:hover
-    background-color: var(--color-border-primary)
+      &:hover
+        background-color: var(--color-border-primary)
 
-.light
-  color: #333333
-  background-color: #cccccc
+    &.light
+      color: #333
+      background-color: #ccc
 
-  &:hover
-    background-color: #dddddd
+      &:hover
+        background-color: #ddd
