@@ -2,7 +2,10 @@ import { Formik, Form } from 'formik';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckIcon from '@mui/icons-material/Check';
 import { STUDIO_VALIDATION_SCHEMA } from '../../../utils/validation/validationSchemas';
-import { addStudio, updateStudio } from '../../../store/slices/studiosSlice';
+import {
+  addStudioThunk,
+  updateStudioThunk,
+} from '../../../store/slices/studiosSlice';
 import { closeService } from '../../../store/slices/serviceSlice';
 import TextField from '../../fields/TextField';
 import TextAreaField from '../../fields/TextAreaField';
@@ -29,7 +32,7 @@ function StudioForm ({ selectedId }) {
     : EMPTY_STUDIO;
 
   const handleSubmit = (values, { resetForm }) => {
-    const action = selectedId ? updateStudio : addStudio;
+    const action = selectedId ? updateStudioThunk : addStudioThunk;
     dispatch(action(values));
     resetForm();
     dispatch(closeService());

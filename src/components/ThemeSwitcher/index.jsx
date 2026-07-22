@@ -5,6 +5,11 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import classNames from 'classnames';
 import { toggleTheme } from '../../store/slices/themeSlice';
 import styles from './ThemeSwitcher.module.sass';
+import CONSTANTS from '../../constants';
+
+const {
+  THEMES: { DARK, LIGHT },
+} = CONSTANTS;
 
 function ThemeSwitcher () {
   const theme = useSelector(state => state.theme.theme);
@@ -14,8 +19,8 @@ function ThemeSwitcher () {
     <IconButton
       onClick={() => dispatch(toggleTheme())}
       className={classNames(styles.themeSwitcherBtn, {
-        [styles.dark]: theme === 'dark',
-        [styles.light]: theme === 'light',
+        [styles.dark]: theme === DARK,
+        [styles.light]: theme === LIGHT,
       })}
     >
       {theme === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}

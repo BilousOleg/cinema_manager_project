@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteDirector } from '../../store/slices/directorsSlice';
+import { deleteDirectorThunk } from '../../store/slices/directorsSlice';
 import { openEntityForm } from '../../store/slices/serviceSlice';
 import defaultPhoto from './../../assets/defaultImages/defaultPhoto.png';
 import EntityPage from '../EntityPage';
@@ -15,7 +15,7 @@ function DirectorsPage () {
   const dispatch = useDispatch();
 
   const deleteDirectorById = id => {
-    dispatch(deleteDirector(id));
+    dispatch(deleteDirectorThunk(id));
   };
 
   const addDirector = () => {

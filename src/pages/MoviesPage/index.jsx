@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMovie } from '../../store/slices/moviesSlice';
+import { deleteMovieThunk } from '../../store/slices/moviesSlice';
 import { openEntityForm } from '../../store/slices/serviceSlice';
 import defaultPoster from './../../assets/defaultImages/defaultPoster.png';
 import EntityPage from '../EntityPage';
@@ -15,7 +15,7 @@ function MoviesPage () {
   const dispatch = useDispatch();
 
   const deleteMovieById = id => {
-    dispatch(deleteMovie(id));
+    dispatch(deleteMovieThunk(id));
   };
 
   const addMovie = () => {

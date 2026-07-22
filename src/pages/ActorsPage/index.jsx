@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteActor } from '../../store/slices/actorsSlice';
+import { deleteActorThunk } from '../../store/slices/actorsSlice';
 import { openEntityForm } from '../../store/slices/serviceSlice';
 import defaultPhoto from './../../assets/defaultImages/defaultPhoto.png';
 import EntityPage from '../EntityPage';
@@ -15,7 +15,7 @@ function ActorsPage () {
   const dispatch = useDispatch();
 
   const deleteActorById = id => {
-    dispatch(deleteActor(id));
+    dispatch(deleteActorThunk(id));
   };
 
   const addActor = () => {

@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { addActor, updateActor } from '../../../store/slices/actorsSlice';
+import {
+  addActorThunk,
+  updateActorThunk,
+} from '../../../store/slices/actorsSlice';
 import { closeService } from '../../../store/slices/serviceSlice';
 import PersonForm from '../PersonForm';
 import CONSTANTS from '../../../constants';
@@ -24,7 +27,7 @@ function ActorForm ({ selectedId }) {
     : EMPTY_ACTOR;
 
   const handleSubmit = (values, { resetForm }) => {
-    const action = selectedId ? updateActor : addActor;
+    const action = selectedId ? updateActorThunk : addActorThunk;
     dispatch(action(values));
     resetForm();
     dispatch(closeService());

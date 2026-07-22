@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Formik } from 'formik';
-import { addMovie, updateMovie } from '../../../store/slices/moviesSlice';
+import {
+  addMovieThunk,
+  updateMovieThunk,
+} from '../../../store/slices/moviesSlice';
 import { closeService } from '../../../store/slices/serviceSlice';
 import { MOVIE_VALIDATION_SCHEMA } from '../../../utils/validation/validationSchemas';
 import MovieStepper from './MovieStepper';
@@ -37,7 +40,7 @@ function MovieForm ({ selectedId }) {
     : EMPTY_MOVIE;
 
   const handleSubmit = (values, { resetForm }) => {
-    const action = selectedId ? updateMovie : addMovie;
+    const action = selectedId ? updateMovieThunk : addMovieThunk;
     dispatch(action(values));
     resetForm();
     setStep(0);

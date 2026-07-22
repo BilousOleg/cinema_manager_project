@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  addDirector,
-  updateDirector,
+  addDirectorThunk,
+  updateDirectorThunk,
 } from '../../../store/slices/directorsSlice';
 import { closeService } from '../../../store/slices/serviceSlice';
 import PersonForm from '../PersonForm';
@@ -27,7 +27,7 @@ function DirectorForm ({ selectedId }) {
     : EMPTY_DIRECTOR;
 
   const handleSubmit = (values, { resetForm }) => {
-    const action = selectedId ? updateDirector : addDirector;
+    const action = selectedId ? updateDirectorThunk : addDirectorThunk;
     dispatch(action(values));
     resetForm();
     dispatch(closeService());

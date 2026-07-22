@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteStudio } from '../../store/slices/studiosSlice';
+import { deleteStudioThunk } from '../../store/slices/studiosSlice';
 import { openEntityForm } from '../../store/slices/serviceSlice';
 import defaultLogo from './../../assets/defaultImages/defaultLogo.png';
 import EntityPage from '../EntityPage';
@@ -15,7 +15,7 @@ function StudiosPage () {
   const dispatch = useDispatch();
 
   const deleteStudioById = id => {
-    dispatch(deleteStudio(id));
+    dispatch(deleteStudioThunk(id));
   };
 
   const addStudio = () => {

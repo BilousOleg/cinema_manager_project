@@ -108,6 +108,17 @@ const CONSTANTS = {
       description: '',
     },
   },
+  THEMES: {
+    DARK: 'dark',
+    LIGHT: 'light',
+  },
+  STORAGE_KEYS: {
+    MOVIES: 'movies',
+    ACTORS: 'actors',
+    DIRECTORS: 'directors',
+    STUDIOS: 'studios',
+    THEME: 'theme',
+  },
 };
 
 export default CONSTANTS;
