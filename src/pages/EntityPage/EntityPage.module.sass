@@ -28,6 +28,12 @@
       cursor: pointer
       user-select: none
 
+      &:hover 
+        background-color: c.$color-success-focus
+    
+      &:active 
+        background-color: c.$color-success-active 
+
   .listSection
     flex: 1
     min-height: 0
@@ -39,6 +45,7 @@
       display: flex
       flex-direction: column
       gap: 0.5rem
+      margin-right: 0.5rem
 
   .paginationSection
     display: flex

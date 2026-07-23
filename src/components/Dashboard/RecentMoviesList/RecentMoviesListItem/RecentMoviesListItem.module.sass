@@ -1,11 +1,20 @@
 @use '../../../../assets/_vars' as v
+@use '../../../../assets/_colors' as c
+
+.movieLink
+  display: block
+  border-radius: v.$main-border-radius
+  transition: box-shadow 0.3s ease, transform 0.3s ease
+  &:hover
+    box-shadow: 0 0 0 2px c.$color-text-link-active
+    transform: translateY(-5px)
 
 .recentMoviesListItem
   flex: 0 1 75px
   min-width: 0
   max-width: 75px
   background: linear-gradient(90deg, var(--color-card-gradient-start), var(--color-card-gradient-end))
-  border-radius: 0.75rem
+  border-radius: v.$main-border-radius
   overflow: hidden
 
   img
@@ -37,7 +46,6 @@
   @media screen and (min-width: 481px)
     flex-basis: 120px
     max-width: 120px
-    border-radius: 1rem
 
     img
       height: 180px

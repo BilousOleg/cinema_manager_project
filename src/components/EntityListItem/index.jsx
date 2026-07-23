@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Image from '../Image';
@@ -16,7 +16,7 @@ function EntityListItem ({
 }) {
   return (
     <li className={styles.entityListItem}>
-      <NavLink to={`/${entity}/${id}`}>
+      <Link to={`/${entity}/${id}`}>
         <article className={styles.entityCard}>
           <div className={styles.content}>
             <Image src={image} alt={primaryText} fallback={defaultImage} />
@@ -47,7 +47,7 @@ function EntityListItem ({
             </button>
           </div>
         </article>
-      </NavLink>
+      </Link>
     </li>
   );
 }

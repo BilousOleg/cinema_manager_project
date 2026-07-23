@@ -1,17 +1,13 @@
-import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import HomeIcon from '@mui/icons-material/Home';
-import MovieFilterIcon from '@mui/icons-material/MovieFilter';
-import RecentActorsIcon from '@mui/icons-material/RecentActors';
-import VideoCameraFrontIcon from '@mui/icons-material/VideoCameraFront';
-import AssuredWorkloadIcon from '@mui/icons-material/AssuredWorkload';
+import classNames from 'classnames';
 import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices';
 import { closeService, openService } from '../../store/slices/serviceSlice';
+import navItems from './navItems';
+import NavItem from './NavItem';
 import styles from './Navigation.module.sass';
 
 function Navigation () {
   const dispatch = useDispatch();
-
   const { isOpen } = useSelector(state => state.service);
 
   const toggleServiceMenu = () => {
@@ -21,38 +17,22 @@ function Navigation () {
   return (
     <nav className={styles.navMenu}>
       <ul className={styles.navList}>
-        <li>
-          <NavLink to='/' className={styles.navLink}>
-            <HomeIcon />
-            <span>Home</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/movies' className={styles.navLink}>
-            <MovieFilterIcon />
-            <span>Movies</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/actors' className={styles.navLink}>
-            <RecentActorsIcon />
-            <span>Actors</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/directors' className={styles.navLink}>
-            <VideoCameraFrontIcon />
-            <span>Directors</span>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/studios' className={styles.navLink}>
-            <AssuredWorkloadIcon />
-            <span>Studios</span>
-          </NavLink>
-        </li>
-        <li>
-          <button className={styles.serviceBtn} onClick={toggleServiceMenu}>
+        {navItems.map(item => (
+          <NavItem
+            key={item.id}
+            to={item.to}
+            Icon={item.icon}
+            label={item.label}
+          />
+        ))}
+
+        <li className={styles.serviceItem}>
+          <button
+            className={classNames(styles.serviceBtn, {
+              [styles.isActive]: isOpen,
+            })}
+            onClick={toggleServiceMenu}
+          >
             <MiscellaneousServicesIcon />
             <span>Service</span>
           </button>

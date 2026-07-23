@@ -1,0 +1,38 @@
+@use '../../../assets/_colors' as c
+
+.navItem
+  flex: 1
+  min-width: 0
+
+  .navLink
+    display: flex
+    align-items: center
+    justify-content: center
+    gap: 0.35rem
+    width: 100%
+    padding: 0.75rem 0.25rem
+    border: 1px solid var(--color-border-primary)
+    color: inherit
+    transition: background-color 0.2s ease
+
+    &:hover
+      background-color: var(--color-nav-hover)
+
+    &.active
+      background-color: var(--color-nav-active)
+      color: c.$color-text-link-active
+
+    span
+      display: inline
+
+  @media screen and (max-width: 560px)
+    .navLink
+      span
+        display: none
+
+  @media screen and (min-width: 721px)
+    .navLink
+      justify-content: flex-start
+      gap: 2rem
+      padding: 0.9375rem 5rem 0.9375rem 0.9375rem
+      border: 0

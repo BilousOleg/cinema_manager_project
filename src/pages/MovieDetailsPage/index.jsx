@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { NavLink, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import NotFoundPage from '../NotFoundPage';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
@@ -51,12 +51,12 @@ function MovieDetailsPage () {
         sectionTitle={'Movie Definition'}
         actions={
           trailer ? (
-            <NavLink
+            <Link
               to={`/movies/${movieId}/trailer`}
               className={styles.watchTrailerLink}
             >
               Watch Trailer
-            </NavLink>
+            </Link>
           ) : null
         }
       >
@@ -79,9 +79,9 @@ function MovieDetailsPage () {
           title={'Director'}
           body={
             movieDirector ? (
-              <NavLink to={`/directors/${movieDirector.id}`}>
+              <Link to={`/directors/${movieDirector.id}`}>
                 {`${movieDirector.firstName} ${movieDirector.lastName}`}
-              </NavLink>
+              </Link>
             ) : (
               <span>—</span>
             )
@@ -91,9 +91,7 @@ function MovieDetailsPage () {
           title={'Studio'}
           body={
             movieStudio ? (
-              <NavLink to={`/studios/${movieStudio.id}`}>
-                {movieStudio.name}
-              </NavLink>
+              <Link to={`/studios/${movieStudio.id}`}>{movieStudio.name}</Link>
             ) : (
               <span>—</span>
             )

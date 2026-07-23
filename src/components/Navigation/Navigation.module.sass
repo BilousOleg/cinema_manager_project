@@ -1,11 +1,14 @@
-@use './../../assets/_vars' as v
+@use '../../assets/_vars' as v
+@use '../../assets/_colors' as c
 
 %navItem
   display: flex
   align-items: center
   justify-content: center
   gap: 0.35rem
+  width: 100%
   padding: 0.75rem 0.25rem
+  transition: background-color 0.2s ease
 
 .navMenu
   flex-shrink: 0
@@ -24,30 +27,32 @@
     box-shadow: var(--shadow-main)
     overflow: hidden
 
-    li
-      flex: 1
-      min-width: 0
+  .serviceItem
+    flex: 1
+    min-width: 0
 
-      .navLink,
-      .serviceBtn
-        @extend %navItem
-        width: 100%
+  .serviceBtn
+    @extend %navItem
+    font: inherit
+    border: 1px solid var(--color-border-primary)
+    background: var(--color-bg-primary)
+    color: inherit
+    cursor: pointer
 
-      .serviceBtn
-        font: inherit
-        border: 1px solid var(--color-border-primary)
-        background: var(--color-bg-primary)
-        color: inherit
-        cursor: pointer
+    &:hover
+      background-color: var(--color-nav-hover)
 
-      .navLink
-        border: 1px solid var(--color-border-primary)
+    &.isActive
+      background-color: var(--color-nav-active)
+      color: c.$color-text-link-active
 
-      @media screen and (max-width: 560px)
-        .navLink,
-        .serviceBtn
-          span
-            display: none
+    span
+      display: inline
+
+  @media screen and (max-width: 560px)
+    .serviceBtn
+      span
+        display: none
 
   @media screen and (min-width: 721px)
     width: auto
@@ -57,16 +62,13 @@
       width: auto
       border-radius: v.$main-border-radius
 
-      li
-        .navLink,
-        .serviceBtn
-          justify-content: flex-start
-          gap: 2rem
-          padding: 0.9375rem 5rem 0.9375rem 0.9375rem
-          border: 0
-
-        .serviceBtn
-          border-top: 1px solid var(--color-border-primary)
+    .serviceItem
+      .serviceBtn
+        justify-content: flex-start
+        gap: 2rem
+        padding: 0.9375rem 5rem 0.9375rem 0.9375rem
+        border: 0
+        border-top: 1px solid var(--color-border-primary)
 
         span
           display: inline

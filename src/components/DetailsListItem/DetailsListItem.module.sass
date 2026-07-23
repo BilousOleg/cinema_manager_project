@@ -1,5 +1,12 @@
+@use '../../assets/_colors' as c
+
 .infoContainer
   color: var(--color-text-muted)
 
   a
-    text-decoration: underline
+    color: var(--color-link)
+    &:hover
+      text-decoration: underline
+
+    &:active
+      color: c.$color-text-link-active
