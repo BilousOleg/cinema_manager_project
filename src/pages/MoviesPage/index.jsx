@@ -32,7 +32,6 @@ function MoviesPage () {
       defaultImage={defaultPoster}
       items={movies}
       entity={MOVIES}
-      addButtonText='ADD MOVIE'
       onAdd={addMovie}
       onEdit={editMovie}
       onDelete={deleteMovieById}

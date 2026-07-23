@@ -1,4 +1,4 @@
-function getTopGenres (movies, genres, limit = 4) {
+function getTopGenres (movies, genres, limit = 3) {
   return Object.entries(
     movies.reduce((acc, { genreId }) => {
       acc[genreId] = (acc[genreId] ?? 0) + 1;

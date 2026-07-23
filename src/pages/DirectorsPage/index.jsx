@@ -32,7 +32,6 @@ function DirectorsPage () {
       defaultImage={defaultPhoto}
       items={directors}
       entity='directors'
-      addButtonText='ADD DIRECTOR'
       onAdd={addDirector}
       onEdit={editDirector}
       onDelete={deleteDirectorById}

@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../../components/Header';
 import Navigation from '../../components/Navigation';
@@ -6,16 +7,20 @@ import Footer from '../../components/Footer';
 import styles from './BasePage.module.sass';
 
 function BasePage () {
+  const contentRef = useRef(null);
+
   return (
     <div className={styles.appWrapper}>
       <Header />
-      <Navigation />
 
-      <main className={styles.main}>
-        <Outlet />
-      </main>
+      <div ref={contentRef} className={styles.content}>
+        <Navigation />
+        <main className={styles.main}>
+          <Outlet />
+        </main>
+        <CinemaService contentRef={contentRef} />
+      </div>
 
-      <CinemaService />
       <Footer />
     </div>
   );

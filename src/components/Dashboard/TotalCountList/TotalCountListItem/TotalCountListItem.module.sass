@@ -1,24 +1,31 @@
+@use '../../../../assets/_vars' as v
+
 .totalCountListItem
   display: flex
   flex-direction: column
   justify-content: center
   align-items: center
-  gap: 1rem
-  padding: 1.5rem
-
-  background: linear-gradient(90deg, #808080, #616161)
-  border-radius: 1.5rem
+  min-width: 0
+  gap: 0.5rem
+  padding: 1rem 0.5rem
+  background: linear-gradient(90deg, var(--color-card-gradient-start), var(--color-card-gradient-end))
+  border-radius: 0.75rem
+  overflow: hidden
 
   h4
-    font-size: 1.25rem
+    max-width: 100%
+    font-size: 0.9rem
     text-align: center
+    overflow-wrap: anywhere
 
   p
-    font-size: 2rem
+    font-size: 1.25rem
     font-weight: 600
 
-  @media (max-width: 992px)
-    min-height: 150px
+  @media screen and (min-width: 481px)
+    gap: 0.75rem
+    padding: 1.25rem 0.75rem
+    border-radius: 1rem
 
     h4
       font-size: 1.1rem
@@ -26,13 +33,12 @@
     p
       font-size: 1.75rem
 
-  @media (max-width: 576px)
-    min-height: 120px
-    gap: 0.5rem
-    padding: 1rem
+  @media screen and (min-width: 721px)
+    padding: 1.5rem 1rem
+    border-radius: v.$main-border-radius
 
     h4
-      font-size: 1rem
+      font-size: 1.25rem
 
     p
-      font-size: 1.5rem
+      font-size: 2rem

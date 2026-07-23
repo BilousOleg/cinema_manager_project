@@ -1,11 +1,16 @@
+import { NavLink } from 'react-router-dom';
 import Image from '../../../Image';
 import styles from './RecentMoviesListItem.module.sass';
 
-function RecentMoviesListItem ({ title, poster, fallback }) {
+function RecentMoviesListItem ({ id, title, poster, fallback }) {
   return (
-    <li className={styles.recentFilmListItem}>
-      <Image src={poster} fallback={fallback} alt={title} />
-      <h4>{title}</h4>
+    <li>
+      <NavLink to={`/movies/${id}`} className={styles.movieLink}>
+        <figure className={styles.recentMoviesListItem}>
+          <Image src={poster} fallback={fallback} alt={title} />
+          <figcaption>{title}</figcaption>
+        </figure>
+      </NavLink>
     </li>
   );
 }

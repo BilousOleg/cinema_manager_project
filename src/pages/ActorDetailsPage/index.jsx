@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import defaultPhoto from './../../assets/defaultImages/defaultPhoto.png';
+import NotFoundPage from '../NotFoundPage';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
@@ -14,8 +15,7 @@ function ActorDetailsPage () {
   const actor = actors.find(a => a.id === actorId);
 
   if (!actor) {
-    // NotFoundPage needed
-    return <div>ERROR</div>;
+    return <NotFoundPage />;
   }
 
   const { firstName, lastName, birthDate, country, photo, biography } = actor;

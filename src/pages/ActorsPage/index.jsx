@@ -32,7 +32,6 @@ function ActorsPage () {
       defaultImage={defaultPhoto}
       items={actors}
       entity={ACTORS}
-      addButtonText='ADD ACTOR'
       onAdd={addActor}
       onEdit={editActor}
       onDelete={deleteActorById}

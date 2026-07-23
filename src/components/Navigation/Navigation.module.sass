@@ -1,26 +1,72 @@
 @use './../../assets/_vars' as v
 
 %navItem
-  padding: 0.9375rem 5rem 0.9375rem 0.9375rem
   display: flex
   align-items: center
-  gap: 2rem
-  
-.navMenu
-  grid-area: nav
-  margin-left: calc(v.$main-gap / 2) 
-  .navList
-    background-color: var(--color-bg-primary)
-    li
-      .navLink
-        @extend %navItem
+  justify-content: center
+  gap: 0.35rem
+  padding: 0.75rem 0.25rem
 
+.navMenu
+  flex-shrink: 0
+  width: 100%
+
+  .navList
+    display: flex
+    width: 100%
+    margin: 0
+    padding: 0
+    background-color: var(--color-bg-primary)
+    list-style: none
+    border-radius: 0
+    border-bottom-left-radius: v.$main-border-radius
+    border-bottom-right-radius: v.$main-border-radius
+    box-shadow: var(--shadow-main)
+    overflow: hidden
+
+    li
+      flex: 1
+      min-width: 0
+
+      .navLink,
       .serviceBtn
         @extend %navItem
         width: 100%
+
+      .serviceBtn
         font: inherit
-        border: 0
-        border-top: 1px solid var(--color-border-primary)
-        background: transparent
+        border: 1px solid var(--color-border-primary)
+        background: var(--color-bg-primary)
         color: inherit
         cursor: pointer
+
+      .navLink
+        border: 1px solid var(--color-border-primary)
+
+      @media screen and (max-width: 560px)
+        .navLink,
+        .serviceBtn
+          span
+            display: none
+
+  @media screen and (min-width: 721px)
+    width: auto
+
+    .navList
+      display: block
+      width: auto
+      border-radius: v.$main-border-radius
+
+      li
+        .navLink,
+        .serviceBtn
+          justify-content: flex-start
+          gap: 2rem
+          padding: 0.9375rem 5rem 0.9375rem 0.9375rem
+          border: 0
+
+        .serviceBtn
+          border-top: 1px solid var(--color-border-primary)
+
+        span
+          display: inline

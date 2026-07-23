@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
+import NotFoundPage from '../NotFoundPage';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
@@ -20,12 +21,12 @@ function MovieDetailsPage () {
   const movie = movies.find(m => m.id === movieId);
 
   if (!movie) {
-    // NotFoundPage needed
-    return <div>ERROR</div>;
+    return <NotFoundPage />;
   }
 
   const {
     title,
+    trailer,
     poster,
     genreId,
     year,
@@ -49,12 +50,14 @@ function MovieDetailsPage () {
         defaultImage={defaultPoster}
         sectionTitle={'Movie Definition'}
         actions={
-          <NavLink
-            to={`/movies/${movieId}/trailer`}
-            className={styles.watchTrailerLink}
-          >
-            Watch Trailer
-          </NavLink>
+          trailer ? (
+            <NavLink
+              to={`/movies/${movieId}/trailer`}
+              className={styles.watchTrailerLink}
+            >
+              Watch Trailer
+            </NavLink>
+          ) : null
         }
       >
         <DetailsListItem

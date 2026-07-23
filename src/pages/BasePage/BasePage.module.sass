@@ -1,24 +1,47 @@
 @use './../../assets/_vars' as v
 
-html 
-  font-size: 16px 
+html
+  font-size: 16px
   font-family: sans-serif
   color: var(--color-text-primary)
-  
-.appWrapper 
-  display: grid 
-  grid-template-columns: 240px 1fr 450px 
-  grid-template-rows: 60px 1fr auto
-  grid-template-areas: "header header header" "nav main sidebar" "footer footer footer" 
-  height: 100vh  
-  gap: v.$main-gap 
+
+.appWrapper
+  display: flex
+  flex-direction: column
+  min-height: 100vh
   background-color: var(--color-bg-page)
-  
-  .main 
-    grid-area: main 
-    min-width: 0
-    background-color: var(--color-bg-primary)
-    
-    h2 
-      font-size: 2rem 
-      text-align: center
+
+  .content
+    display: flex
+    flex-direction: column
+    flex: 1
+    gap: calc(v.$main-gap / 2)
+    min-height: 0
+    padding: 0 0 v.$main-gap
+
+    .main
+      display: flex
+      flex-direction: column
+      flex: 1
+      min-width: 0
+      min-height: 0
+      background-color: var(--color-bg-primary)
+      border-radius: v.$main-border-radius
+      box-shadow: var(--shadow-main)
+
+      h2
+        font-size: 1.25rem
+        text-align: center
+
+        @media screen and (min-width: 1201px)
+          font-size: 2rem
+
+  @media screen and (min-width: 721px)
+    .content
+      flex-direction: row
+      gap: v.$main-gap
+      padding: v.$main-gap calc(v.$main-gap / 2)
+
+      .main
+        h2
+          font-size: 1.5rem

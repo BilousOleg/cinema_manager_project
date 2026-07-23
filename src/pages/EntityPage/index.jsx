@@ -11,7 +11,6 @@ function EntityPage ({
   defaultImage,
   items,
   entity,
-  addButtonText,
   onAdd,
   onEdit,
   onDelete,
@@ -43,7 +42,7 @@ function EntityPage ({
 
         <button className={styles.addBtn} onClick={onAdd}>
           <AddIcon />
-          <span>{addButtonText}</span>
+          <span>ADD</span>
         </button>
       </section>
 

@@ -1,6 +1,14 @@
-.recentFilmList
-  display: grid
+.recentMoviesList
+  display: flex
   justify-content: center
-  grid-template-columns: repeat(auto-fit, 175px)
-  gap: 1.5rem
-  margin: 0 auto
+  gap: 0.5rem
+  width: 100%
+  min-width: 0
+  padding: 0
+  overflow: hidden
+
+  @media screen and (min-width: 481px)
+    gap: 0.75rem
+
+  @media screen and (min-width: 721px)
+    gap: 1rem

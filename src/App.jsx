@@ -5,6 +5,7 @@ import { loadMoviesThunk } from './store/slices/moviesSlice';
 import { loadActorsThunk } from './store/slices/actorsSlice';
 import { loadDirectorsThunk } from './store/slices/directorsSlice';
 import { loadStudiosThunk } from './store/slices/studiosSlice';
+import BasePage from './pages/BasePage';
 import Home from './pages/Home';
 import MoviesPage from './pages/MoviesPage';
 import MovieDetailsPage from './pages/MovieDetailsPage';
@@ -15,7 +16,7 @@ import DirectorsPage from './pages/DirectorsPage';
 import DirectorDetailsPage from './pages/DirectorDetailsPage';
 import StudiosPage from './pages/StudiosPage';
 import StudioDetailsPage from './pages/StudioDetailsPage';
-import BasePage from './pages/BasePage';
+import NotFoundPage from './pages/NotFoundPage';
 import CONSTANTS from './constants';
 
 const {
@@ -59,6 +60,7 @@ function App () {
             <Route index element={<StudiosPage />} />
             <Route path=':studioId' element={<StudioDetailsPage />} />
           </Route>
+          <Route path='*' element={<NotFoundPage />} />
         </Route>
       </Routes>
     </Router>

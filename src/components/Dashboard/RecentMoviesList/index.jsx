@@ -5,10 +5,11 @@ import styles from './RecentMoviesList.module.sass';
 
 function RecentMoviesList ({ movies }) {
   return movies.length ? (
-    <ul className={styles.recentFilmList}>
+    <ul className={styles.recentMoviesList}>
       {movies.map(m => (
         <RecentMoviesListItem
           key={m.id}
+          id={m.id}
           title={m.title}
           poster={m.poster}
           fallback={defaultPoster}
@@ -16,7 +17,7 @@ function RecentMoviesList ({ movies }) {
       ))}
     </ul>
   ) : (
-    <NoItems message={'Create a movie to display it here...'} />
+    <NoItems message='Create a movie to display it here...' />
   );
 }
 

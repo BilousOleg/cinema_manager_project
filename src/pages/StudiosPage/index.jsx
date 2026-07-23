@@ -32,7 +32,6 @@ function StudiosPage () {
       defaultImage={defaultLogo}
       items={studios}
       entity={STUDIOS}
-      addButtonText='ADD STUDIO'
       onAdd={addStudio}
       onEdit={editStudio}
       onDelete={deleteStudioById}

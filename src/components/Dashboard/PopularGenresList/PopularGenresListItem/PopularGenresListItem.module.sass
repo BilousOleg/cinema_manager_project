@@ -1,27 +1,44 @@
+@use '../../../../assets/_vars' as v
+
 .popularGenresListItem
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  gap: 1rem
-  padding: 1.5rem
-  background: linear-gradient(90deg, #808080, #616161)
-  border-radius: 1.5rem
+  flex: 0 1 90px
+  min-width: 0
+  max-width: 90px
+  padding: 0.4rem
+  background: linear-gradient(90deg, var(--color-card-gradient-start), var(--color-card-gradient-end))
+  border-radius: 0.75rem
+  overflow: hidden
 
   h4
-    font-size: 1.25rem
+    width: 100%
+    font-size: 0.7rem
     text-align: center
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
 
-  @media (max-width: 992px)
-    min-height: 150px
+  @media screen and (min-width: 361px)
+    flex-basis: 110px
+    max-width: 110px
+    padding: 0.5rem
 
     h4
-      font-size: 1.1rem
+      font-size: 0.75rem
 
-  @media (max-width: 576px)
-    min-height: 120px
-    gap: 0.5rem
+  @media screen and (min-width: 481px)
+    flex-basis: 140px
+    max-width: 140px
+    padding: 0.75rem
+    border-radius: 1rem
+
+    h4
+      font-size: 0.9rem
+
+  @media screen and (min-width: 721px)
+    flex-basis: 175px
+    max-width: 175px
     padding: 1rem
+    border-radius: v.$main-border-radius
 
     h4
       font-size: 1rem

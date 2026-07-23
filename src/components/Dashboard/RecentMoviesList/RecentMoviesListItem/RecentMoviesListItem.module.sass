@@ -1,35 +1,59 @@
-.recentFilmListItem
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  gap: 1rem
-  min-height: 175px
-  background: linear-gradient(90deg, #808080, #616161)
-  border-radius: 1.5rem
+@use '../../../../assets/_vars' as v
+
+.recentMoviesListItem
+  flex: 0 1 75px
+  min-width: 0
+  max-width: 75px
+  background: linear-gradient(90deg, var(--color-card-gradient-start), var(--color-card-gradient-end))
+  border-radius: 0.75rem
   overflow: hidden
-  
+
   img
     display: block
     width: 100%
-    aspect-ratio: 2 / 3
+    height: 112px
     object-fit: cover
 
-  h4
+  figcaption
     width: 100%
-    padding: 0 1.5rem 1rem
-    font-size: 1.25rem
+    padding: 0.4rem 0.2rem
+    font-size: 0.7rem
+    text-align: center
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
 
-  @media (max-width: 992px)
-    min-height: 150px
+  @media screen and (min-width: 361px)
+    flex-basis: 90px
+    max-width: 90px
 
-    h4
-      font-size: 1.1rem
+    img
+      height: 135px
 
-  @media (max-width: 576px)
-    min-height: 120px
-    gap: 0.5rem
-    padding: 1rem
+    figcaption
+      padding: 0.5rem 0.25rem
+      font-size: 0.75rem
 
-    h4
+  @media screen and (min-width: 481px)
+    flex-basis: 120px
+    max-width: 120px
+    border-radius: 1rem
+
+    img
+      height: 180px
+
+    figcaption
+      padding: 0.6rem 0.5rem
+      font-size: 0.9rem
+
+  @media screen and (min-width: 721px)
+    flex-basis: 150px
+    max-width: 150px
+    border-radius: v.$main-border-radius
+
+    img
+      height: 225px
+
+    figcaption
+      padding: 0.75rem
       font-size: 1rem

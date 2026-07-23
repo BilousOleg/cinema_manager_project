@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import defaultLogo from './../../assets/defaultImages/defaultLogo.png';
+import NotFoundPage from '../NotFoundPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityDetailsPage from '../EntityDetailsPage';
 import EntityLinks from '../../components/EntityLinks';
@@ -14,8 +15,7 @@ function StudioDetailsPage () {
   const studio = studios.find(a => a.id === studioId);
 
   if (!studio) {
-    // NotFoundPage needed
-    return <div>ERROR</div>;
+    return <NotFoundPage />;
   }
 
   const { name, founded, country, logo, description } = studio;
