@@ -1,4 +1,9 @@
 .formBlock
   display: flex
-  gap: 0.5rem
+  flex-direction: column
+  gap: 2.2rem
   width: 100%
+
+  @media screen and (min-width: 400px)
+    flex-direction: row
+    gap: 0.5rem
