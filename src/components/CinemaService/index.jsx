@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
@@ -9,12 +9,11 @@ import DirectorForm from '../forms/DirectorForm';
 import StudioForm from '../forms/StudioForm';
 import styles from './CinemaService.module.sass';
 
-function CinemaService ({ contentRef }) {
+function CinemaService () {
   const dispatch = useDispatch();
   const location = useLocation();
 
   const { isOpen, entity, selectedId } = useSelector(state => state.service);
-  const [contentHeight, setContentHeight] = useState(0);
 
   const serviceClassNames = classNames(styles.serviceSection, {
     [styles.isOpen]: isOpen,
@@ -24,22 +23,6 @@ function CinemaService ({ contentRef }) {
     dispatch(closeService());
   }, [location.pathname, dispatch]);
 
-  useEffect(() => {
-    if (!contentRef.current) return;
-
-    const updateContentHeight = () => {
-      setContentHeight(contentRef.current.clientHeight);
-    };
-
-    updateContentHeight();
-    const observer = new ResizeObserver(updateContentHeight);
-    observer.observe(contentRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [contentRef]);
-
   const handleBackgroundClick = event => {
     if (event.target === event.currentTarget) {
       dispatch(closeService());
@@ -47,13 +30,7 @@ function CinemaService ({ contentRef }) {
   };
 
   return (
-    <aside
-      className={serviceClassNames}
-      style={{
-        '--content-height': `${contentHeight}px`,
-      }}
-      onClick={handleBackgroundClick}
-    >
+    <aside className={serviceClassNames} onClick={handleBackgroundClick}>
       <div className={styles.serviceModal}>
         <h2 className={styles.serviceHeading}>Cinema service</h2>
         <div className={styles.serviceBody}>

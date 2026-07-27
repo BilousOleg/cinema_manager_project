@@ -14,17 +14,14 @@ html
   .content
     display: flex
     flex-direction: column
-    flex: 1
+    height: calc(100vh - (v.$footer-height + v.$header-height))
     gap: calc(v.$main-gap / 2)
-    min-height: 0
-    padding: 0 0 v.$main-gap
+    padding-bottom: v.$main-gap
 
     .main
       display: flex
       flex-direction: column
       flex: 1
-      min-width: 0
-      min-height: 0
       background-color: var(--color-bg-primary)
       border-radius: v.$main-border-radius
       box-shadow: var(--shadow-main)
