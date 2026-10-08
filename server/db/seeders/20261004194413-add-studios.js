@@ -22,7 +22,8 @@ module.exports = {
           founded: 1923,
           country_id: USA.id,
           logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKjUsWV5bfTnNebkW8x-TWwAQK7dNtRlhzOe6_021VSQ&s=10',
-          description: '',
+          description:
+            'A major American film studio known for producing and distributing blockbuster movies across a wide range of genres, including action, drama, fantasy, and science fiction.',
           created_at: now,
           updated_at: now,
         },
@@ -31,7 +32,8 @@ module.exports = {
           founded: 2016,
           country_id: USA.id,
           logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPkOI-5VPQTphP8ywCHIE7HiT1gzDtz-SjNZrHyDhR8A&s',
-          description: '',
+          description:
+            'An American film production company responsible for bringing DC Comics superheroes and stories to the big screen, including Batman, Superman, and Wonder Woman.',
           created_at: now,
           updated_at: now,
         },
@@ -40,7 +42,8 @@ module.exports = {
           founded: 1912,
           country_id: USA.id,
           logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCDjUYCMWCJvYgNi5GPXrAo-iX3n5VnbG7vIEZFwSl3Q&s',
-          description: '',
+          description:
+            'One of the oldest major American film studios, known for producing and distributing popular films across genres such as adventure, comedy, horror, drama, and science fiction.',
           created_at: now,
           updated_at: now,
         },
@@ -49,7 +52,8 @@ module.exports = {
           founded: 1986,
           country_id: australia.id,
           logo: 'https://i0.wp.com/www.thewrap.com/wp-content/uploads/2017/04/village-roadshow-logo.jpg?fit=618%2C412&quality=89&ssl=1',
-          description: '',
+          description:
+            'An Australian film production and financing company that has co-produced numerous internationally successful films in collaboration with major Hollywood studios.',
           created_at: now,
           updated_at: now,
         },

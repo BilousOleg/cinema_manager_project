@@ -23,6 +23,7 @@ module.exports = {
 
     const matthew = await getActorId('Matthew', 'McConaughey');
     const anne = await getActorId('Anne', 'Hathaway');
+    const jessica = await getActorId('Jessica', 'Chastain');
     const joaquin = await getActorId('Joaquin', 'Phoenix');
     const cillian = await getActorId('Cillian', 'Murphy');
     const emily = await getActorId('Emily', 'Blunt');
@@ -45,6 +46,13 @@ module.exports = {
           actor_id: anne,
           movie_id: await getMovieId(queryInterface, Sequelize, 'Interstellar'),
           character_name: 'Amelia Brand',
+          created_at: now,
+          updated_at: now,
+        },
+        {
+          actor_id: jessica,
+          movie_id: await getMovieId(queryInterface, Sequelize, 'Interstellar'),
+          character_name: 'Murphy',
           created_at: now,
           updated_at: now,
         },

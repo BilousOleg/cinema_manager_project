@@ -1,0 +1,11 @@
+### 200
+
+GET http://localhost:5000/api/dashboard/total-counts
+
+### 200
+
+GET http://localhost:5000/api/dashboard/recent-movies
+
+### 200
+
+GET http://localhost:5000/api/dashboard/popular-genres?limit=3

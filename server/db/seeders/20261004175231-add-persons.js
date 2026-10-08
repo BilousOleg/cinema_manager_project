@@ -142,7 +142,8 @@ module.exports = {
           last_name: 'Nolan',
           birth_date: '1970-07-30',
           country_id: unitedKingdom.id,
-          photo: null,
+          photo:
+            'https://upload.wikimedia.org/wikipedia/commons/9/95/Christopher_Nolan_Cannes_2018.jpg',
           biography:
             'British-American film director, producer and screenwriter. Known for large-scale science fiction and psychological thrillers.',
           created_at: now,
@@ -153,7 +154,8 @@ module.exports = {
           last_name: 'Phillips',
           birth_date: '1970-12-20',
           country_id: USA.id,
-          photo: null,
+          photo:
+            'https://upload.wikimedia.org/wikipedia/commons/0/0b/Todd_Phillips-64847.jpg',
           biography:
             'American film director, producer and screenwriter. Best known for Joker and The Hangover trilogy.',
           created_at: now,
@@ -164,7 +166,8 @@ module.exports = {
           last_name: 'Wachowski',
           birth_date: '1965-06-21',
           country_id: USA.id,
-          photo: null,
+          photo:
+            'https://upload.wikimedia.org/wikipedia/commons/5/55/Lana_Wachowski-2787_%283x4_cropped%29.jpg',
           biography:
             'American filmmaker best known for co-creating The Matrix franchise.',
           created_at: now,
@@ -175,7 +178,8 @@ module.exports = {
           last_name: 'Wachowski',
           birth_date: '1967-12-29',
           country_id: USA.id,
-          photo: null,
+          photo:
+            'https://upload.wikimedia.org/wikipedia/commons/d/de/Lily_Wachowski%2C_London%2C_2018_by_Christa_Holka.jpg?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original',
           biography:
             'American filmmaker best known for co-creating The Matrix franchise.',
           created_at: now,
