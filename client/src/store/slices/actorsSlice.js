@@ -11,7 +11,8 @@ const ACTORS_SLICE_NAME = 'actors';
 
 const initialState = {
   actors: [],
-  isFetching: false,
+  currentActor: null,
+  isFetching: true,
   error: null,
 };
 
@@ -81,11 +82,28 @@ export const loadActorsThunk = createAsyncThunk(
   `${ACTORS_SLICE_NAME}/loadActors`,
   async (_, { rejectWithValue }) => {
     try {
-      const actors = API.getStoredEntities(ACTORS);
+      const {
+        data: { data },
+      } = await API.getActors();
 
-      return actors;
+      return data;
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to load actors');
+    }
+  }
+);
+
+export const loadActorByIdThunk = createAsyncThunk(
+  `${ACTORS_SLICE_NAME}/loadActor`,
+  async (payload, { rejectWithValue }) => {
+    try {
+      const {
+        data: { data },
+      } = await API.getActorById(payload);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to load actor');
     }
   }
 );
@@ -96,6 +114,7 @@ const actorsSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
+      // create
       .addCase(addActorThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -108,6 +127,7 @@ const actorsSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // updateById
       .addCase(updateActorThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -124,6 +144,7 @@ const actorsSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // deleteById
       .addCase(deleteActorThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -136,6 +157,7 @@ const actorsSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // get
       .addCase(loadActorsThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -145,6 +167,20 @@ const actorsSlice = createSlice({
         state.actors = payload;
       })
       .addCase(loadActorsThunk.rejected, (state, { payload }) => {
+        state.isFetching = false;
+        state.error = payload;
+      })
+      // getById
+      .addCase(loadActorByIdThunk.pending, state => {
+        state.isFetching = true;
+        state.error = null;
+        state.currentActor = null;
+      })
+      .addCase(loadActorByIdThunk.fulfilled, (state, { payload }) => {
+        state.isFetching = false;
+        state.currentActor = payload;
+      })
+      .addCase(loadActorByIdThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
         state.error = payload;
       });

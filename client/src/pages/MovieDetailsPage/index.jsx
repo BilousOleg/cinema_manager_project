@@ -1,26 +1,33 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import defaultPoster from './../../assets/defaultImages/defaultPoster.png';
+import { loadMovieByIdThunk } from '../../store/slices/moviesSlice';
 import NotFoundPage from '../NotFoundPage';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
+import EntityList from '../../components/EntityList';
 import EntityLinks from '../../components/EntityLinks';
-import defaultPoster from './../../assets/defaultImages/defaultPoster.png';
+import NoItems from '../../components/NoItems';
 import styles from './MovieDetailsPage.module.sass';
-import CONSTANTS from '../../constants';
-
-const { GENRES_BY_ID } = CONSTANTS;
 
 function MovieDetailsPage () {
   const { movieId } = useParams();
+  const dispatch = useDispatch();
 
-  const { movies } = useSelector(state => state.movies);
-  const { actors } = useSelector(state => state.actors);
-  const { directors } = useSelector(state => state.directors);
-  const { studios } = useSelector(state => state.studios);
+  const { currentMovie, isFetching, error } = useSelector(
+    state => state.movies
+  );
 
-  const movie = movies.find(m => m.id === movieId);
+  useEffect(() => {
+    dispatch(loadMovieByIdThunk(movieId));
+  }, [dispatch, movieId]);
 
-  if (!movie) {
+  if (isFetching) {
+    <NoItems message='Loading...' />;
+  }
+
+  if (error || !currentMovie) {
     return <NotFoundPage />;
   }
 
@@ -28,19 +35,13 @@ function MovieDetailsPage () {
     title,
     trailer,
     poster,
-    genreId,
+    Genres: movieGenres,
     year,
     description,
-    actorIds,
-    directorId,
-    studioId,
-  } = movie;
-
-  const movieActors = actorIds
-    .map(id => actors.find(a => a.id === id))
-    .filter(item => !!item);
-  const movieDirector = directors.find(d => d.id === directorId);
-  const movieStudio = studios.find(s => s.id === studioId);
+    Actors: movieActors,
+    Directors: movieDirectors,
+    Studios: movieStudios,
+  } = currentMovie;
 
   return (
     <>
@@ -62,7 +63,7 @@ function MovieDetailsPage () {
       >
         <DetailsListItem
           title={'Genre'}
-          body={GENRES_BY_ID[genreId].name ?? '—'}
+          body={<EntityList items={movieGenres} getLabel={g => g.genreName} />}
         />
         <DetailsListItem title={'Release year'} body={year} />
         <DetailsListItem
@@ -71,30 +72,32 @@ function MovieDetailsPage () {
             <EntityLinks
               items={movieActors}
               basePath='actors'
-              getLabel={a => `${a.firstName} ${a.lastName}`}
+              getLabel={({ Person }) =>
+                `${Person.firstName} ${Person.lastName}`
+              }
             />
           }
         />
         <DetailsListItem
-          title={'Director'}
+          title={'Directors'}
           body={
-            movieDirector ? (
-              <Link to={`/directors/${movieDirector.id}`}>
-                {`${movieDirector.firstName} ${movieDirector.lastName}`}
-              </Link>
-            ) : (
-              <span>—</span>
-            )
+            <EntityLinks
+              items={movieDirectors}
+              basePath='directors'
+              getLabel={({ Person }) =>
+                `${Person.firstName} ${Person.lastName}`
+              }
+            />
           }
         />
         <DetailsListItem
-          title={'Studio'}
+          title={'Studios'}
           body={
-            movieStudio ? (
-              <Link to={`/studios/${movieStudio.id}`}>{movieStudio.name}</Link>
-            ) : (
-              <span>—</span>
-            )
+            <EntityLinks
+              items={movieStudios}
+              basePath='studios'
+              getLabel={s => s.studioName}
+            />
           }
         />
         <DetailsListItem title={'Description'} body={description || '—'} />

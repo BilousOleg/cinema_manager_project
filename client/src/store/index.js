@@ -5,6 +5,7 @@ import directorsReducer from './slices/directorsSlice';
 import studiosReducer from './slices/studiosSlice';
 import serviceReducer from './slices/serviceSlice';
 import themeReducer from './slices/themeSlice';
+import dashboardReducer from './slices/dashboardSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     studios: studiosReducer,
     service: serviceReducer,
     theme: themeReducer,
+    dashboard: dashboardReducer,
   },
 });
 

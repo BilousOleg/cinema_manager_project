@@ -3,7 +3,15 @@ import defaultPoster from './../../../assets/defaultImages/defaultPoster.png';
 import NoItems from '../../NoItems';
 import styles from './RecentMoviesList.module.sass';
 
-function RecentMoviesList ({ movies }) {
+function RecentMoviesList ({ movies, isFetching, error }) {
+  if (isFetching) {
+    return <NoItems message={'Loading...'} />;
+  }
+
+  if (error) {
+    return <NoItems message={`${error.message}`} />;
+  }
+
   return movies.length ? (
     <ul className={styles.recentMoviesList}>
       {movies.map(m => (

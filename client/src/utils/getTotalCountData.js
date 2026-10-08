@@ -3,22 +3,22 @@ function getTotalCountData ({ movies, actors, directors, studios }) {
     {
       id: 1,
       text: 'Total films:',
-      count: movies.length,
+      count: movies,
     },
     {
       id: 2,
       text: 'Total actors:',
-      count: actors.length,
+      count: actors,
     },
     {
       id: 3,
       text: 'Total directors:',
-      count: directors.length,
+      count: directors,
     },
     {
       id: 4,
       text: 'Total studios:',
-      count: studios.length,
+      count: studios,
     },
   ];
 }

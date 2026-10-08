@@ -1,29 +1,39 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadMovieByIdThunk } from '../../store/slices/moviesSlice';
 import getYoutubeEmbed from '../../utils/getYoutubeEmbedURL';
 import NotFoundPage from '../NotFoundPage';
+import NoItems from '../../components/NoItems';
 import styles from './MovieTrailerPage.module.sass';
 
 function MovieTrailerPage () {
   const { movieId } = useParams();
+  const dispatch = useDispatch();
 
-  const { movies } = useSelector(state => state.movies);
+  const { currentMovie, isFetching, error } = useSelector(
+    state => state.movies
+  );
 
-  const movie = movies.find(m => m.id === movieId);
+  useEffect(() => {
+    dispatch(loadMovieByIdThunk(movieId));
+  }, [dispatch, movieId]);
 
-  if (!movie || !movie.trailer) {
+  if (isFetching) {
+    return <NoItems message='Loading' />;
+  }
+
+  if (error || !currentMovie || !currentMovie.trailer) {
     return <NotFoundPage />;
   }
 
-  const embedTrailer = getYoutubeEmbed(movie.trailer);
+  const { title, trailer } = currentMovie;
+
+  const embedTrailer = getYoutubeEmbed(trailer);
 
   return (
     <article className={styles.trailerPage}>
-      <iframe
-        src={embedTrailer}
-        title={`${movie.title} trailer`}
-        allowFullScreen
-      />
+      <iframe src={embedTrailer} title={`${title} trailer`} allowFullScreen />
     </article>
   );
 }

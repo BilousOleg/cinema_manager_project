@@ -1,26 +1,45 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import defaultPhoto from './../../assets/defaultImages/defaultPhoto.png';
+import { loadDirectorByIdThunk } from '../../store/slices/directorsSlice';
 import NotFoundPage from '../NotFoundPage';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
+import NoItems from '../../components/NoItems';
 
 function DirectorDetailsPage () {
   const { directorId } = useParams();
+  const dispatch = useDispatch();
 
-  const { directors } = useSelector(state => state.directors);
-  const { movies } = useSelector(state => state.movies);
+  const { currentDirector, isFetching, error } = useSelector(
+    state => state.directors
+  );
 
-  const director = directors.find(d => d.id === directorId);
+  useEffect(() => {
+    dispatch(loadDirectorByIdThunk(directorId));
+  }, [dispatch, directorId]);
 
-  if (!director) {
+  if (isFetching) {
+    return <NoItems message={'Loading...'} />;
+  }
+
+  if (error || !currentDirector) {
     return <NotFoundPage />;
   }
 
-  const { firstName, lastName, birthDate, country, photo, biography } =
-    director;
-  const directorMovies = movies.filter(m => m.directorId === directorId);
+  const {
+    Person: {
+      firstName,
+      lastName,
+      birthDate,
+      photo,
+      biography,
+      Country: { countryName },
+    },
+    Movies: directorMovies,
+  } = currentDirector;
 
   const formattedDate = birthDate.split('-').reverse().join('.');
 
@@ -31,7 +50,7 @@ function DirectorDetailsPage () {
       defaultImage={defaultPhoto}
       sectionTitle={'Director Information'}
     >
-      <DetailsListItem title={'Country'} body={country} />
+      <DetailsListItem title={'Country'} body={countryName} />
       <DetailsListItem title={'Birth date'} body={formattedDate} />
       <DetailsListItem
         title={'Movies'}

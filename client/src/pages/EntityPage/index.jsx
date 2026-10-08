@@ -14,7 +14,7 @@ function EntityPage ({
   onAdd,
   onEdit,
   onDelete,
-  itemsPerPage = 9,
+  itemsPerPage = 8,
   getImage,
   getPrimaryText,
   getSecondaryText,

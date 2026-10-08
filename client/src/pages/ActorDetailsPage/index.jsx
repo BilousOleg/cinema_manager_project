@@ -1,25 +1,45 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import defaultPhoto from './../../assets/defaultImages/defaultPhoto.png';
+import { loadActorByIdThunk } from '../../store/slices/actorsSlice';
 import NotFoundPage from '../NotFoundPage';
 import EntityDetailsPage from '../EntityDetailsPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityLinks from '../../components/EntityLinks';
+import NoItems from '../../components/NoItems';
 
 function ActorDetailsPage () {
   const { actorId } = useParams();
+  const dispatch = useDispatch();
 
-  const { actors } = useSelector(state => state.actors);
-  const { movies } = useSelector(state => state.movies);
+  const { currentActor, isFetching, error } = useSelector(
+    state => state.actors
+  );
 
-  const actor = actors.find(a => a.id === actorId);
+  useEffect(() => {
+    dispatch(loadActorByIdThunk(actorId));
+  }, [dispatch, actorId]);
 
-  if (!actor) {
+  if (isFetching) {
+    return <NoItems message={'Loading...'} />;
+  }
+
+  if (error || !currentActor) {
     return <NotFoundPage />;
   }
 
-  const { firstName, lastName, birthDate, country, photo, biography } = actor;
-  const actorMovies = movies.filter(m => m.actorIds.includes(actorId));
+  const {
+    Person: {
+      firstName,
+      lastName,
+      birthDate,
+      photo,
+      biography,
+      Country: { countryName },
+    },
+    Movies: actorMovies,
+  } = currentActor;
 
   const formattedDate = birthDate.split('-').reverse().join('.');
 
@@ -30,7 +50,7 @@ function ActorDetailsPage () {
       defaultImage={defaultPhoto}
       sectionTitle={'Actor Information'}
     >
-      <DetailsListItem title={'Country'} body={country} />
+      <DetailsListItem title={'Country'} body={countryName} />
       <DetailsListItem title={'Birth date'} body={formattedDate} />
       <DetailsListItem
         title={'Movies'}

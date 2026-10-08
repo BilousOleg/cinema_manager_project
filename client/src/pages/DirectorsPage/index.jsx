@@ -35,8 +35,8 @@ function DirectorsPage () {
       onAdd={addDirector}
       onEdit={editDirector}
       onDelete={deleteDirectorById}
-      getImage={d => d.photo}
-      getPrimaryText={d => `${d.firstName} ${d.lastName}`}
+      getImage={({ Person }) => Person.photo}
+      getPrimaryText={({ Person }) => `${Person.firstName} ${Person.lastName}`}
     />
   );
 }

@@ -11,7 +11,8 @@ const DIRECTORS_SLICE_NAME = 'directors';
 
 const initialState = {
   directors: [],
-  isFetching: false,
+  currentDirector: null,
+  isFetching: true,
   error: null,
 };
 
@@ -81,11 +82,28 @@ export const loadDirectorsThunk = createAsyncThunk(
   `${DIRECTORS_SLICE_NAME}/loadDirectors`,
   async (_, { rejectWithValue }) => {
     try {
-      const directors = API.getStoredEntities(DIRECTORS);
+      const {
+        data: { data },
+      } = await API.getDirectors();
 
-      return directors;
+      return data;
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to load directors');
+    }
+  }
+);
+
+export const loadDirectorByIdThunk = createAsyncThunk(
+  `${DIRECTORS_SLICE_NAME}/loadDirector`,
+  async (payload, { rejectWithValue }) => {
+    try {
+      const {
+        data: { data },
+      } = await API.getDirectorById(payload);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to load director');
     }
   }
 );
@@ -96,6 +114,7 @@ const directorsSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
+      // create
       .addCase(addDirectorThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -108,6 +127,7 @@ const directorsSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // updateById
       .addCase(updateDirectorThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -124,6 +144,7 @@ const directorsSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // deleteById
       .addCase(deleteDirectorThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -136,6 +157,7 @@ const directorsSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // get
       .addCase(loadDirectorsThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -145,6 +167,20 @@ const directorsSlice = createSlice({
         state.directors = payload;
       })
       .addCase(loadDirectorsThunk.rejected, (state, { payload }) => {
+        state.isFetching = false;
+        state.error = payload;
+      })
+      // getById
+      .addCase(loadDirectorByIdThunk.pending, state => {
+        state.isFetching = true;
+        state.error = null;
+        state.currentDirector = null;
+      })
+      .addCase(loadDirectorByIdThunk.fulfilled, (state, { payload }) => {
+        state.isFetching = false;
+        state.currentDirector = payload;
+      })
+      .addCase(loadDirectorByIdThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
         state.error = payload;
       });

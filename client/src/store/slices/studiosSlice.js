@@ -11,7 +11,8 @@ const STUDIOS_SLICE_NAME = 'studios';
 
 const initialState = {
   studios: [],
-  isFetching: false,
+  currentStudio: null,
+  isFetching: true,
   error: null,
 };
 
@@ -81,11 +82,28 @@ export const loadStudiosThunk = createAsyncThunk(
   `${STUDIOS_SLICE_NAME}/loadStudios`,
   async (_, { rejectWithValue }) => {
     try {
-      const studios = API.getStoredEntities(STUDIOS);
+      const {
+        data: { data },
+      } = await API.getStudios();
 
-      return studios;
+      return data;
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to load studios');
+    }
+  }
+);
+
+export const loadStudioByIdThunk = createAsyncThunk(
+  `${STUDIOS_SLICE_NAME}/loadStudio`,
+  async (payload, { rejectWithValue }) => {
+    try {
+      const {
+        data: { data },
+      } = await API.getStudioById(payload);
+
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to load studio');
     }
   }
 );
@@ -96,6 +114,7 @@ const studiosSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
+      // create
       .addCase(addStudioThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -108,6 +127,7 @@ const studiosSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // updateById
       .addCase(updateStudioThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -124,6 +144,7 @@ const studiosSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // deleteById
       .addCase(deleteStudioThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -136,6 +157,7 @@ const studiosSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // get
       .addCase(loadStudiosThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -145,6 +167,20 @@ const studiosSlice = createSlice({
         state.studios = payload;
       })
       .addCase(loadStudiosThunk.rejected, (state, { payload }) => {
+        state.isFetching = false;
+        state.error = payload;
+      })
+      // getById
+      .addCase(loadStudioByIdThunk.pending, state => {
+        state.isFetching = true;
+        state.error = null;
+        state.currentStudio = null;
+      })
+      .addCase(loadStudioByIdThunk.fulfilled, (state, { payload }) => {
+        state.isFetching = false;
+        state.currentStudio = payload;
+      })
+      .addCase(loadStudioByIdThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
         state.error = payload;
       });

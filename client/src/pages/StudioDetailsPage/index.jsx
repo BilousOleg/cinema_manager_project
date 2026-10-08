@@ -1,26 +1,42 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import defaultLogo from './../../assets/defaultImages/defaultLogo.png';
+import { loadStudioByIdThunk } from '../../store/slices/studiosSlice';
 import NotFoundPage from '../NotFoundPage';
 import DetailsListItem from '../../components/DetailsListItem';
 import EntityDetailsPage from '../EntityDetailsPage';
 import EntityLinks from '../../components/EntityLinks';
+import NoItems from '../../components/NoItems';
 
 function StudioDetailsPage () {
   const { studioId } = useParams();
+  const dispatch = useDispatch();
 
-  const { studios } = useSelector(state => state.studios);
-  const { movies } = useSelector(state => state.movies);
+  const { currentStudio, isFetching, error } = useSelector(
+    state => state.studios
+  );
 
-  const studio = studios.find(a => a.id === studioId);
+  useEffect(() => {
+    dispatch(loadStudioByIdThunk(studioId));
+  }, [dispatch, studioId]);
 
-  if (!studio) {
+  if (isFetching) {
+    return <NoItems message={'Loading...'} />;
+  }
+
+  if (error || !currentStudio) {
     return <NotFoundPage />;
   }
 
-  const { name, founded, country, logo, description } = studio;
-
-  const studioMovies = movies.filter(m => m.studioId === studioId);
+  const {
+    name,
+    founded,
+    logo,
+    description,
+    Country: { countryName },
+    Movies: studioMovies,
+  } = currentStudio;
 
   return (
     <EntityDetailsPage
@@ -30,7 +46,7 @@ function StudioDetailsPage () {
       sectionTitle={'Studio Information'}
     >
       <DetailsListItem title={'Foundation year'} body={founded} />
-      <DetailsListItem title={'Country'} body={country} />
+      <DetailsListItem title={'Country'} body={countryName} />
       <DetailsListItem
         title={'Movies'}
         body={

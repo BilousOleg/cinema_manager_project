@@ -36,7 +36,7 @@ function StudiosPage () {
       onEdit={editStudio}
       onDelete={deleteStudioById}
       getImage={s => s.logo}
-      getPrimaryText={s => s.name}
+      getPrimaryText={s => s.studioName}
       getSecondaryText={s => s.founded}
     />
   );

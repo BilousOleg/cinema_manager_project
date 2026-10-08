@@ -11,7 +11,8 @@ const MOVIES_SLICE_NAME = 'movies';
 
 const initialState = {
   movies: [],
-  isFetching: false,
+  currentMovie: null,
+  isFetching: true,
   error: null,
 };
 
@@ -85,9 +86,26 @@ export const loadMoviesThunk = createAsyncThunk(
   `${MOVIES_SLICE_NAME}/loadMovies`,
   async (_, { rejectWithValue }) => {
     try {
-      const movies = API.getStoredEntities(MOVIES);
+      const {
+        data: { data },
+      } = await API.getMovies();
 
-      return movies;
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Failed to load movies');
+    }
+  }
+);
+
+export const loadMovieByIdThunk = createAsyncThunk(
+  `${MOVIES_SLICE_NAME}/loadMovie`,
+  async (payload, { rejectWithValue }) => {
+    try {
+      const {
+        data: { data },
+      } = await API.getMovieById(payload);
+
+      return data;
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to load movies');
     }
@@ -100,6 +118,7 @@ const moviesSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
+      // create
       .addCase(addMovieThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -112,6 +131,7 @@ const moviesSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // updateById
       .addCase(updateMovieThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -128,6 +148,7 @@ const moviesSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // deleteById
       .addCase(deleteMovieThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -141,6 +162,7 @@ const moviesSlice = createSlice({
         state.isFetching = false;
         state.error = payload;
       })
+      // get
       .addCase(loadMoviesThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
@@ -150,6 +172,20 @@ const moviesSlice = createSlice({
         state.movies = payload;
       })
       .addCase(loadMoviesThunk.rejected, (state, { payload }) => {
+        state.isFetching = false;
+        state.error = payload;
+      })
+      // getById
+      .addCase(loadMovieByIdThunk.pending, state => {
+        state.isFetching = true;
+        state.error = null;
+        state.currentMovie = null;
+      })
+      .addCase(loadMovieByIdThunk.fulfilled, (state, { payload }) => {
+        state.isFetching = false;
+        state.currentMovie = payload;
+      })
+      .addCase(loadMovieByIdThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
         state.error = payload;
       });
