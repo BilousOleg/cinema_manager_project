@@ -1,3 +1,4 @@
+const createHttpError = require('http-errors');
 const {
   Movie,
   Genre,
@@ -8,13 +9,26 @@ const {
 } = require('../db/models');
 
 module.exports.getMovies = async (req, res, next) => {
+  const { page, limit, offset } = req.pagination;
+
   try {
-    const foundMovies = await Movie.findAll({
+    const { rows: foundMovies, count } = await Movie.findAndCountAll({
       raw: true,
       attributes: ['id', 'poster', 'title', 'year'],
+      limit,
+      offset,
+      order: ['id'],
     });
 
-    res.status(200).send({ data: foundMovies });
+    res.status(200).send({
+      data: foundMovies,
+      pagination: {
+        page,
+        results: limit,
+        total: count,
+        totalPages: Math.ceil(count / limit),
+      },
+    });
   } catch (err) {
     next(err);
   }
@@ -74,6 +88,10 @@ module.exports.getMovieById = async (req, res, next) => {
       ],
     });
 
+    if (!foundMovie) {
+      return next(createHttpError(404, 'Movie Not Found'));
+    }
+
     res.status(200).send({ data: foundMovie });
   } catch (err) {
     next(err);
@@ -82,4 +100,18 @@ module.exports.getMovieById = async (req, res, next) => {
 
 module.exports.updateMovieById = (req, res, next) => {};
 
-module.exports.deleteMovieById = (req, res, next) => {};
+module.exports.deleteMovieById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const deletedCount = await Movie.destroy({ where: { id } });
+
+    if (!deletedCount) {
+      return next(createHttpError(404, 'Movie Not Found'));
+    }
+
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};

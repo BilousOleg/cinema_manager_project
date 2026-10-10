@@ -1,9 +1,15 @@
+const createHttpError = require('http-errors');
 const { Director, Person, Country, Movie } = require('../db/models');
 
 module.exports.getDirectors = async (req, res, next) => {
+  const { page, limit, offset } = req.pagination;
+
   try {
-    const foundDirectors = await Director.findAll({
+    const { rows: foundDirectors, count } = await Director.findAndCountAll({
       attributes: ['id'],
+      limit,
+      offset,
+      order: ['id'],
       include: [
         {
           model: Person,
@@ -12,7 +18,15 @@ module.exports.getDirectors = async (req, res, next) => {
       ],
     });
 
-    res.status(200).send({ data: foundDirectors });
+    res.status(200).send({
+      data: foundDirectors,
+      pagination: {
+        page,
+        results: limit,
+        total: count,
+        totalPages: Math.ceil(count / limit),
+      },
+    });
   } catch (err) {
     next(err);
   }
@@ -51,7 +65,27 @@ module.exports.getDirectorById = async (req, res, next) => {
       ],
     });
 
+    if (!foundDirector) {
+      return next(createHttpError(404, 'Director Not Found'));
+    }
+
     res.status(200).send({ data: foundDirector });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.deleteDirectorById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const deletedCount = await Director.destroy({ where: { id } });
+
+    if (!deletedCount) {
+      return next(createHttpError(404, 'Director Not Found'));
+    }
+
+    res.status(204).send();
   } catch (err) {
     next(err);
   }
