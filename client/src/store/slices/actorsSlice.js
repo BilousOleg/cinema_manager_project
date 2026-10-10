@@ -12,6 +12,12 @@ const ACTORS_SLICE_NAME = 'actors';
 const initialState = {
   actors: [],
   currentActor: null,
+  pagination: {
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0,
+  },
   isFetching: true,
   error: null,
 };
@@ -61,15 +67,7 @@ export const deleteActorThunk = createAsyncThunk(
   `${ACTORS_SLICE_NAME}/deleteActor`,
   async (actorId, { rejectWithValue }) => {
     try {
-      const actors = API.getStoredEntities(ACTORS);
-      const isActorExists = actors.some(a => a.id === actorId);
-
-      if (!isActorExists) {
-        throw new Error('Actor not found');
-      }
-
-      const updatedActors = actors.filter(a => a.id !== actorId);
-      API.setStoredEntities(ACTORS, updatedActors);
+      await API.deleteActorById(actorId);
 
       return actorId;
     } catch (error) {
@@ -80,13 +78,13 @@ export const deleteActorThunk = createAsyncThunk(
 
 export const loadActorsThunk = createAsyncThunk(
   `${ACTORS_SLICE_NAME}/loadActors`,
-  async (_, { rejectWithValue }) => {
+  async ({ page, results }, { rejectWithValue }) => {
     try {
       const {
-        data: { data },
-      } = await API.getActors();
+        data: { data, pagination },
+      } = await API.getActors(page, results);
 
-      return data;
+      return { data, pagination };
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to load actors');
     }
@@ -95,11 +93,11 @@ export const loadActorsThunk = createAsyncThunk(
 
 export const loadActorByIdThunk = createAsyncThunk(
   `${ACTORS_SLICE_NAME}/loadActor`,
-  async (payload, { rejectWithValue }) => {
+  async (actorId, { rejectWithValue }) => {
     try {
       const {
         data: { data },
-      } = await API.getActorById(payload);
+      } = await API.getActorById(actorId);
 
       return data;
     } catch (error) {
@@ -162,13 +160,17 @@ const actorsSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(loadActorsThunk.fulfilled, (state, { payload }) => {
+      .addCase(
+        loadActorsThunk.fulfilled,
+        (state, { payload: { data, pagination } }) => {
+          state.actors = data;
+          state.pagination = pagination;
+          state.isFetching = false;
+        }
+      )
+      .addCase(loadActorsThunk.rejected, (state, { payload: { data } }) => {
+        state.error = data;
         state.isFetching = false;
-        state.actors = payload;
-      })
-      .addCase(loadActorsThunk.rejected, (state, { payload }) => {
-        state.isFetching = false;
-        state.error = payload;
       })
       // getById
       .addCase(loadActorByIdThunk.pending, state => {

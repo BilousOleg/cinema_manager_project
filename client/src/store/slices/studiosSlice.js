@@ -12,6 +12,12 @@ const STUDIOS_SLICE_NAME = 'studios';
 const initialState = {
   studios: [],
   currentStudio: null,
+  pagination: {
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0,
+  },
   isFetching: true,
   error: null,
 };
@@ -61,15 +67,7 @@ export const deleteStudioThunk = createAsyncThunk(
   `${STUDIOS_SLICE_NAME}/deleteStudio`,
   async (studioId, { rejectWithValue }) => {
     try {
-      const studios = API.getStoredEntities(STUDIOS);
-      const isStudioExists = studios.some(s => s.id === studioId);
-
-      if (!isStudioExists) {
-        throw new Error('Studio not found');
-      }
-
-      const updatedStudios = studios.filter(s => s.id !== studioId);
-      API.setStoredEntities(STUDIOS, updatedStudios);
+      await API.deleteStudioById(studioId);
 
       return studioId;
     } catch (error) {
@@ -80,13 +78,13 @@ export const deleteStudioThunk = createAsyncThunk(
 
 export const loadStudiosThunk = createAsyncThunk(
   `${STUDIOS_SLICE_NAME}/loadStudios`,
-  async (_, { rejectWithValue }) => {
+  async ({ page, results }, { rejectWithValue }) => {
     try {
       const {
-        data: { data },
-      } = await API.getStudios();
+        data: { data, pagination },
+      } = await API.getStudios(page, results);
 
-      return data;
+      return { data, pagination };
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to load studios');
     }
@@ -95,11 +93,11 @@ export const loadStudiosThunk = createAsyncThunk(
 
 export const loadStudioByIdThunk = createAsyncThunk(
   `${STUDIOS_SLICE_NAME}/loadStudio`,
-  async (payload, { rejectWithValue }) => {
+  async (studioId, { rejectWithValue }) => {
     try {
       const {
         data: { data },
-      } = await API.getStudioById(payload);
+      } = await API.getStudioById(studioId);
 
       return data;
     } catch (error) {
@@ -162,13 +160,17 @@ const studiosSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(loadStudiosThunk.fulfilled, (state, { payload }) => {
+      .addCase(
+        loadStudiosThunk.fulfilled,
+        (state, { payload: { data, pagination } }) => {
+          state.studios = data;
+          state.pagination = pagination;
+          state.isFetching = false;
+        }
+      )
+      .addCase(loadStudiosThunk.rejected, (state, { payload: data }) => {
+        state.error = data;
         state.isFetching = false;
-        state.studios = payload;
-      })
-      .addCase(loadStudiosThunk.rejected, (state, { payload }) => {
-        state.isFetching = false;
-        state.error = payload;
       })
       // getById
       .addCase(loadStudioByIdThunk.pending, state => {

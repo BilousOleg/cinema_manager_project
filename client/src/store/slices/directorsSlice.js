@@ -12,6 +12,12 @@ const DIRECTORS_SLICE_NAME = 'directors';
 const initialState = {
   directors: [],
   currentDirector: null,
+  pagination: {
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0,
+  },
   isFetching: true,
   error: null,
 };
@@ -61,15 +67,7 @@ export const deleteDirectorThunk = createAsyncThunk(
   `${DIRECTORS_SLICE_NAME}/deleteDirector`,
   async (directorId, { rejectWithValue }) => {
     try {
-      const directors = API.getStoredEntities(DIRECTORS);
-      const isDirectorExists = directors.some(d => d.id === directorId);
-
-      if (!isDirectorExists) {
-        throw new Error('Director not found');
-      }
-
-      const updatedDirectors = directors.filter(d => d.id !== directorId);
-      API.setStoredEntities(DIRECTORS, updatedDirectors);
+      await API.deleteDirectorById(directorId);
 
       return directorId;
     } catch (error) {
@@ -80,13 +78,13 @@ export const deleteDirectorThunk = createAsyncThunk(
 
 export const loadDirectorsThunk = createAsyncThunk(
   `${DIRECTORS_SLICE_NAME}/loadDirectors`,
-  async (_, { rejectWithValue }) => {
+  async ({ page, results }, { rejectWithValue }) => {
     try {
       const {
-        data: { data },
-      } = await API.getDirectors();
+        data: { data, pagination },
+      } = await API.getDirectors(page, results);
 
-      return data;
+      return { data, pagination };
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to load directors');
     }
@@ -95,11 +93,11 @@ export const loadDirectorsThunk = createAsyncThunk(
 
 export const loadDirectorByIdThunk = createAsyncThunk(
   `${DIRECTORS_SLICE_NAME}/loadDirector`,
-  async (payload, { rejectWithValue }) => {
+  async (directorId, { rejectWithValue }) => {
     try {
       const {
         data: { data },
-      } = await API.getDirectorById(payload);
+      } = await API.getDirectorById(directorId);
 
       return data;
     } catch (error) {
@@ -162,13 +160,17 @@ const directorsSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(loadDirectorsThunk.fulfilled, (state, { payload }) => {
+      .addCase(
+        loadDirectorsThunk.fulfilled,
+        (state, { payload: { data, pagination } }) => {
+          state.directors = data;
+          state.pagination = pagination;
+          state.isFetching = false;
+        }
+      )
+      .addCase(loadDirectorsThunk.rejected, (state, { payload: { data } }) => {
+        state.error = data;
         state.isFetching = false;
-        state.directors = payload;
-      })
-      .addCase(loadDirectorsThunk.rejected, (state, { payload }) => {
-        state.isFetching = false;
-        state.error = payload;
       })
       // getById
       .addCase(loadDirectorByIdThunk.pending, state => {

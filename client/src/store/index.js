@@ -6,6 +6,7 @@ import studiosReducer from './slices/studiosSlice';
 import serviceReducer from './slices/serviceSlice';
 import themeReducer from './slices/themeSlice';
 import dashboardReducer from './slices/dashboardSlice';
+import notificationReducer from './slices/notificationSlice';
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     service: serviceReducer,
     theme: themeReducer,
     dashboard: dashboardReducer,
+    notification: notificationReducer,
   },
 });
 

@@ -1,10 +1,6 @@
-import { useEffect, useLayoutEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useLayoutEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { loadMoviesThunk } from './store/slices/moviesSlice';
-import { loadActorsThunk } from './store/slices/actorsSlice';
-import { loadDirectorsThunk } from './store/slices/directorsSlice';
-import { loadStudiosThunk } from './store/slices/studiosSlice';
 import BasePage from './pages/BasePage';
 import Home from './pages/Home';
 import MoviesPage from './pages/MoviesPage';
@@ -25,18 +21,10 @@ const {
 
 function App () {
   const { theme } = useSelector(state => state.theme);
-  const dispatch = useDispatch();
 
   useLayoutEffect(() => {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
-
-  useEffect(() => {
-    dispatch(loadMoviesThunk());
-    dispatch(loadActorsThunk());
-    dispatch(loadDirectorsThunk());
-    dispatch(loadStudiosThunk());
-  }, [dispatch]);
 
   return (
     <Router>

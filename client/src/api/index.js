@@ -2,27 +2,54 @@ import axios from 'axios';
 
 const httpClient = axios.create({ baseURL: 'http://localhost:5000/api' });
 
-export const getMovies = async () => httpClient.get('/movies');
-export const getMovieById = async id => httpClient.get(`/movies/${id}`);
+export const getMovies = (page, results) =>
+  httpClient.get('/movies', {
+    params: {
+      page,
+      results,
+    },
+  });
+export const getMovieById = id => httpClient.get(`/movies/${id}`);
+export const deleteMovieById = id => httpClient.delete(`/movies/${id}`);
 
-export const getActors = async () => httpClient.get('/actors');
-export const getActorById = async id => httpClient.get(`/actors/${id}`);
+export const getActors = (page, results) =>
+  httpClient.get('/actors', {
+    params: {
+      page,
+      results,
+    },
+  });
+export const getActorById = id => httpClient.get(`/actors/${id}`);
+export const deleteActorById = id => httpClient.delete(`/actors/${id}`);
 
-export const getDirectors = async () => httpClient.get('/directors');
-export const getDirectorById = async id => httpClient.get(`/directors/${id}`);
+export const getDirectors = async (page, results) =>
+  httpClient.get('/directors', {
+    params: {
+      page,
+      results,
+    },
+  });
+export const getDirectorById = id => httpClient.get(`/directors/${id}`);
+export const deleteDirectorById = id => httpClient.delete(`/directors/${id}`);
 
-export const getStudios = async () => httpClient.get('/studios');
-export const getStudioById = async id => httpClient.get(`/studios/${id}`);
+export const getStudios = (page, results) =>
+  httpClient.get('/studios', {
+    params: {
+      page,
+      results,
+    },
+  });
+export const getStudioById = id => httpClient.get(`/studios/${id}`);
+export const deleteStudioById = id => httpClient.delete(`/studios/${id}`);
 
-export const getTotalCounts = async () =>
-  httpClient.get('/dashboard/total-counts');
+export const getTotalCounts = () => httpClient.get('/dashboard/total-counts');
 
-export const getPopularGenres = async (limit = 3) =>
+export const getPopularGenres = (limit = 3) =>
   httpClient.get('/dashboard/popular-genres', {
     params: { limit },
   });
 
-export const getRecentMovies = async (limit = 3) =>
+export const getRecentMovies = (limit = 3) =>
   httpClient.get('/dashboard/recent-movies', {
     params: { limit },
   });

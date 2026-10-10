@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { Pagination, PaginationItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import EntityListItem from '../../components/EntityListItem';
@@ -11,30 +9,16 @@ function EntityPage ({
   defaultImage,
   items,
   entity,
+  page,
+  totalPages,
+  onPageChange,
   onAdd,
   onEdit,
   onDelete,
-  itemsPerPage = 8,
   getImage,
   getPrimaryText,
   getSecondaryText,
 }) {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const pageCount = Math.max(1, Math.ceil(items.length / itemsPerPage));
-
-  const pageFromUrl = Number(searchParams.get('page')) || 1;
-  const currentPage = Math.min(Math.max(pageFromUrl, 1), pageCount);
-
-  useEffect(() => {
-    if (!searchParams.has('page')) {
-      setSearchParams({ page: '1' }, { replace: true });
-    }
-  }, [searchParams, setSearchParams]);
-
-  const start = (currentPage - 1) * itemsPerPage;
-  const currentItems = items.slice(start, start + itemsPerPage);
-
   return (
     <article className={styles.page}>
       <section className={styles.headingSection}>
@@ -49,7 +33,7 @@ function EntityPage ({
       <section className={styles.listSection}>
         {items.length ? (
           <ul>
-            {currentItems.map(item => (
+            {items.map(item => (
               <EntityListItem
                 key={item.id}
                 entity={entity}
@@ -70,11 +54,11 @@ function EntityPage ({
 
       <section className={styles.paginationSection}>
         <Pagination
-          page={currentPage}
-          count={pageCount}
+          page={page}
+          count={totalPages}
           siblingCount={2}
           boundaryCount={1}
-          onChange={(e, value) => setSearchParams({ page: value.toString() })}
+          onChange={(_, value) => onPageChange(value)}
           renderItem={item => (
             <PaginationItem {...item} className={styles.pageItem} />
           )}

@@ -12,6 +12,12 @@ const MOVIES_SLICE_NAME = 'movies';
 const initialState = {
   movies: [],
   currentMovie: null,
+  pagination: {
+    page: 1,
+    limit: 10,
+    total: 0,
+    totalPages: 0,
+  },
   isFetching: true,
   error: null,
 };
@@ -65,15 +71,7 @@ export const deleteMovieThunk = createAsyncThunk(
   `${MOVIES_SLICE_NAME}/deleteMovie`,
   async (movieId, { rejectWithValue }) => {
     try {
-      const movies = API.getStoredEntities(MOVIES);
-      const isMovieExists = movies.some(movie => movie.id === movieId);
-
-      if (!isMovieExists) {
-        throw new Error('Movie not found');
-      }
-
-      const updatedMovies = movies.filter(movie => movie.id !== movieId);
-      API.setStoredEntities(MOVIES, updatedMovies);
+      await API.deleteMovieById(movieId);
 
       return movieId;
     } catch (error) {
@@ -84,13 +82,13 @@ export const deleteMovieThunk = createAsyncThunk(
 
 export const loadMoviesThunk = createAsyncThunk(
   `${MOVIES_SLICE_NAME}/loadMovies`,
-  async (_, { rejectWithValue }) => {
+  async ({ page, results }, { rejectWithValue }) => {
     try {
       const {
-        data: { data },
-      } = await API.getMovies();
+        data: { data, pagination },
+      } = await API.getMovies(page, results);
 
-      return data;
+      return { data, pagination };
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to load movies');
     }
@@ -99,11 +97,11 @@ export const loadMoviesThunk = createAsyncThunk(
 
 export const loadMovieByIdThunk = createAsyncThunk(
   `${MOVIES_SLICE_NAME}/loadMovie`,
-  async (payload, { rejectWithValue }) => {
+  async (movieId, { rejectWithValue }) => {
     try {
       const {
         data: { data },
-      } = await API.getMovieById(payload);
+      } = await API.getMovieById(movieId);
 
       return data;
     } catch (error) {
@@ -167,13 +165,17 @@ const moviesSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(loadMoviesThunk.fulfilled, (state, { payload }) => {
+      .addCase(
+        loadMoviesThunk.fulfilled,
+        (state, { payload: { data, pagination } }) => {
+          state.movies = data;
+          state.pagination = pagination;
+          state.isFetching = false;
+        }
+      )
+      .addCase(loadMoviesThunk.rejected, (state, { payload: { data } }) => {
+        state.error = data;
         state.isFetching = false;
-        state.movies = payload;
-      })
-      .addCase(loadMoviesThunk.rejected, (state, { payload }) => {
-        state.isFetching = false;
-        state.error = payload;
       })
       // getById
       .addCase(loadMovieByIdThunk.pending, state => {

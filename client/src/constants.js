@@ -112,6 +112,8 @@ const CONSTANTS = {
     DARK: 'dark',
     LIGHT: 'light',
   },
+  DEFAULT_PAGE: 1,
+  DEFAULT_RESULTS: 8,
   STORAGE_KEYS: {
     MOVIES: 'movies',
     ACTORS: 'actors',
