@@ -5,8 +5,8 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const now = new Date().toISOString();
 
-    const [USA] = await queryInterface.sequelize.query(
-      `SELECT id FROM countries WHERE country_name = 'USA'`,
+    const [unitedStates] = await queryInterface.sequelize.query(
+      `SELECT id FROM countries WHERE country_name = 'United States'`,
       { type: Sequelize.QueryTypes.SELECT }
     );
     const [australia] = await queryInterface.sequelize.query(
@@ -20,7 +20,7 @@ module.exports = {
         {
           studio_name: 'Warner Bros. Pictures',
           founded: 1923,
-          country_id: USA.id,
+          country_id: unitedStates.id,
           logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKjUsWV5bfTnNebkW8x-TWwAQK7dNtRlhzOe6_021VSQ&s=10',
           description:
             'A major American film studio known for producing and distributing blockbuster movies across a wide range of genres, including action, drama, fantasy, and science fiction.',
@@ -30,7 +30,7 @@ module.exports = {
         {
           studio_name: 'DC Films',
           founded: 2016,
-          country_id: USA.id,
+          country_id: unitedStates.id,
           logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPkOI-5VPQTphP8ywCHIE7HiT1gzDtz-SjNZrHyDhR8A&s',
           description:
             'An American film production company responsible for bringing DC Comics superheroes and stories to the big screen, including Batman, Superman, and Wonder Woman.',
@@ -40,7 +40,7 @@ module.exports = {
         {
           studio_name: 'Universal Pictures',
           founded: 1912,
-          country_id: USA.id,
+          country_id: unitedStates.id,
           logo: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCDjUYCMWCJvYgNi5GPXrAo-iX3n5VnbG7vIEZFwSl3Q&s',
           description:
             'One of the oldest major American film studios, known for producing and distributing popular films across genres such as adventure, comedy, horror, drama, and science fiction.',

@@ -1,5 +1,40 @@
 const createHttpError = require('http-errors');
+const _ = require('lodash');
 const { Actor, Person, Country, Movie } = require('../db/models');
+
+module.exports.createActor = async (req, res, next) => {
+  const { body } = req;
+
+  try {
+    if (body.countryId != null) {
+      const country = await Country.findByPk(body.countryId);
+
+      if (!country) {
+        return next(createHttpError(400, 'Invalid countryId'));
+      }
+    }
+
+    const createdPerson = await Person.create(body);
+
+    const createdActor = await Actor.create({
+      personId: createdPerson.id,
+    });
+
+    const preparedPerson = _.omit(createdPerson.get(), [
+      'createdAt',
+      'updatedAt',
+    ]);
+
+    res.status(201).send({
+      data: {
+        id: createdActor.id,
+        Person: preparedPerson,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports.getActors = async (req, res, next) => {
   const { page, limit, offset } = req.pagination;
@@ -41,19 +76,9 @@ module.exports.getActorById = async (req, res, next) => {
       include: [
         {
           model: Person,
-          attributes: [
-            'firstName',
-            'lastName',
-            'birthDate',
-            'photo',
-            'biography',
-          ],
-          include: [
-            {
-              model: Country,
-              attributes: ['countryName'],
-            },
-          ],
+          attributes: {
+            exclude: ['id', 'createdAt', 'updatedAt'],
+          },
         },
         {
           model: Movie,
@@ -86,6 +111,49 @@ module.exports.deleteActorById = async (req, res, next) => {
     }
 
     res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.updateActorById = async (req, res, next) => {
+  const {
+    params: { id },
+    body,
+  } = req.params;
+
+  try {
+    const foundActor = await Actor.findByPk(id, {
+      include: [{ model: Person }],
+    });
+
+    if (!foundActor) {
+      return next(createHttpError(404, 'Actor Not Found'));
+    }
+
+    if (body.countryId != null) {
+      const country = await Country.findByPk(body.countryId);
+
+      if (!country) {
+        return next(createHttpError(400, 'Invalid countryId'));
+      }
+    }
+
+    await foundActor.Person.update(body);
+
+    const updatedActor = await Actor.findByPk(id, {
+      attributes: ['id'],
+      include: [
+        {
+          model: Person,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+      ],
+    });
+
+    res.status(200).send({ data: updatedActor });
   } catch (err) {
     next(err);
   }

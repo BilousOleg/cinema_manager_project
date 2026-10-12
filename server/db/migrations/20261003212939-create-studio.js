@@ -54,6 +54,12 @@ module.exports = {
       name: 'studios_founded_check',
       where: Sequelize.literal('founded >= 1800'),
     });
+
+    await queryInterface.addConstraint('studios', {
+      fields: ['studio_name'],
+      type: 'unique',
+      name: 'studios_studio_name_unique',
+    });
   },
   async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('studios');

@@ -1,0 +1,9 @@
+### 200
+
+PATCH http://localhost:5000/api/studios/26
+Content-Type: application/json
+
+{
+  "studioName": "Warner Bros. Pictures",
+  "description": "A major American film studio known for producing and distributing blockbuster movies across a wide range of genres, including action, drama, fantasy, and science fiction."
+}

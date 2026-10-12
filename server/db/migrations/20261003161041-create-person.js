@@ -58,6 +58,12 @@ module.exports = {
       name: 'persons_last_name_check',
       where: Sequelize.literal('LENGTH(last_name) >= 2'),
     });
+
+    await queryInterface.addConstraint('persons', {
+      fields: ['first_name', 'last_name'],
+      type: 'unique',
+      name: 'persons_first_name_last_name_unique',
+    });
   },
   async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('persons');

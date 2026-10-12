@@ -1,5 +1,40 @@
 const createHttpError = require('http-errors');
+const _ = require('lodash');
 const { Director, Person, Country, Movie } = require('../db/models');
+
+module.exports.createDirector = async (req, res, next) => {
+  const { body } = req;
+
+  try {
+    if (body.countryId != null) {
+      const country = await Country.findByPk(body.countryId);
+
+      if (!country) {
+        return next(createHttpError(400, 'Invalid countryId'));
+      }
+    }
+
+    const createdPerson = await Person.create(body);
+
+    const createdDirector = await Director.create({
+      personId: createdPerson.id,
+    });
+
+    const preparedPerson = _.omit(createdPerson.get(), [
+      'createdAt',
+      'updatedAt',
+    ]);
+
+    res.status(201).send({
+      data: {
+        id: createdDirector.id,
+        Person: preparedPerson,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports.getDirectors = async (req, res, next) => {
   const { page, limit, offset } = req.pagination;
@@ -41,19 +76,9 @@ module.exports.getDirectorById = async (req, res, next) => {
       include: [
         {
           model: Person,
-          attributes: [
-            'firstName',
-            'lastName',
-            'birthDate',
-            'photo',
-            'biography',
-          ],
-          include: [
-            {
-              model: Country,
-              attributes: ['countryName'],
-            },
-          ],
+          attributes: {
+            exclude: ['id', 'createdAt', 'updatedAt'],
+          },
         },
         {
           model: Movie,
@@ -86,6 +111,49 @@ module.exports.deleteDirectorById = async (req, res, next) => {
     }
 
     res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.updateDirectorById = async (req, res, next) => {
+  const {
+    params: { id },
+    body,
+  } = req;
+
+  try {
+    const foundDirector = await Director.findByPk(id, {
+      include: [{ model: Person }],
+    });
+
+    if (!foundDirector) {
+      return next(createHttpError(404, 'Director Not Found'));
+    }
+
+    if (body.countryId != null) {
+      const country = await Country.findByPk(body.countryId);
+
+      if (!country) {
+        return next(createHttpError(400, 'Invalid countryId'));
+      }
+    }
+
+    await foundDirector.Person.update(body);
+
+    const updatedDirector = await Director.findByPk(id, {
+      attributes: ['id'],
+      include: [
+        {
+          model: Person,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+      ],
+    });
+
+    res.status(200).send({ data: updatedDirector });
   } catch (err) {
     next(err);
   }

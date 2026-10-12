@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const countriesRouter = require('./countriesRouter');
 const moviesRouter = require('./moviesRouter');
 const actorsRouter = require('./actorsRouter');
 const directorsRouter = require('./directorsRouter');
@@ -7,6 +8,7 @@ const dashboardRouter = require('./dashboardRouter');
 
 const router = Router();
 
+router.use('/countries', countriesRouter);
 router.use('/movies', moviesRouter);
 router.use('/actors', actorsRouter);
 router.use('/directors', directorsRouter);

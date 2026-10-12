@@ -6,6 +6,7 @@ const directorsRouter = Router();
 
 directorsRouter
   .route('/')
+  .post(validation.validatePerson, directorsController.createDirector)
   .get(
     validation.validatePagination,
     paginate.pagination,
@@ -17,6 +18,7 @@ directorsRouter.use('/:id', validation.validateId);
 directorsRouter
   .route('/:id')
   .get(directorsController.getDirectorById)
-  .delete(directorsController.deleteDirectorById);
+  .delete(directorsController.deleteDirectorById)
+  .patch(validation.validatePerson, directorsController.updateDirectorById);
 
 module.exports = directorsRouter;

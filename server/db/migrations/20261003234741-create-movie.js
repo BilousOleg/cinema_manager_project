@@ -49,6 +49,12 @@ module.exports = {
       name: 'movies_year_check',
       where: Sequelize.literal('year >= 1800'),
     });
+
+    await queryInterface.addConstraint('movies', {
+      fields: ['title'],
+      type: 'unique',
+      name: 'movies_title_unique',
+    });
   },
   async down (queryInterface, Sequelize) {
     await queryInterface.dropTable('movies');

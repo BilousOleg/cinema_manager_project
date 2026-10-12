@@ -1,6 +1,6 @@
 ### 200
 
-GET http://localhost:5000/api/movies/6
+GET http://localhost:5000/api/movies/26
 
 ### 200
 
