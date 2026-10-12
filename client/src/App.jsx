@@ -1,6 +1,7 @@
-import { useLayoutEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect, useLayoutEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { loadCountriesThunk } from './store/slices/countriesSlice';
 import BasePage from './pages/BasePage';
 import Home from './pages/Home';
 import MoviesPage from './pages/MoviesPage';
@@ -20,7 +21,13 @@ const {
 } = CONSTANTS;
 
 function App () {
+  const dispatch = useDispatch();
+
   const { theme } = useSelector(state => state.theme);
+
+  useEffect(() => {
+    dispatch(loadCountriesThunk());
+  });
 
   useLayoutEffect(() => {
     document.documentElement.dataset.theme = theme;

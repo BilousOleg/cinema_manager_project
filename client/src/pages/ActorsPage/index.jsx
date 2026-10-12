@@ -83,8 +83,7 @@ function ActorsPage () {
     } catch (err) {
       dispatch(
         showNotification({
-          message:
-            err?.errors?.[0]?.title || err?.message || 'Failed to delete actor',
+          message: err || 'Failed to delete actor',
           type: 'error',
         })
       );

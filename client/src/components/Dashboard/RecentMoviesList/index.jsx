@@ -9,7 +9,7 @@ function RecentMoviesList ({ movies, isFetching, error }) {
   }
 
   if (error) {
-    return <NoItems message={`${error.message}`} />;
+    return <NoItems message={`${error}`} />;
   }
 
   return movies.length ? (

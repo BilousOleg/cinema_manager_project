@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import * as API from './../../api';
+import { normalizeFormValues } from '../../utils/formValues';
 import CONSTANTS from '../../constants';
 
 const {
@@ -22,43 +22,44 @@ const initialState = {
   error: null,
 };
 
-export const addActorThunk = createAsyncThunk(
+export const createActorThunk = createAsyncThunk(
   `${ACTORS_SLICE_NAME}/addActor`,
   async (actor, { rejectWithValue }) => {
     try {
-      const newActor = {
-        id: uuidv4(),
-        ...actor,
-      };
+      const normalizedActor = normalizeFormValues(actor);
 
-      const actors = API.getStoredEntities(ACTORS);
-      actors.push(newActor);
-      API.setStoredEntities(ACTORS, actors);
+      const {
+        data: { data },
+      } = await API.createActor(normalizedActor);
 
-      return newActor;
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to add actor');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to add actor'
+      );
     }
   }
 );
 
 export const updateActorThunk = createAsyncThunk(
   `${ACTORS_SLICE_NAME}/updateActor`,
-  async (actor, { rejectWithValue }) => {
+  async ({ id, actor }, { rejectWithValue }) => {
     try {
-      const actors = API.getStoredEntities(ACTORS);
-      const storedActor = actors.find(a => a.id === actor.id);
+      const normalizedActor = normalizeFormValues(actor);
 
-      if (!storedActor) {
-        throw new Error('Actor not found');
-      }
+      const {
+        data: { data },
+      } = await API.updateActorById(id, normalizedActor);
 
-      Object.assign(storedActor, actor);
-      API.setStoredEntities(ACTORS, actors);
-
-      return storedActor;
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to update actor');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to update actor'
+      );
     }
   }
 );
@@ -71,22 +72,30 @@ export const deleteActorThunk = createAsyncThunk(
 
       return actorId;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to delete actor');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to delete actor'
+      );
     }
   }
 );
 
 export const loadActorsThunk = createAsyncThunk(
   `${ACTORS_SLICE_NAME}/loadActors`,
-  async ({ page, results }, { rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
     try {
       const {
         data: { data, pagination },
-      } = await API.getActors(page, results);
+      } = await API.getActors(params);
 
       return { data, pagination };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load actors');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to load actors'
+      );
     }
   }
 );
@@ -101,7 +110,11 @@ export const loadActorByIdThunk = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load actor');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to load actor'
+      );
     }
   }
 );
@@ -109,19 +122,22 @@ export const loadActorByIdThunk = createAsyncThunk(
 const actorsSlice = createSlice({
   initialState,
   name: ACTORS_SLICE_NAME,
-  reducers: {},
+  reducers: {
+    clearCurrentActor: state => {
+      state.currentActor = null;
+    },
+  },
   extraReducers: builder => {
     builder
       // create
-      .addCase(addActorThunk.pending, state => {
+      .addCase(createActorThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(addActorThunk.fulfilled, (state, { payload }) => {
+      .addCase(createActorThunk.fulfilled, state => {
         state.isFetching = false;
-        state.actors.push(payload);
       })
-      .addCase(addActorThunk.rejected, (state, { payload }) => {
+      .addCase(createActorThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
         state.error = payload;
       })
@@ -130,13 +146,8 @@ const actorsSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(updateActorThunk.fulfilled, (state, { payload }) => {
+      .addCase(updateActorThunk.fulfilled, state => {
         state.isFetching = false;
-        const actor = state.actors.find(a => a.id === payload.id);
-
-        if (actor) {
-          Object.assign(actor, payload);
-        }
       })
       .addCase(updateActorThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
@@ -189,6 +200,8 @@ const actorsSlice = createSlice({
   },
 });
 
-const { reducer } = actorsSlice;
+const { reducer, actions } = actorsSlice;
+
+export const { clearCurrentActor } = actions;
 
 export default reducer;

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import * as API from './../../api';
+import { normalizeFormValues } from '../../utils/formValues';
 import CONSTANTS from '../../constants';
 
 const {
@@ -22,43 +22,44 @@ const initialState = {
   error: null,
 };
 
-export const addStudioThunk = createAsyncThunk(
+export const createStudioThunk = createAsyncThunk(
   `${STUDIOS_SLICE_NAME}/addStudio`,
   async (studio, { rejectWithValue }) => {
+    const normalizedStudio = normalizeFormValues(studio);
+
     try {
-      const newStudio = {
-        id: uuidv4(),
-        ...studio,
-      };
+      const {
+        data: { data },
+      } = await API.createStudio(normalizedStudio);
 
-      const studios = API.getStoredEntities(STUDIOS);
-      studios.push(newStudio);
-      API.setStoredEntities(STUDIOS, studios);
-
-      return newStudio;
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to add studio');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to add studio'
+      );
     }
   }
 );
 
 export const updateStudioThunk = createAsyncThunk(
   `${STUDIOS_SLICE_NAME}/updateStudio`,
-  async (studio, { rejectWithValue }) => {
+  async ({ id, studio }, { rejectWithValue }) => {
     try {
-      const studios = API.getStoredEntities(STUDIOS);
-      const storedStudio = studios.find(s => s.id === studio.id);
+      const normalizedStudio = normalizeFormValues(studio);
 
-      if (!storedStudio) {
-        throw new Error('Studio not found');
-      }
+      const {
+        data: { data },
+      } = await API.updateStudioById(id, normalizedStudio);
 
-      Object.assign(storedStudio, studio);
-      API.setStoredEntities(STUDIOS, studios);
-
-      return storedStudio;
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to update studio');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to update studio'
+      );
     }
   }
 );
@@ -71,22 +72,30 @@ export const deleteStudioThunk = createAsyncThunk(
 
       return studioId;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to delete studio');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to delete studio'
+      );
     }
   }
 );
 
 export const loadStudiosThunk = createAsyncThunk(
   `${STUDIOS_SLICE_NAME}/loadStudios`,
-  async ({ page, results }, { rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
     try {
       const {
         data: { data, pagination },
-      } = await API.getStudios(page, results);
+      } = await API.getStudios(params);
 
       return { data, pagination };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load studios');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to load studios'
+      );
     }
   }
 );
@@ -101,7 +110,11 @@ export const loadStudioByIdThunk = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load studio');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to load studio'
+      );
     }
   }
 );
@@ -109,19 +122,22 @@ export const loadStudioByIdThunk = createAsyncThunk(
 const studiosSlice = createSlice({
   initialState,
   name: STUDIOS_SLICE_NAME,
-  reducers: {},
+  reducers: {
+    clearCurrentStudio: state => {
+      state.currentStudio = null;
+    },
+  },
   extraReducers: builder => {
     builder
       // create
-      .addCase(addStudioThunk.pending, state => {
+      .addCase(createStudioThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(addStudioThunk.fulfilled, (state, { payload }) => {
+      .addCase(createStudioThunk.fulfilled, state => {
         state.isFetching = false;
-        state.studios.push(payload);
       })
-      .addCase(addStudioThunk.rejected, (state, { payload }) => {
+      .addCase(createStudioThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
         state.error = payload;
       })
@@ -130,13 +146,8 @@ const studiosSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(updateStudioThunk.fulfilled, (state, { payload }) => {
+      .addCase(updateStudioThunk.fulfilled, state => {
         state.isFetching = false;
-        const studio = state.studios.find(s => s.id === payload.id);
-
-        if (studio) {
-          Object.assign(studio, payload);
-        }
       })
       .addCase(updateStudioThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
@@ -189,6 +200,8 @@ const studiosSlice = createSlice({
   },
 });
 
-const { reducer } = studiosSlice;
+const { reducer, actions } = studiosSlice;
+
+export const { clearCurrentStudio } = actions;
 
 export default reducer;

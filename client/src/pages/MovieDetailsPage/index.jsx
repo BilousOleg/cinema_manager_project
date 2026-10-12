@@ -62,10 +62,10 @@ function MovieDetailsPage () {
         }
       >
         <DetailsListItem
-          title={'Genre'}
+          title={'Genres'}
           body={<EntityList items={movieGenres} getLabel={g => g.genreName} />}
         />
-        <DetailsListItem title={'Release year'} body={year} />
+        <DetailsListItem title={'Release year'} body={year || '—'} />
         <DetailsListItem
           title={'Actors'}
           body={

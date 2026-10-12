@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import * as API from './../../api';
 import CONSTANTS from '../../constants';
 
@@ -22,23 +21,21 @@ const initialState = {
   error: null,
 };
 
-export const addMovieThunk = createAsyncThunk(
+export const createMovieThunk = createAsyncThunk(
   `${MOVIES_SLICE_NAME}/addMovie`,
   async (movie, { rejectWithValue }) => {
     try {
-      const newMovie = {
-        id: uuidv4(),
-        ...movie,
-        genreId: Number(movie.genreId),
-      };
+      const {
+        data: { data },
+      } = await API.createMovie(movie);
 
-      const movies = API.getStoredEntities(MOVIES);
-      movies.push(newMovie);
-      API.setStoredEntities(MOVIES, movies);
-
-      return newMovie;
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to add movie');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to add movie'
+      );
     }
   }
 );
@@ -62,7 +59,11 @@ export const updateMovieThunk = createAsyncThunk(
 
       return storedMovie;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to update movie');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to update movie'
+      );
     }
   }
 );
@@ -75,22 +76,30 @@ export const deleteMovieThunk = createAsyncThunk(
 
       return movieId;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to delete movie');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to delete movie'
+      );
     }
   }
 );
 
 export const loadMoviesThunk = createAsyncThunk(
   `${MOVIES_SLICE_NAME}/loadMovies`,
-  async ({ page, results }, { rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
     try {
       const {
         data: { data, pagination },
-      } = await API.getMovies(page, results);
+      } = await API.getMovies(params);
 
       return { data, pagination };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load movies');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to load movies'
+      );
     }
   }
 );
@@ -105,7 +114,11 @@ export const loadMovieByIdThunk = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load movies');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to load movies'
+      );
     }
   }
 );
@@ -117,15 +130,14 @@ const moviesSlice = createSlice({
   extraReducers: builder => {
     builder
       // create
-      .addCase(addMovieThunk.pending, state => {
+      .addCase(createMovieThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(addMovieThunk.fulfilled, (state, { payload }) => {
+      .addCase(createMovieThunk.fulfilled, state => {
         state.isFetching = false;
-        state.movies.push(payload);
       })
-      .addCase(addMovieThunk.rejected, (state, { payload }) => {
+      .addCase(createMovieThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
         state.error = payload;
       })
@@ -134,13 +146,8 @@ const moviesSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(updateMovieThunk.fulfilled, (state, { payload }) => {
+      .addCase(updateMovieThunk.fulfilled, state => {
         state.isFetching = false;
-        const movie = state.movies.find(movie => movie.id === payload.id);
-
-        if (movie) {
-          Object.assign(movie, payload);
-        }
       })
       .addCase(updateMovieThunk.rejected, (state, { payload }) => {
         state.isFetching = false;

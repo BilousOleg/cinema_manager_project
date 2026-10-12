@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import * as API from './../../api';
+import { normalizeFormValues } from '../../utils/formValues';
 import CONSTANTS from '../../constants';
 
 const {
@@ -22,43 +22,44 @@ const initialState = {
   error: null,
 };
 
-export const addDirectorThunk = createAsyncThunk(
+export const createDirectorThunk = createAsyncThunk(
   `${DIRECTORS_SLICE_NAME}/addDirector`,
   async (director, { rejectWithValue }) => {
     try {
-      const newDirector = {
-        id: uuidv4(),
-        ...director,
-      };
+      const normalizedDirector = normalizeFormValues(director);
 
-      const directors = API.getStoredEntities(DIRECTORS);
-      directors.push(newDirector);
-      API.setStoredEntities(DIRECTORS, directors);
+      const {
+        data: { data },
+      } = await API.createDirector(normalizedDirector);
 
-      return newDirector;
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to add director');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to add director'
+      );
     }
   }
 );
 
 export const updateDirectorThunk = createAsyncThunk(
   `${DIRECTORS_SLICE_NAME}/updateDirector`,
-  async (director, { rejectWithValue }) => {
+  async ({ id, director }, { rejectWithValue }) => {
     try {
-      const directors = API.getStoredEntities(DIRECTORS);
-      const storedDirector = directors.find(d => d.id === director.id);
+      const normalizedDirector = normalizeFormValues(director);
 
-      if (!storedDirector) {
-        throw new Error('Director not found');
-      }
+      const {
+        data: { data },
+      } = await API.updateDirectorById(id, normalizedDirector);
 
-      Object.assign(storedDirector, director);
-      API.setStoredEntities(DIRECTORS, directors);
-
-      return storedDirector;
+      return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to update director');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to update director'
+      );
     }
   }
 );
@@ -71,22 +72,30 @@ export const deleteDirectorThunk = createAsyncThunk(
 
       return directorId;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to delete director');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to delete director'
+      );
     }
   }
 );
 
 export const loadDirectorsThunk = createAsyncThunk(
   `${DIRECTORS_SLICE_NAME}/loadDirectors`,
-  async ({ page, results }, { rejectWithValue }) => {
+  async (params, { rejectWithValue }) => {
     try {
       const {
         data: { data, pagination },
-      } = await API.getDirectors(page, results);
+      } = await API.getDirectors(params);
 
       return { data, pagination };
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load directors');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to load directors'
+      );
     }
   }
 );
@@ -101,7 +110,11 @@ export const loadDirectorByIdThunk = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load director');
+      return rejectWithValue(
+        error.response?.data?.errors?.[0]?.title ||
+          error.message ||
+          'Failed to load director'
+      );
     }
   }
 );
@@ -109,19 +122,22 @@ export const loadDirectorByIdThunk = createAsyncThunk(
 const directorsSlice = createSlice({
   initialState,
   name: DIRECTORS_SLICE_NAME,
-  reducers: {},
+  reducers: {
+    clearCurrentDirector: state => {
+      state.currentDirector = null;
+    },
+  },
   extraReducers: builder => {
     builder
       // create
-      .addCase(addDirectorThunk.pending, state => {
+      .addCase(createDirectorThunk.pending, state => {
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(addDirectorThunk.fulfilled, (state, { payload }) => {
+      .addCase(createDirectorThunk.fulfilled, state => {
         state.isFetching = false;
-        state.directors.push(payload);
       })
-      .addCase(addDirectorThunk.rejected, (state, { payload }) => {
+      .addCase(createDirectorThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
         state.error = payload;
       })
@@ -130,13 +146,8 @@ const directorsSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(updateDirectorThunk.fulfilled, (state, { payload }) => {
+      .addCase(updateDirectorThunk.fulfilled, state => {
         state.isFetching = false;
-        const director = state.directors.find(d => d.id === payload.id);
-
-        if (director) {
-          Object.assign(director, payload);
-        }
       })
       .addCase(updateDirectorThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
@@ -189,6 +200,8 @@ const directorsSlice = createSlice({
   },
 });
 
-const { reducer } = directorsSlice;
+const { reducer, actions } = directorsSlice;
+
+export const { clearCurrentDirector } = actions;
 
 export default reducer;

@@ -16,6 +16,7 @@ function GeneralStep () {
           items={GENRES}
           getValue={genre => genre.id}
           getLabel={genre => genre.name}
+          placeholder='Choose genre'
         />
         <TextField
           name='year'

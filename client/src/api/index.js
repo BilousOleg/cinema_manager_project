@@ -2,45 +2,33 @@ import axios from 'axios';
 
 const httpClient = axios.create({ baseURL: 'http://localhost:5000/api' });
 
-export const getMovies = (page, results) =>
-  httpClient.get('/movies', {
-    params: {
-      page,
-      results,
-    },
-  });
+export const getCountries = () => httpClient.get('/countries');
+
+export const createMovie = data => httpClient.post('/movies', data);
+export const getMovies = params => httpClient.get('/movies', { params });
 export const getMovieById = id => httpClient.get(`/movies/${id}`);
 export const deleteMovieById = id => httpClient.delete(`/movies/${id}`);
 
-export const getActors = (page, results) =>
-  httpClient.get('/actors', {
-    params: {
-      page,
-      results,
-    },
-  });
+export const createActor = data => httpClient.post('/actors', data);
+export const getActors = params => httpClient.get('/actors', { params });
 export const getActorById = id => httpClient.get(`/actors/${id}`);
 export const deleteActorById = id => httpClient.delete(`/actors/${id}`);
+export const updateActorById = (id, data) =>
+  httpClient.patch(`/actors/${id}`, data);
 
-export const getDirectors = async (page, results) =>
-  httpClient.get('/directors', {
-    params: {
-      page,
-      results,
-    },
-  });
+export const createDirector = data => httpClient.post('/directors', data);
+export const getDirectors = params => httpClient.get('/directors', { params });
 export const getDirectorById = id => httpClient.get(`/directors/${id}`);
 export const deleteDirectorById = id => httpClient.delete(`/directors/${id}`);
+export const updateDirectorById = (id, data) =>
+  httpClient.patch(`/directors/${id}`, data);
 
-export const getStudios = (page, results) =>
-  httpClient.get('/studios', {
-    params: {
-      page,
-      results,
-    },
-  });
+export const createStudio = data => httpClient.post('/studios', data);
+export const getStudios = params => httpClient.get('/studios', { params });
 export const getStudioById = id => httpClient.get(`/studios/${id}`);
 export const deleteStudioById = id => httpClient.delete(`/studios/${id}`);
+export const updateStudioById = (id, data) =>
+  httpClient.patch(`/studios/${id}`, data);
 
 export const getTotalCounts = () => httpClient.get('/dashboard/total-counts');
 

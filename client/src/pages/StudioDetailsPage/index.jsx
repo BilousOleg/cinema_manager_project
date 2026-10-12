@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import defaultLogo from './../../assets/defaultImages/defaultLogo.png';
+import { selectCountriesById } from '../../store/slices/countriesSlice';
 import { loadStudioByIdThunk } from '../../store/slices/studiosSlice';
 import NotFoundPage from '../NotFoundPage';
 import DetailsListItem from '../../components/DetailsListItem';
@@ -16,6 +17,8 @@ function StudioDetailsPage () {
   const { currentStudio, isFetching, error } = useSelector(
     state => state.studios
   );
+
+  const countriesById = useSelector(selectCountriesById);
 
   useEffect(() => {
     dispatch(loadStudioByIdThunk(studioId));
@@ -33,10 +36,12 @@ function StudioDetailsPage () {
     name,
     founded,
     logo,
+    countryId,
     description,
-    Country: { countryName },
     Movies: studioMovies,
   } = currentStudio;
+
+  const studioCountry = countriesById[countryId];
 
   return (
     <EntityDetailsPage
@@ -45,8 +50,8 @@ function StudioDetailsPage () {
       defaultImage={defaultLogo}
       sectionTitle={'Studio Information'}
     >
-      <DetailsListItem title={'Foundation year'} body={founded} />
-      <DetailsListItem title={'Country'} body={countryName} />
+      <DetailsListItem title={'Foundation year'} body={founded || '—'} />
+      <DetailsListItem title={'Country'} body={studioCountry || '—'} />
       <DetailsListItem
         title={'Movies'}
         body={

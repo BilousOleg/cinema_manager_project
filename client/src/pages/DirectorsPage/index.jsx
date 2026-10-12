@@ -83,10 +83,7 @@ function DirectorsPage () {
     } catch (err) {
       dispatch(
         showNotification({
-          message:
-            err?.errors?.[0]?.title ||
-            err?.message ||
-            'Failed to delete director',
+          message: err || 'Failed to delete director',
           type: 'error',
         })
       );

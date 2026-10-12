@@ -2,13 +2,7 @@ import { ErrorMessage, Field } from 'formik';
 import classNames from 'classnames';
 import styles from './SelectField.module.sass';
 
-function SelectField ({
-  name,
-  items,
-  getValue,
-  getLabel,
-  placeholder = 'Choose genre',
-}) {
+function SelectField ({ name, items, getValue, getLabel, placeholder }) {
   return (
     <Field name={name}>
       {({ field, meta }) => (

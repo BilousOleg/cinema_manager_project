@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import defaultPhoto from './../../assets/defaultImages/defaultPhoto.png';
+import { selectCountriesById } from '../../store/slices/countriesSlice';
 import { loadDirectorByIdThunk } from '../../store/slices/directorsSlice';
 import NotFoundPage from '../NotFoundPage';
 import EntityDetailsPage from '../EntityDetailsPage';
@@ -12,6 +13,8 @@ import NoItems from '../../components/NoItems';
 function DirectorDetailsPage () {
   const { directorId } = useParams();
   const dispatch = useDispatch();
+
+  const countriesById = useSelector(selectCountriesById);
 
   const { currentDirector, isFetching, error } = useSelector(
     state => state.directors
@@ -30,18 +33,12 @@ function DirectorDetailsPage () {
   }
 
   const {
-    Person: {
-      firstName,
-      lastName,
-      birthDate,
-      photo,
-      biography,
-      Country: { countryName },
-    },
+    Person: { firstName, lastName, birthDate, countryId, photo, biography },
     Movies: directorMovies,
   } = currentDirector;
 
-  const formattedDate = birthDate.split('-').reverse().join('.');
+  const directorCountry = countriesById[countryId];
+  const formattedDate = birthDate?.split('-').reverse().join('.');
 
   return (
     <EntityDetailsPage
@@ -50,8 +47,8 @@ function DirectorDetailsPage () {
       defaultImage={defaultPhoto}
       sectionTitle={'Director Information'}
     >
-      <DetailsListItem title={'Country'} body={countryName} />
-      <DetailsListItem title={'Birth date'} body={formattedDate} />
+      <DetailsListItem title={'Country'} body={directorCountry || '—'} />
+      <DetailsListItem title={'Birth date'} body={formattedDate || '—'} />
       <DetailsListItem
         title={'Movies'}
         body={

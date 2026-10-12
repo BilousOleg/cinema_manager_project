@@ -8,7 +8,7 @@ function PopularGenresList ({ genres, isFetching, error }) {
   }
 
   if (error) {
-    return <NoItems message={`${error.message}`} />;
+    return <NoItems message={`${error}`} />;
   }
 
   return genres.length ? (

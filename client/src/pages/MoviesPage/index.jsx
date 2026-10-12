@@ -82,8 +82,7 @@ function MoviesPage () {
     } catch (err) {
       dispatch(
         showNotification({
-          message:
-            err?.errors?.[0]?.title || err?.message || 'Failed to delete movie',
+          message: err || 'Failed to delete movie',
           type: 'error',
         })
       );
