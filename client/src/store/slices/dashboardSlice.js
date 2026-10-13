@@ -30,7 +30,11 @@ export const loadTotalCountsThunk = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load total counts');
+      return rejectWithValue(
+        error.response?.data?.[0]?.title ||
+          error.message ||
+          'Failed to load total counts'
+      );
     }
   }
 );
@@ -45,7 +49,11 @@ export const loadPopularGenresThunk = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load popular genres');
+      return rejectWithValue(
+        error.response?.data?.[0]?.title ||
+          error.message ||
+          'Failed to load popular genres'
+      );
     }
   }
 );
@@ -60,7 +68,11 @@ export const loadRecentMoviesThunk = createAsyncThunk(
 
       return data;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to load recent movies');
+      return rejectWithValue(
+        error.response?.data?.[0]?.title ||
+          error.message ||
+          'Failed to load recent movies'
+      );
     }
   }
 );

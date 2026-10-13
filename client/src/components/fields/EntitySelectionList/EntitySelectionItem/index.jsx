@@ -14,12 +14,16 @@ function EntitySelectionItem ({
     <li className={styles.item}>
       <label className={styles.label}>
         <Field type={type} name={name} value={value} />
-        <Image
-          src={imgSrc}
-          alt={title}
-          fallback={defaultImage}
-          className={styles.image}
-        />
+
+        {defaultImage && (
+          <Image
+            src={imgSrc}
+            alt={title}
+            fallback={defaultImage}
+            className={styles.image}
+          />
+        )}
+
         <span className={styles.title}>{title}</span>
       </label>
     </li>

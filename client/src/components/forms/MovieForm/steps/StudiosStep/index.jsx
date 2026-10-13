@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { loadStudiosThunk } from '../../../../../store/slices/studiosSlice';
 import { openEntityForm } from '../../../../../store/slices/serviceSlice';
 import defaultLogo from './../../../../../assets/defaultImages/defaultLogo.png';
 import EntitySelectionList from '../../../../fields/EntitySelectionList';
@@ -8,9 +10,14 @@ const {
   ENTITIES: { STUDIOS },
 } = CONSTANTS;
 
-function StudioStep () {
-  const { studios } = useSelector(state => state.studios);
+function StudiosStep () {
   const dispatch = useDispatch();
+
+  const { studios } = useSelector(state => state.studios);
+
+  useEffect(() => {
+    dispatch(loadStudiosThunk());
+  }, [dispatch]);
 
   const handleAddStudio = () => {
     dispatch(openEntityForm({ entity: STUDIOS }));
@@ -19,16 +26,16 @@ function StudioStep () {
   return (
     <EntitySelectionList
       items={studios}
-      type='radio'
-      name='studioId'
+      type='checkbox'
+      name='studioIds'
       getValue={s => s.id}
-      getTitle={s => s.name}
+      getTitle={s => s.studioName}
       getImage={s => s.logo}
       defaultImage={defaultLogo}
-      addButtonText={'AddStudio'}
+      addButtonText={'Add studio'}
       onAdd={handleAddStudio}
     />
   );
 }
 
-export default StudioStep;
+export default StudiosStep;

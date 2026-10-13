@@ -1,50 +1,3 @@
-const GENRES = [
-  {
-    id: 1,
-    name: 'Action',
-  },
-  {
-    id: 2,
-    name: 'Adventure',
-  },
-  {
-    id: 3,
-    name: 'Biography',
-  },
-  {
-    id: 4,
-    name: 'Comedy',
-  },
-  {
-    id: 5,
-    name: 'Crime',
-  },
-  {
-    id: 6,
-    name: 'Drama',
-  },
-  {
-    id: 7,
-    name: 'Fantasy',
-  },
-  {
-    id: 8,
-    name: 'Horror',
-  },
-  {
-    id: 9,
-    name: 'Romance',
-  },
-  {
-    id: 10,
-    name: 'Science Fiction',
-  },
-  {
-    id: 11,
-    name: 'Thriller',
-  },
-];
-
 const CONSTANTS = {
   STATIC_IMAGES_PATH: '/staticImages/',
   ROUTES: {
@@ -63,25 +16,24 @@ const CONSTANTS = {
   MOVIE_FORM_STEPS: [
     {
       label: 'General',
-      fields: ['title', 'genreId', 'year', 'poster', 'trailer'],
+      fields: ['title', 'year', 'poster', 'trailer'],
     },
-    { label: 'Director', fields: ['directorId'] },
+    { label: 'Genres', fields: ['genreIds'] },
+    { label: 'Directors', fields: ['directorIds'] },
     { label: 'Actors', fields: ['actorIds'] },
-    { label: 'Studio', fields: ['studioId'] },
+    { label: 'Studios', fields: ['studioIds'] },
     { label: 'Storyline', fields: ['description'] },
   ],
-  GENRES,
-  GENRES_BY_ID: Object.fromEntries(GENRES.map(genre => [genre.id, genre])),
   EMPTY_FORM_VALUES: {
     EMPTY_MOVIE: {
       title: '',
-      genreId: '',
+      genreIds: [],
       year: '',
       poster: '',
       trailer: '',
-      directorId: '',
+      directorIds: [],
       actorIds: [],
-      studioId: '',
+      studioIds: [],
       description: '',
     },
     EMPTY_ACTOR: {
@@ -115,10 +67,6 @@ const CONSTANTS = {
   DEFAULT_PAGE: 1,
   DEFAULT_RESULTS: 8,
   STORAGE_KEYS: {
-    MOVIES: 'movies',
-    ACTORS: 'actors',
-    DIRECTORS: 'directors',
-    STUDIOS: 'studios',
     THEME: 'theme',
   },
 };

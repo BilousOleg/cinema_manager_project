@@ -1,11 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as API from './../../api';
 import { normalizeFormValues } from '../../utils/formValues';
-import CONSTANTS from '../../constants';
-
-const {
-  STORAGE_KEYS: { ACTORS },
-} = CONSTANTS;
 
 const ACTORS_SLICE_NAME = 'actors';
 
@@ -35,7 +30,7 @@ export const createActorThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to add actor'
       );
@@ -56,7 +51,7 @@ export const updateActorThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to update actor'
       );
@@ -73,7 +68,7 @@ export const deleteActorThunk = createAsyncThunk(
       return actorId;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to delete actor'
       );
@@ -92,7 +87,7 @@ export const loadActorsThunk = createAsyncThunk(
       return { data, pagination };
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to load actors'
       );
@@ -111,7 +106,7 @@ export const loadActorByIdThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to load actor'
       );
@@ -158,9 +153,8 @@ const actorsSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(deleteActorThunk.fulfilled, (state, { payload }) => {
+      .addCase(deleteActorThunk.fulfilled, state => {
         state.isFetching = false;
-        state.actors = state.actors.filter(a => a.id !== payload);
       })
       .addCase(deleteActorThunk.rejected, (state, { payload }) => {
         state.isFetching = false;

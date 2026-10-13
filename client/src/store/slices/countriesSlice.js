@@ -33,7 +33,7 @@ export const loadCountriesThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to load countries'
       );

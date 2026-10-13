@@ -1,23 +1,11 @@
 import TextField from '../../../../fields/TextField';
-import SelectField from '../../../../fields/SelectField';
 import styles from './GeneralStep.module.sass';
-import CONSTANTS from '../../../../../constants';
-
-const { GENRES } = CONSTANTS;
 
 function GeneralStep () {
   return (
     <>
       <TextField name='title' type='text' placeholder='Movie title' />
       <div className={styles.formBlock}>
-        <SelectField
-          name='genreId'
-          label='Genre'
-          items={GENRES}
-          getValue={genre => genre.id}
-          getLabel={genre => genre.name}
-          placeholder='Choose genre'
-        />
         <TextField
           name='year'
           placeholder='Year'

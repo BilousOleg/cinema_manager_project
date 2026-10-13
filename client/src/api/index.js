@@ -3,11 +3,14 @@ import axios from 'axios';
 const httpClient = axios.create({ baseURL: 'http://localhost:5000/api' });
 
 export const getCountries = () => httpClient.get('/countries');
+export const getGenres = () => httpClient.get('/genres');
 
 export const createMovie = data => httpClient.post('/movies', data);
 export const getMovies = params => httpClient.get('/movies', { params });
 export const getMovieById = id => httpClient.get(`/movies/${id}`);
 export const deleteMovieById = id => httpClient.delete(`/movies/${id}`);
+export const updateMovieById = (id, data) =>
+  httpClient.patch(`/movies/${id}`, data);
 
 export const createActor = data => httpClient.post('/actors', data);
 export const getActors = params => httpClient.get('/actors', { params });

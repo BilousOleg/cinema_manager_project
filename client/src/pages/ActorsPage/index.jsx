@@ -79,7 +79,15 @@ function ActorsPage () {
           page: String(page - 1),
           results: String(results),
         });
+        return;
       }
+
+      dispatch(
+        loadActorsThunk({
+          page,
+          results,
+        })
+      );
     } catch (err) {
       dispatch(
         showNotification({

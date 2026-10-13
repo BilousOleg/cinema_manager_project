@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { loadDirectorsThunk } from '../../../../../store/slices/directorsSlice';
 import { openEntityForm } from '../../../../../store/slices/serviceSlice';
 import defaultPhoto from './../../../../../assets/defaultImages/defaultPhoto.png';
 import EntitySelectionList from '../../../../fields/EntitySelectionList';
@@ -8,9 +10,14 @@ const {
   ENTITIES: { DIRECTORS },
 } = CONSTANTS;
 
-function DirectorStep () {
-  const { directors } = useSelector(state => state.directors);
+function DirectorsStep () {
   const dispatch = useDispatch();
+
+  const { directors } = useSelector(state => state.directors);
+
+  useEffect(() => {
+    dispatch(loadDirectorsThunk());
+  }, [dispatch]);
 
   const handleAddDirector = () => {
     dispatch(openEntityForm({ entity: DIRECTORS }));
@@ -19,11 +26,11 @@ function DirectorStep () {
   return (
     <EntitySelectionList
       items={directors}
-      type='radio'
-      name='directorId'
+      type='checkbox'
+      name='directorIds'
       getValue={d => d.id}
-      getTitle={d => `${d.firstName} ${d.lastName}`}
-      getImage={d => d.photo}
+      getTitle={({ Person }) => `${Person.firstName} ${Person.lastName}`}
+      getImage={({ Person }) => Person.photo}
       defaultImage={defaultPhoto}
       addButtonText='Add director'
       onAdd={handleAddDirector}
@@ -31,4 +38,4 @@ function DirectorStep () {
   );
 }
 
-export default DirectorStep;
+export default DirectorsStep;

@@ -79,7 +79,15 @@ function DirectorsPage () {
           page: String(page - 1),
           results: String(results),
         });
+        return;
       }
+
+      dispatch(
+        loadDirectorsThunk({
+          page,
+          results,
+        })
+      );
     } catch (err) {
       dispatch(
         showNotification({

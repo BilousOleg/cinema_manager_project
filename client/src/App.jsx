@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { loadCountriesThunk } from './store/slices/countriesSlice';
+import { loadGenresThunk } from './store/slices/genresSlice';
 import BasePage from './pages/BasePage';
 import Home from './pages/Home';
 import MoviesPage from './pages/MoviesPage';
@@ -27,6 +28,7 @@ function App () {
 
   useEffect(() => {
     dispatch(loadCountriesThunk());
+    dispatch(loadGenresThunk());
   });
 
   useLayoutEffect(() => {

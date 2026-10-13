@@ -1,20 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { Form, Formik } from 'formik';
 import {
+  clearCurrentMovie,
   createMovieThunk,
+  loadMovieByIdThunk,
   loadMoviesThunk,
   updateMovieThunk,
 } from '../../../store/slices/moviesSlice';
 import { closeService } from '../../../store/slices/serviceSlice';
 import { showNotification } from '../../../store/slices/notificationSlice';
+import { toMovieFormValues } from '../../../utils/formValues';
 import { MOVIE_VALIDATION_SCHEMA } from '../../../utils/validation/validationSchemas';
 import MovieStepper from './MovieStepper';
 import GeneralStep from './steps/GeneralStep';
-import DirectorStep from './steps/DirectorStep';
+import GenresStep from './steps/GenresStep';
+import DirectorsStep from './steps/DirectorsStep';
 import ActorsStep from './steps/ActorsStep';
-import StudioStep from './steps/StudioStep';
+import StudiosStep from './steps/StudiosStep';
 import StorylineStep from './steps/StorylineStep';
 import MovieFormActions from './MovieFormActions';
 import styles from './MovieForm.module.sass';
@@ -29,10 +33,10 @@ const {
 
 function MovieForm ({ selectedId }) {
   const [searchParams] = useSearchParams();
-
   const [step, setStep] = useState(0);
-
   const dispatch = useDispatch();
+
+  const { currentMovie, isFetching } = useSelector(state => state.movies);
 
   const page = Math.max(1, Number(searchParams.get('page')) || DEFAULT_PAGE);
 
@@ -41,19 +45,26 @@ function MovieForm ({ selectedId }) {
     Number(searchParams.get('results')) || DEFAULT_RESULTS
   );
 
-  const { movies } = useSelector(state => state.movies);
-  const currentMovie = selectedId
-    ? movies.find(m => m.id === selectedId)
-    : null;
+  useEffect(() => {
+    setStep(0);
 
-  const formInitialValues = currentMovie || EMPTY_MOVIE;
+    if (selectedId) {
+      dispatch(loadMovieByIdThunk(selectedId));
+    } else {
+      dispatch(clearCurrentMovie());
+    }
+  }, [selectedId, dispatch]);
+
+  const formInitialValues = currentMovie
+    ? toMovieFormValues(currentMovie)
+    : EMPTY_MOVIE;
 
   const handleSubmit = async (values, { resetForm }) => {
     const action = selectedId ? updateMovieThunk : createMovieThunk;
 
     try {
       await dispatch(
-        action(selectedId ? { id: selectedId, ...values } : values)
+        action(selectedId ? { id: selectedId, movie: values } : values)
       ).unwrap();
 
       await dispatch(loadMoviesThunk({ page, results })).unwrap();
@@ -79,6 +90,14 @@ function MovieForm ({ selectedId }) {
     }
   };
 
+  if (selectedId && isFetching && !currentMovie) {
+    return <p>Loading movie...</p>;
+  }
+
+  if (selectedId && !currentMovie) {
+    return null;
+  }
+
   return (
     <Formik
       initialValues={formInitialValues}
@@ -91,10 +110,11 @@ function MovieForm ({ selectedId }) {
           <MovieStepper step={step} steps={MOVIE_FORM_STEPS} />
 
           {step === 0 && <GeneralStep />}
-          {step === 1 && <DirectorStep />}
-          {step === 2 && <ActorsStep />}
-          {step === 3 && <StudioStep />}
-          {step === 4 && <StorylineStep />}
+          {step === 1 && <GenresStep />}
+          {step === 2 && <DirectorsStep />}
+          {step === 3 && <ActorsStep />}
+          {step === 4 && <StudiosStep />}
+          {step === 5 && <StorylineStep />}
 
           <MovieFormActions
             step={step}

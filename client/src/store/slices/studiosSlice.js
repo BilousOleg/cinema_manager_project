@@ -1,11 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as API from './../../api';
 import { normalizeFormValues } from '../../utils/formValues';
-import CONSTANTS from '../../constants';
-
-const {
-  STORAGE_KEYS: { STUDIOS },
-} = CONSTANTS;
 
 const STUDIOS_SLICE_NAME = 'studios';
 
@@ -35,7 +30,7 @@ export const createStudioThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to add studio'
       );
@@ -56,7 +51,7 @@ export const updateStudioThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to update studio'
       );
@@ -73,7 +68,7 @@ export const deleteStudioThunk = createAsyncThunk(
       return studioId;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to delete studio'
       );
@@ -92,7 +87,7 @@ export const loadStudiosThunk = createAsyncThunk(
       return { data, pagination };
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to load studios'
       );
@@ -111,7 +106,7 @@ export const loadStudioByIdThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to load studio'
       );
@@ -158,9 +153,8 @@ const studiosSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(deleteStudioThunk.fulfilled, (state, { payload }) => {
+      .addCase(deleteStudioThunk.fulfilled, state => {
         state.isFetching = false;
-        state.studios = state.studios.filter(s => s.id !== payload);
       })
       .addCase(deleteStudioThunk.rejected, (state, { payload }) => {
         state.isFetching = false;

@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import countriesReducer from './slices/countriesSlice';
+import genresReducer from './slices/genresSlice';
 import moviesReducer from './slices/moviesSlice';
 import actorsReducer from './slices/actorsSlice';
 import directorsReducer from './slices/directorsSlice';
@@ -12,6 +13,7 @@ import notificationReducer from './slices/notificationSlice';
 const store = configureStore({
   reducer: {
     countries: countriesReducer,
+    genres: genresReducer,
     movies: moviesReducer,
     actors: actorsReducer,
     directors: directorsReducer,

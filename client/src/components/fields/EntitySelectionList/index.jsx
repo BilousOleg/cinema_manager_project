@@ -36,7 +36,7 @@ function EntitySelectionList ({
             name={name}
             value={getValue(item)}
             title={getTitle(item)}
-            imgSrc={getImage(item)}
+            imgSrc={getImage?.(item)}
             defaultImage={defaultImage}
           />
         ))}

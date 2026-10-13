@@ -78,7 +78,15 @@ function StudiosPage () {
           page: String(page - 1),
           results: String(results),
         });
+        return;
       }
+
+      dispatch(
+        loadStudiosThunk({
+          page,
+          results,
+        })
+      );
     } catch (err) {
       dispatch(
         showNotification({

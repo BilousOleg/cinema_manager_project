@@ -11,6 +11,18 @@ export const normalizeFormValues = values =>
     })
   );
 
+export const toMovieFormValues = movie => ({
+  title: movie?.title ?? '',
+  genreIds: movie?.Genres?.map(genre => genre.id) ?? [],
+  year: movie?.year ?? '',
+  poster: movie?.poster ?? '',
+  trailer: movie?.trailer ?? '',
+  directorIds: movie?.Directors?.map(director => director.id) ?? [],
+  actorIds: movie?.Actors?.map(actor => actor.id) ?? [],
+  studioIds: movie?.Studios?.map(studio => studio.id) ?? [],
+  description: movie?.description ?? '',
+});
+
 export const toPersonFormValues = person => ({
   firstName: person?.Person?.firstName ?? '',
   lastName: person?.Person?.lastName ?? '',

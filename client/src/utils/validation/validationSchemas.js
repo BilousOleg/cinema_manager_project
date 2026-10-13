@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 const PERSON_NAME_REGEX = /^[\p{L}\p{M}]+(?:[ '-][\p{L}\p{M}]+)*$/u;
 const STUDIO_NAME_REGEX =
-  /^[\p{L}\p{M}\p{N}]+(?:[ .,'&()\/-]+[\p{L}\p{M}\p{N}]+)*\.?$/u;
+  /^[\p{L}\p{M}\p{N}]+(?:[ .,'&()/-]+[\p{L}\p{M}\p{N}]+)*\.?$/u;
 
 const nameField = (fieldName, minChars, maxChars, regExp = null) => {
   let schema = yup
@@ -19,12 +19,7 @@ const nameField = (fieldName, minChars, maxChars, regExp = null) => {
   return schema;
 };
 
-const countryField = yup
-  .number()
-  .transform((value, originalValue) => (originalValue === '' ? null : value))
-  .integer('Country must be a valid country')
-  .positive('Country must be a valid country')
-  .nullable();
+const countryIdField = yup.string().uuid().nullable().optional();
 
 const yearField = (label, minYear) =>
   yup
@@ -61,9 +56,15 @@ const longTextField = fieldName =>
     .trim()
     .max(2000, `${fieldName} must contain at most 2000 characters`);
 
+const arrayField = fieldName =>
+  yup
+    .array()
+    .min(1, `Select at least one ${fieldName}`)
+    .required(`Select at least one actor ${fieldName}`);
+
 export const MOVIE_VALIDATION_SCHEMA = yup.object({
   title: nameField('Title', 1, 100),
-  genreId: yup.number().required('Genre is required'),
+  genreIds: arrayField('genre'),
   year: yearField('Release year', 1800),
   poster: urlField,
   trailer: yup
@@ -76,12 +77,9 @@ export const MOVIE_VALIDATION_SCHEMA = yup.object({
         !value ||
         /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//.test(value)
     ),
-  directorId: yup.string().required('Director is required'),
-  actorIds: yup
-    .array()
-    .min(1, 'Select at least one actor')
-    .required('Select at least one actor'),
-  studioId: yup.string().required('Studio is required'),
+  directorIds: arrayField('director'),
+  actorIds: arrayField('actor'),
+  studioIds: arrayField('studio'),
   description: longTextField('Description'),
 });
 
@@ -102,14 +100,14 @@ export const PERSON_VALIDATION_SCHEMA = yup.object({
 
       return birthDate <= today;
     }),
-  countryId: countryField,
+  countryId: countryIdField,
   photo: urlField,
   biography: longTextField('Biography'),
 });
 
 export const STUDIO_VALIDATION_SCHEMA = yup.object({
   studioName: nameField('Name', 2, 50, STUDIO_NAME_REGEX),
-  countryId: countryField,
+  countryId: countryIdField,
   founded: yearField('Foundation year', 1800),
   logo: urlField,
   description: longTextField('Description'),

@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as API from './../../api';
-import CONSTANTS from '../../constants';
-
-const {
-  STORAGE_KEYS: { MOVIES },
-} = CONSTANTS;
+import { normalizeFormValues } from '../../utils/formValues';
 
 const MOVIES_SLICE_NAME = 'movies';
 
@@ -25,14 +21,16 @@ export const createMovieThunk = createAsyncThunk(
   `${MOVIES_SLICE_NAME}/addMovie`,
   async (movie, { rejectWithValue }) => {
     try {
+      const normalizedMovie = normalizeFormValues(movie);
+
       const {
         data: { data },
-      } = await API.createMovie(movie);
+      } = await API.createMovie(normalizedMovie);
 
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to add movie'
       );
@@ -42,25 +40,18 @@ export const createMovieThunk = createAsyncThunk(
 
 export const updateMovieThunk = createAsyncThunk(
   `${MOVIES_SLICE_NAME}/updateMovie`,
-  async (movie, { rejectWithValue }) => {
+  async ({ id, movie }, { rejectWithValue }) => {
     try {
-      const movies = API.getStoredEntities(MOVIES);
-      const storedMovie = movies.find(m => m.id === movie.id);
+      const normalizedMovie = normalizeFormValues(movie);
 
-      if (!storedMovie) {
-        throw new Error('Movie not found');
-      }
+      const {
+        data: { data },
+      } = await API.updateMovieById(id, normalizedMovie);
 
-      Object.assign(storedMovie, {
-        ...movie,
-        genreId: Number(movie.genreId),
-      });
-      API.setStoredEntities(MOVIES, movies);
-
-      return storedMovie;
+      return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to update movie'
       );
@@ -77,7 +68,7 @@ export const deleteMovieThunk = createAsyncThunk(
       return movieId;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to delete movie'
       );
@@ -96,7 +87,7 @@ export const loadMoviesThunk = createAsyncThunk(
       return { data, pagination };
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to load movies'
       );
@@ -115,7 +106,7 @@ export const loadMovieByIdThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to load movies'
       );
@@ -126,7 +117,11 @@ export const loadMovieByIdThunk = createAsyncThunk(
 const moviesSlice = createSlice({
   initialState,
   name: MOVIES_SLICE_NAME,
-  reducers: {},
+  reducers: {
+    clearCurrentMovie: state => {
+      state.currentMovie = null;
+    },
+  },
   extraReducers: builder => {
     builder
       // create
@@ -158,10 +153,8 @@ const moviesSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(deleteMovieThunk.fulfilled, (state, { payload }) => {
+      .addCase(deleteMovieThunk.fulfilled, state => {
         state.isFetching = false;
-
-        state.movies = state.movies.filter(movie => movie.id !== payload);
       })
       .addCase(deleteMovieThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
@@ -201,6 +194,8 @@ const moviesSlice = createSlice({
   },
 });
 
-const { reducer } = moviesSlice;
+const { reducer, actions } = moviesSlice;
+
+export const { clearCurrentMovie } = actions;
 
 export default reducer;

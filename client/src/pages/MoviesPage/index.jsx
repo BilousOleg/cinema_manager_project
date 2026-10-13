@@ -78,7 +78,15 @@ function MoviesPage () {
           page: String(page - 1),
           results: String(results),
         });
+        return;
       }
+
+      dispatch(
+        loadMoviesThunk({
+          page,
+          results,
+        })
+      );
     } catch (err) {
       dispatch(
         showNotification({

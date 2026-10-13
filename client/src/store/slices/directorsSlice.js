@@ -1,11 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import * as API from './../../api';
 import { normalizeFormValues } from '../../utils/formValues';
-import CONSTANTS from '../../constants';
-
-const {
-  STORAGE_KEYS: { DIRECTORS },
-} = CONSTANTS;
 
 const DIRECTORS_SLICE_NAME = 'directors';
 
@@ -35,7 +30,7 @@ export const createDirectorThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to add director'
       );
@@ -56,7 +51,7 @@ export const updateDirectorThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to update director'
       );
@@ -73,7 +68,7 @@ export const deleteDirectorThunk = createAsyncThunk(
       return directorId;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to delete director'
       );
@@ -92,7 +87,7 @@ export const loadDirectorsThunk = createAsyncThunk(
       return { data, pagination };
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to load directors'
       );
@@ -111,7 +106,7 @@ export const loadDirectorByIdThunk = createAsyncThunk(
       return data;
     } catch (error) {
       return rejectWithValue(
-        error.response?.data?.errors?.[0]?.title ||
+        error.response?.data?.[0]?.title ||
           error.message ||
           'Failed to load director'
       );
@@ -158,9 +153,8 @@ const directorsSlice = createSlice({
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(deleteDirectorThunk.fulfilled, (state, { payload }) => {
+      .addCase(deleteDirectorThunk.fulfilled, state => {
         state.isFetching = false;
-        state.directors = state.directors.filter(d => d.id !== payload);
       })
       .addCase(deleteDirectorThunk.rejected, (state, { payload }) => {
         state.isFetching = false;
