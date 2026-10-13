@@ -44,7 +44,7 @@ module.exports.getDirectors = async (req, res, next) => {
       attributes: ['id'],
       limit,
       offset,
-      order: ['id'],
+      order: ['createdAt'],
       include: [
         {
           model: Person,
@@ -104,11 +104,16 @@ module.exports.deleteDirectorById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const deletedCount = await Director.destroy({ where: { id } });
+    const director = await Director.findByPk(id);
 
-    if (!deletedCount) {
+    if (!director) {
       return next(createHttpError(404, 'Director Not Found'));
     }
+
+    const { personId } = director;
+
+    await director.destroy();
+    await Person.destroy({ where: { id: personId } });
 
     res.status(204).send();
   } catch (err) {

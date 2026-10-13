@@ -22,10 +22,9 @@ module.exports.getMovieId = async (queryInterface, Sequelize, title) => {
     `
       SELECT id
       FROM movies
-      WHERE title = :title
+      WHERE title = '${title}'
     `,
     {
-      replacements: { title },
       type: Sequelize.QueryTypes.SELECT,
     }
   );

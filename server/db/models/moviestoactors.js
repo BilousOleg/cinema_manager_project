@@ -23,15 +23,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   MoviesToActors.init(
     {
-      characterName: {
-        type: DataTypes.STRING(100),
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
         allowNull: false,
-        validate: {
-          len: {
-            args: [2, Infinity],
-            msg: 'Character name must be at least 2 characters long',
-          },
-        },
       },
     },
     {

@@ -5,12 +5,12 @@ module.exports = {
     await queryInterface.createTable('movies_to_genres', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
       genre_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'genres',
@@ -20,7 +20,7 @@ module.exports = {
         onUpdate: 'CASCADE',
       },
       movie_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'movies',

@@ -1,4 +1,5 @@
 const createHttpError = require('http-errors');
+const _ = require('lodash');
 const {
   Movie,
   Genre,
@@ -6,7 +7,31 @@ const {
   Director,
   Studio,
   Person,
+  sequelize,
 } = require('../db/models');
+
+module.exports.createMovie = async (req, res, next) => {
+  try {
+    const { genreIds, actorIds, directorIds, studioIds, ...movieData } =
+      req.body;
+
+    // Транзакція для виконання декількох запитів до бд у форматі "Все або нічого"
+    const createdMovie = await sequelize.transaction(async transaction => {
+      const movie = await Movie.create(movieData, { transaction });
+
+      await movie.setGenres(genreIds, { transaction });
+      await movie.setActors(actorIds, { transaction });
+      await movie.setDirectors(directorIds, { transaction });
+      await movie.setStudios(studioIds, { transaction });
+
+      return movie;
+    });
+
+    res.status(201).send({ data: createdMovie });
+  } catch (err) {
+    next(err);
+  }
+};
 
 module.exports.getMovies = async (req, res, next) => {
   const { page, limit, offset } = req.pagination;
@@ -17,7 +42,7 @@ module.exports.getMovies = async (req, res, next) => {
       attributes: ['id', 'poster', 'title', 'year'],
       limit,
       offset,
-      order: ['id'],
+      order: ['createdAt'],
     });
 
     res.status(200).send({
@@ -33,8 +58,6 @@ module.exports.getMovies = async (req, res, next) => {
     next(err);
   }
 };
-
-module.exports.createMovie = (req, res, next) => {};
 
 module.exports.getMovieById = async (req, res, next) => {
   const { id } = req.params;
@@ -98,8 +121,6 @@ module.exports.getMovieById = async (req, res, next) => {
   }
 };
 
-module.exports.updateMovieById = (req, res, next) => {};
-
 module.exports.deleteMovieById = async (req, res, next) => {
   const { id } = req.params;
 
@@ -111,6 +132,37 @@ module.exports.deleteMovieById = async (req, res, next) => {
     }
 
     res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.updateMovieById = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const { genreIds, actorIds, directorIds, studioIds, ...movieData } =
+      req.body;
+
+    // Транзакція для виконання декількох запитів до бд у форматі "Все або нічого"
+    const updatedMovie = await sequelize.transaction(async transaction => {
+      const movie = await Movie.findByPk(id, { transaction });
+
+      if (!movie) {
+        throw createHttpError(404, 'Movie Not Found');
+      }
+
+      await movie.update(movieData, { transaction });
+
+      await movie.setGenres(genreIds, { transaction });
+      await movie.setActors(actorIds, { transaction });
+      await movie.setDirectors(directorIds, { transaction });
+      await movie.setStudios(studioIds, { transaction });
+
+      return movie;
+    });
+
+    res.status(200).send({ data: updatedMovie });
   } catch (err) {
     next(err);
   }

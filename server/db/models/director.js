@@ -18,7 +18,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Director.init(
-    {},
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
+    },
     {
       sequelize,
       modelName: 'Director',

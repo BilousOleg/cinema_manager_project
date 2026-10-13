@@ -5,9 +5,9 @@ module.exports = {
     await queryInterface.createTable('persons', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
       first_name: {
         type: Sequelize.STRING(50),
@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.DATEONLY,
       },
       country_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: 'countries',
           key: 'id',
@@ -57,12 +57,6 @@ module.exports = {
       type: 'check',
       name: 'persons_last_name_check',
       where: Sequelize.literal('LENGTH(last_name) >= 2'),
-    });
-
-    await queryInterface.addConstraint('persons', {
-      fields: ['first_name', 'last_name'],
-      type: 'unique',
-      name: 'persons_first_name_last_name_unique',
     });
   },
   async down (queryInterface, Sequelize) {

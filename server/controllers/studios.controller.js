@@ -38,7 +38,7 @@ module.exports.getStudios = async (req, res, next) => {
       attributes: ['id', 'logo', 'studioName'],
       limit,
       offset,
-      order: ['id'],
+      order: ['createdAt'],
     });
 
     res.status(200).send({

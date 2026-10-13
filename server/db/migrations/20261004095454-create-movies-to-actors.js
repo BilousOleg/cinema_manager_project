@@ -5,16 +5,12 @@ module.exports = {
     await queryInterface.createTable('movies_to_actors', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
-      },
-      character_name: {
-        type: Sequelize.STRING(100),
-        allowNull: false,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
       actor_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'actors',
@@ -24,7 +20,7 @@ module.exports = {
         onUpdate: 'CASCADE',
       },
       movie_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         allowNull: false,
         references: {
           model: 'movies',
@@ -41,13 +37,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-    });
-
-    await queryInterface.addConstraint('movies_to_actors', {
-      fields: ['character_name'],
-      type: 'check',
-      name: 'movies_to_actors_character_name_check',
-      where: Sequelize.literal('LENGTH(character_name) >= 2'),
     });
 
     await queryInterface.addConstraint('movies_to_actors', {

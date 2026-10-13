@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Genre.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
       genreName: {
         type: DataTypes.STRING(50),
         allowNull: false,

@@ -5,9 +5,9 @@ module.exports = {
     await queryInterface.createTable('studios', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
       studio_name: {
         type: Sequelize.STRING(50),
@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.SMALLINT,
       },
       country_id: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: 'countries',
           key: 'id',

@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
   }
   Country.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
       countryName: {
         type: DataTypes.STRING(64),
         allowNull: false,

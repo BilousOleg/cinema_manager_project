@@ -2,7 +2,7 @@ const yup = require('yup');
 
 const PERSON_NAME_REGEX = /^[\p{L}\p{M}]+(?:[ '-][\p{L}\p{M}]+)*$/u;
 const STUDIO_NAME_REGEX =
-  /^[\p{L}\p{M}\p{N}]+(?:[ .,'&()\/-]+[\p{L}\p{M}\p{N}]+)*\.?$/u;
+  /^[\p{L}\p{M}\p{N}]+(?:[ .,'&()/-]+[\p{L}\p{M}\p{N}]+)*\.?$/u;
 
 const positiveIntegerValidationSchema = (fieldName, defaultValue) =>
   yup
@@ -12,7 +12,9 @@ const positiveIntegerValidationSchema = (fieldName, defaultValue) =>
     .min(1, `${fieldName} must be greater than 0`)
     .default(defaultValue);
 
-module.exports.ID_VALIDATION_SCHEMA = positiveIntegerValidationSchema('Id');
+const ID_VALIDATION_SCHEMA = yup.string().uuid();
+
+module.exports.ID_VALIDATION_SCHEMA = ID_VALIDATION_SCHEMA;
 
 module.exports.LIMIT_VALIDATION_SCHEMA = positiveIntegerValidationSchema(
   'Limit',
@@ -42,12 +44,7 @@ const nameField = (fieldName, minChars, maxChars, regExp = null) => {
   return schema;
 };
 
-const countryField = yup
-  .number()
-  .transform((value, originalValue) => (originalValue === '' ? null : value))
-  .integer('Country must be a valid country')
-  .positive('Country must be a valid country')
-  .nullable();
+const countryIdField = ID_VALIDATION_SCHEMA.nullable().optional();
 
 const yearField = (label, minYear) =>
   yup
@@ -80,12 +77,40 @@ const urlField = yup
   )
   .nullable();
 
+const arrayField = fieldName =>
+  yup
+    .array()
+    .min(1, `Select at least one ${fieldName}`)
+    .required(`Select at least one actor ${fieldName}`);
+
 const longTextField = fieldName =>
   yup
     .string()
     .trim()
     .max(2000, `${fieldName} must contain at most 2000 characters`)
     .nullable();
+
+module.exports.MOVIE_VALIDATION_SCHEMA = yup.object({
+  title: nameField('Title', 1, 100),
+  genreIds: arrayField('genre'),
+  year: yearField('Release year', 1800),
+  poster: urlField,
+  trailer: yup
+    .string()
+    .trim()
+    .test(
+      'youtube-url-or-empty',
+      'Enter a valid YouTube URL',
+      value =>
+        !value ||
+        /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\//.test(value)
+    )
+    .nullable(),
+  directorIds: arrayField('director'),
+  actorIds: arrayField('actor'),
+  studioIds: arrayField('studio'),
+  description: longTextField('Description'),
+});
 
 module.exports.PERSON_VALIDATION_SCHEMA = yup.object({
   firstName: nameField('First name', 2, 50, PERSON_NAME_REGEX),
@@ -105,14 +130,14 @@ module.exports.PERSON_VALIDATION_SCHEMA = yup.object({
       return birthDate <= today;
     })
     .nullable(),
-  countryId: countryField,
+  countryId: countryIdField,
   photo: urlField,
   biography: longTextField('Biography'),
 });
 
 module.exports.STUDIO_VALIDATION_SCHEMA = yup.object({
   studioName: nameField('Studio name', 2, 50, STUDIO_NAME_REGEX),
-  countryId: countryField,
+  countryId: countryIdField,
   founded: yearField('Foundation year', 1800),
   logo: urlField,
   description: longTextField('Description'),

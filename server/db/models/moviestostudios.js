@@ -22,7 +22,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   MoviesToStudios.init(
-    {},
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+        allowNull: false,
+      },
+    },
     {
       sequelize,
       modelName: 'MoviesToStudios',

@@ -2,6 +2,7 @@ const {
   ID_VALIDATION_SCHEMA,
   LIMIT_VALIDATION_SCHEMA,
   PAGINATION_VALIDATION_SCHEMA,
+  MOVIE_VALIDATION_SCHEMA,
   PERSON_VALIDATION_SCHEMA,
   STUDIO_VALIDATION_SCHEMA,
 } = require('../utils/validationSchemas');
@@ -33,6 +34,20 @@ module.exports.validateLimit = async (req, res, next) => {
 module.exports.validatePagination = async (req, res, next) => {
   try {
     req.query = await PAGINATION_VALIDATION_SCHEMA.validate(req.query, {
+      abortEarly: false,
+    });
+
+    next();
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports.validateMovie = async (req, res, next) => {
+  const { body } = req;
+
+  try {
+    req.body = await MOVIE_VALIDATION_SCHEMA.validate(body, {
       abortEarly: false,
     });
 

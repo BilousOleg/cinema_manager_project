@@ -44,7 +44,7 @@ module.exports.getActors = async (req, res, next) => {
       attributes: ['id'],
       limit,
       offset,
-      order: ['id'],
+      order: ['createdAt'],
       include: [
         {
           model: Person,
@@ -104,11 +104,16 @@ module.exports.deleteActorById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const deletedCount = await Actor.destroy({ where: { id } });
+    const actor = await Actor.findByPk(id);
 
-    if (!deletedCount) {
+    if (!actor) {
       return next(createHttpError(404, 'Actor Not Found'));
     }
+
+    const { personId } = actor;
+
+    await actor.destroy();
+    await Person.destroy({ where: { id: personId } });
 
     res.status(204).send();
   } catch (err) {
@@ -120,7 +125,7 @@ module.exports.updateActorById = async (req, res, next) => {
   const {
     params: { id },
     body,
-  } = req.params;
+  } = req;
 
   try {
     const foundActor = await Actor.findByPk(id, {
