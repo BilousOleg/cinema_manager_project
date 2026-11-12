@@ -1,0 +1,39 @@
+version: '3'
+services:
+  client-dev:
+    build:
+      context: ./client
+    environment:
+      NODE_ENV: development
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server-dev
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+  
+  server-dev:
+    build:
+      context: ./server
+    environment:
+      NODE_ENV: development
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres-dev
+    volumes:
+      - ./server:/server
+      - /server/node_modules
+    env_file:
+      - ./server/.env
+  
+  postgres-dev:
+    image: postgres:18.6-alpine3.24
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB} 
+    ports:
+      - "2345:5432"
+    restart: unless-stopped
