@@ -8,10 +8,13 @@ WORKDIR /server
 
 COPY package*.json ./
 
+RUN npm install -g nodemon
+RUN npm install -g sequelize-cli
+
 RUN npm install
 
 COPY . .
 
 EXPOSE 5000
 
-CMD sequelize db:migrate && sequelize db:seed:all && npm run dev 
+CMD sequelize db:migrate && sequelize db:seed:all && npm run dev
